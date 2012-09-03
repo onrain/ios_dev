@@ -1,3 +1,14 @@
+%div{class:"modal hide fade", id:"new-company"}
+  .modal-header
+    %button{class:"close", :"data-dismiss"=>:"modal"}
+      ×
+    %h3 Add new company.
+
+  %div{class:"modal-body"}
+    = render 'companies/form-remote'
+      
+      
+
 = form_for @client do |f|
   -if @client.errors.any?
     #error_explanation
@@ -7,7 +18,9 @@
           %li= msg
 
   .field
-    = f.select("company_id", Company.all.collect {|p| [ p.name, p.id ] })
+    = f.select("company_id", Company.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+    %br
+    = link_to "add new company", '#', id:"get-new-company"
   .field
     = f.label :name
     = f.text_field :name

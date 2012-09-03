@@ -17,6 +17,7 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new
+    @company = Company.new
     respond_with(@client)
   end
 

@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %title IOSmanager
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+
+  %body
+    %h3
+      Admin Panel
+    %ul
+      %li
+        =link_to "Companies", companies_path
+      %li
+        =link_to "Clients", clients_path
+
+    = yield

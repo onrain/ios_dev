@@ -1,3 +1,13 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$ ->
+  
+  $('#new-company').modal(
+      "backdrop" : "static",
+      "keyboard" : true,
+      'show' : false
+      )
+    
+  $('#get-new-company').click ->
+    $('#new-company').modal(show:true)
+    
+  $('#new-com').click ->
+    document.location.reload(true)
