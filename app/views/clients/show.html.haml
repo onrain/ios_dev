@@ -1,18 +1,25 @@
 %p#notice= notice
 
-%p
-  %b Company:
-  = @client.company_id
-%p
-  %b Name:
-  = @client.name
-%p
-  %b Email:
-  = @client.email
-%p
-  %b Handle:
-  = @client.handle
+- for client in @client
 
-= link_to 'Edit', edit_client_path(@client)
-\|
-= link_to 'Back', clients_path
+  %p
+    %b Company:
+    = client.company_id
+  
+  %p
+    %b Company name:
+    = client.company_name
+    
+  %p
+    %b Name:
+    = client.name
+  %p
+    %b Email:
+    = client.email
+  %p
+    %b Handle:
+    = client.handle
+  
+  = link_to 'Edit', edit_client_path(client)
+  \|
+  = link_to 'Back', clients_path

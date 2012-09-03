@@ -4,21 +4,19 @@ class ClientsController < ApplicationController
   
   
   def index
-    @clients = Client.all    
+    @clients = Client.client_list
     respond_with(@clients)
   end
 
 
   def show
-    @client = Client.find(params[:id])
-
+    @client = Client.client_show(params[:id])
     respond_with(@client)
   end
 
 
   def new
     @client = Client.new
-
     respond_with(@client)
   end
 
