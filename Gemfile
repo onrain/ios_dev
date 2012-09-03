@@ -16,6 +16,12 @@ group :test, :development do
   gem "rspec-rails", "~> 2.0"
 end
 
+group :test do
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+end
+
 
 gem 'jquery-rails'
 

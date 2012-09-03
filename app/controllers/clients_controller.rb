@@ -23,13 +23,20 @@ class ClientsController < ApplicationController
 
 
   def edit
+    @company = Company.new
     @client = Client.find(params[:id])
   end
 
 
   def create
     @client = Client.new(params[:client])
+    @company = Company.new
+    
+    
+    res = params[:client][:name].to_s
+    @client.handle = res.gsub(" ", ".").downcase
 
+    
     respond_with(@client) do |format|
       if @client.save
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
