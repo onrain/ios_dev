@@ -1,11 +1,16 @@
-%p#notice= notice
+-if notice
+  %div{class:"alert alert-success"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
 
-%p
-  %b Name:
-  = @company.name
-%p
-  %b Website:
-  = @company.website
+%table{class:"table table-bordered", id:"show-company"}
+  %tr
+    %th Name:
+    %td= @company.name
+  %tr
+    %th Website:
+    %td= @company.website
 
 = link_to 'Edit', edit_company_path(@company)
 \|

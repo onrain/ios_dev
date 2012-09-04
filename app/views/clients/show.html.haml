@@ -1,25 +1,38 @@
-%p#notice= notice
+-if notice
+  %div{class:"alert alert-success"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
 
-- for client in @client
-
-  %p
-    %b Company:
-    = client.company_id
-  
-  %p
-    %b Company name:
-    = client.company_name
+%table{class:"table table-bordered", id:"show-clients"}
+  - for client in @client
+    %tr
+      %th
+        Company:
+      %td
+        = client.company_id
+    %tr
+      %th
+        Company name:
+      %td
+        = client.company_name
     
-  %p
-    %b Name:
-    = client.name
-  %p
-    %b Email:
-    = client.email
-  %p
-    %b Handle:
-    = client.handle
+    %tr
+      %th
+        Name:
+      %td
+        = client.name
+    %tr  
+      %th
+        Email:
+      %td
+        = client.email
+    %tr  
+      %th
+        Handle:
+      %td
+        = client.handle
   
-  = link_to 'Edit', edit_client_path(client)
-  \|
-  = link_to 'Back', clients_path
+= link_to 'Edit', edit_client_path(client)
+\|
+= link_to 'Back', clients_path
