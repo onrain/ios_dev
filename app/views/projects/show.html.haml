@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Client:
+  = @project.client_id
+%p
+  %b Manager:
+  = @project.manager_id
+%p
+  %b Name:
+  = @project.name
+%p
+  %b Svn:
+  = @project.svn
+%p
+  %b Handle:
+  = @project.handle
+
+= link_to 'Edit', edit_project_path(@project)
+\|
+= link_to 'Back', projects_path
