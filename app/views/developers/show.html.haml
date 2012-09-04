@@ -1,0 +1,22 @@
+-if notice
+  %div{class:"alert alert-success"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
+%table{class:"table table-bordered", id:"show-recoreds"}
+  %tr
+    %th Name:
+    %td= @developer.name
+  %tr
+    %th Manager:
+    %td= @developer.manager_id
+  %tr
+    %th Email:
+    %td= @developer.email
+  %tr
+    %th Personal email:
+    %td= @developer.personal_email
+
+= link_to 'Edit', edit_developer_path(@developer)
+\|
+= link_to 'Back', developers_path

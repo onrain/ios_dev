@@ -9,12 +9,12 @@
           - @company.errors.full_messages.each do |msg|
             %li= msg
     %tr
-      %td   
+      %th 
         = f.label :name
       %td  
         = f.text_field :name
     %tr
-      %td
+      %th
         = f.label :website
       %td
         = f.text_field :website

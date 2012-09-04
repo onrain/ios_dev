@@ -20,24 +20,24 @@
             %li= msg
     
     %tr
-      %td
+      %th
         Select company
       %td  
         = f.select("company_id", Company.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
         %br
         = link_to "add new company", '#', id:"get-new-company"
     %tr
-      %td
+      %th
         = f.label :name
       %td
         = f.text_field :name
     %tr
-      %td
+      %th
         = f.label :email
       %td
         = f.text_field :email
     %tr
-      %td  
+      %th 
         = f.label :handle
       %td
         = f.text_field :handle

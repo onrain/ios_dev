@@ -1,0 +1,34 @@
+-if notice
+  %div{class:"alert alert-success"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
+
+%h1 Listing developers
+
+%table{class:"table table-striped"}
+  %tr
+    %th Name
+    %th Manager
+    %th Email
+    %th Personal email
+    %th
+      %i{class:"icon-file"}
+    %th
+      %i{class:"icon-wrench"}
+    %th
+      %i{class:"icon-trash"}
+
+  - @developers.each do |developer|
+    %tr
+      %td= developer.name
+      %td= check_manager(developer.manager_name, developer.manager_id).html_safe
+      %td= developer.email
+      %td= developer.personal_email
+      %td{style:"width:100px;"}= link_to 'Show', developer, class:"btn btn-small btn-info"
+      %td{style:"width:100px;"}= link_to 'Edit', edit_developer_path(developer), class:"btn btn-success btn-small"
+      %td{style:"width:100px;"}= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete, class:" btn btn-danger btn-small"
+
+%br
+
+= link_to 'New Developer', new_developer_path, class:"btn btn-inverse"

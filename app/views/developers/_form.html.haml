@@ -1,0 +1,25 @@
+%table{class:"table"}
+  = form_for @developer do |f|
+    -if @developer.errors.any?
+      %div{class:"alert alert-error"}
+        %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+          &times;
+        %h3= "#{pluralize(@developer.errors.count, "error")} prohibited this post from being saved:"
+        %ul
+          - @developer.errors.full_messages.each do |msg|
+            %li= msg
+  
+    %tr
+      %th= f.label :name
+      %td= f.text_field :name
+    %tr
+      %th= f.label :manager_id
+      %td= f.select(:manager_id, Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+    %tr
+      %th= f.label :email
+      %td= f.text_field :email
+    %tr
+      %th= f.label :personal_email
+      %td= f.text_field :personal_email
+    %tr
+      %td{colspan:"2"}= f.submit 'Save', class:"btn"

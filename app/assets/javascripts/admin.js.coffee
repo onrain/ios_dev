@@ -7,6 +7,8 @@ $ ->
     $('#company-nav').addClass('active')
   if (/admin\/managers/).test(path)
     $('#manager-nav').addClass('active')
+  if (/admin\/developers/).test(path)
+    $('#developers-nav').addClass('active')
     
    $('.field_with_errors').click ->
     $(this).removeClass('field_with_errors')
