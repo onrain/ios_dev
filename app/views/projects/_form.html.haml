@@ -20,7 +20,11 @@
       %td= f.text_field :name
     %tr
       %th=f.label "Developers"
+      
       %td
+        - for dev in Developer.all
+          = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
+          =dev.name
     %tr
       %th= f.label :svn
       %td= f.text_field :svn
