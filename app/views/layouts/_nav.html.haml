@@ -1,0 +1,9 @@
+.navbar
+  .navbar-inner
+    %a{class:"brand", href:"#"}
+      Home
+    %ul{class:"nav"}
+      %li{id:"clients-nav"}
+        = link_to "Clients", clients_path
+      %li{id:"company-nav"}
+        = link_to "Companies", companies_path

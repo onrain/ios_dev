@@ -31,10 +31,9 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(params[:client])
     @company = Company.new
-    
-    
-    res = params[:client][:name].to_s
-    @client.handle = res.gsub(" ", ".").downcase
+
+    hand = params[:client][:name].to_s
+    @client.handle = hand.gsub(" ", ".").downcase
 
     
     respond_with(@client) do |format|

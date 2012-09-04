@@ -8,7 +8,7 @@ class Client < ActiveRecord::Base
                     :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
   validates :name, presence:true
   
-  scope :client_list, lambda { joins(:company).select("companies.name as company_name, clients.id, clients.company_id, clients.name, clients.email, clients.handle") }  
+  scope :client_list, lambda { joins(:company).select("companies.name as company_name, clients.*") }  
   
-  scope :client_show, lambda { |e| joins(:company).select("companies.name as company_name, clients.id, clients.company_id, clients.name, clients.email, clients.handle").where("clients.id = #{e}") }  
+  scope :client_show, lambda { |e| joins(:company).select("companies.name as company_name, clients.*").where("clients.id = #{e}") }  
 end

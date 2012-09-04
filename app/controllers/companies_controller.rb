@@ -4,8 +4,11 @@ class CompaniesController < ApplicationController
   
   def index
     @companies = Company.all
-
-    respond_with @companies
+    @res = Company.last
+    respond_with(@companies) do |format|
+      format.json{render json: @res}
+    end
+    
   end
 
 

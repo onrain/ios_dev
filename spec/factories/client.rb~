@@ -2,8 +2,8 @@ FactoryGirl.define do
   factory :client do
     id "1"
     company_id "1" 
-    name "test"
+    name "Test Test"
     email "test@test.ru"
-    handle
+    handle "test.test"
   end
 end
