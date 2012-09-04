@@ -19,7 +19,7 @@
     %tr
       %td= client.id
       %td= client.company_id
-      %td= client.company_name unless client.company_name.nil?
+      %td= check_company(client.company_name).html_safe
       %td= client.name
       %td= client.email
       %td= client.handle
