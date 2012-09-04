@@ -15,7 +15,9 @@ class ClientsController < ApplicationController
 
 
   def show
-    @client = Client.client_show(params[:id])
+    @client = Client.find_by_sql(
+     "SELECT companies.name as company_name, clients.* FROM clients
+      LEFT JOIN companies ON companies.id = clients.company_id where clients.id=#{params[:id]}")
     respond_with(@client)
   end
 

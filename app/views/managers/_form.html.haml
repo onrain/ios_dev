@@ -1,0 +1,23 @@
+%table{class:"table"}
+  = form_for @manager do |f|
+    -if @manager.errors.any?
+      %div{class:"alert alert-error"}
+        %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+          &times;
+        %h3= "#{pluralize(@manager.errors.count, "error")} prohibited this post from being saved:"
+        %ul
+          - @manager.errors.full_messages.each do |msg|
+            %li= msg
+  
+    %tr
+      %td= f.label :name
+      %td= f.text_field :name
+    %tr
+      %td= f.label :personal_email
+      %td= f.text_field :personal_email
+    %tr
+      %td= f.label :office_email
+      %td= f.text_field :office_email
+    %tr
+      %td{colspan:"2"}
+        = f.submit 'Save', class:"btn"

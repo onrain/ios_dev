@@ -11,6 +11,7 @@ $ ->
     $('#new-company').modal(show:true)
     $('#cname').val('')
     $('#cwebsite').val('')
+    $('#form-notice').empty()
     
   $('#new-com').click ->
           
