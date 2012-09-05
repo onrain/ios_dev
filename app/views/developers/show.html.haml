@@ -3,20 +3,21 @@
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
       x
     =notice
-%table{class:"table table-bordered", id:"show-recoreds"}
-  %tr
-    %th Name:
-    %td= @developer.name
-  %tr
-    %th Manager:
-    %td= @developer.manager_id
-  %tr
-    %th Email:
-    %td= @developer.email
-  %tr
-    %th Personal email:
-    %td= @developer.personal_email
+-for dev in @developer
+  %table{class:"table table-bordered", id:"show-recoreds"}
+    %tr
+      %th Name:
+      %td= dev.name
+    %tr
+      %th Manager:
+      %td= link_to dev.manager_name, manager_path(dev.manager_id)
+    %tr
+      %th Email:
+      %td= dev.email
+    %tr
+      %th Personal email:
+      %td= dev.personal_email
 
-= link_to 'Edit', edit_developer_path(@developer)
-\|
+= link_to 'Edit', edit_developer_path(dev)
+\|              
 = link_to 'Back', developers_path

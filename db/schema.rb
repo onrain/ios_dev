@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904132948) do
+ActiveRecord::Schema.define(:version => 20120905080509) do
+
+  create_table "applications", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "product_name"
+    t.string   "bundle_identifier"
+    t.string   "bundle_version"
+    t.string   "relative_path"
+    t.string   "title"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "clients", :force => true do |t|
     t.integer  "company_id"

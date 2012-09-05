@@ -1,7 +1,4 @@
 IOSmanager::Application.routes.draw do
-   
-
-  
 
   get 'admin' => "admin#index"
  
@@ -12,6 +9,7 @@ IOSmanager::Application.routes.draw do
     resources :managers
     resources :developers
     resources :projects
+    resources :applications
   end
 
 

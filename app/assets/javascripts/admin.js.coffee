@@ -11,6 +11,8 @@ $ ->
     $('#developers-nav').addClass('active')
   if (/admin\/projects/).test(path)
     $('#projects-nav').addClass('active')
-    
+  if (/admin\/applications/).test(path)
+    $('#app-nav').addClass('active')
+  
    $('.field_with_errors').click ->
     $(this).removeClass('field_with_errors')

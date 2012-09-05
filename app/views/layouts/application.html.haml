@@ -8,6 +8,6 @@
 
   %body
 
-    = render 'layouts/nav'
+    = render 'layouts/nav' if request.fullpath =~ /admin/
 
     = yield

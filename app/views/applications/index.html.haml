@@ -1,0 +1,38 @@
+-if notice
+  %div{class:"alert alert-success"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
+
+%h1 Listing applications
+
+%table{class:"table table-striped"}
+  %tr
+    %th Project
+    %th Product name
+    %th Bundle identifier
+    %th Bundle version
+    %th Relative path
+    %th Title
+    %th
+      %i{class:"icon-file"}
+    %th
+      %i{class:"icon-wrench"}
+    %th
+      %i{class:"icon-trash"}
+
+  - @applications.each do |application|
+    %tr
+      %td= link_to application.project_name, project_path(application.project_id)
+      %td= application.product_name
+      %td= application.bundle_identifier
+      %td= application.bundle_version
+      %td= application.relative_path
+      %td= application.title
+      %td{style:"width:100px;"}= link_to 'Show', application, class:"btn btn-small btn-info"
+      %td{style:"width:100px;"}= link_to 'Edit', edit_application_path(application), class:"btn btn-success btn-small"
+      %td{style:"width:100px;"}= link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete, class:" btn btn-danger btn-small"
+
+%br
+
+= link_to 'New Application', new_application_path, class:"btn btn-inverse"

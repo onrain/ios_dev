@@ -3,24 +3,24 @@
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
       x
     =notice
+- for proj in @project 
+  %table{class:"table table-bordered", id:"show-recoreds"}
+    %tr
+      %th Client:
+      %td= link_to proj.client_name, project_path(proj.client_id)
+    %tr
+      %th Manager:
+      %td= link_to proj.manager_name, project_path(proj.manager_id)
+    %tr
+      %th Name:
+      %td= proj.name
+    %tr
+      %th Svn:
+      %td proj.svn
+    %tr
+      %th Handle:
+      %td= proj.handle
 
-%table{class:"table table-bordered", id:"show-recoreds"}
-  %tr
-    %th Client:
-    %td= @project.client_id
-  %tr
-    %th Manager:
-    %td= @project.manager_id
-  %tr
-    %th Name:
-    %td= @project.name
-  %tr
-    %td Svn:
-    %td @project.svn
-  %tr
-    %td Handle:
-    %td= @project.handle
-
-= link_to 'Edit', edit_project_path(@project)
+= link_to 'Edit', edit_project_path(proj)
 \|
 = link_to 'Back', projects_path
