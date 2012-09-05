@@ -22,8 +22,8 @@
 
   - @projects.each do |project|
     %tr
-      %td= project.client_id
-      %td= project.manager_id
+      %td= link_to project.client_name, client_path(project.client_id)
+      %td= link_to project.manager_name, manager_path(project.manager_id)
       %td= project.name
       %td= project.svn
       %td= project.handle

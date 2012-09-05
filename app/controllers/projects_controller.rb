@@ -2,7 +2,10 @@ class ProjectsController < ApplicationController
   respond_to :json, :html, :xml
   
   def index
-    @projects = Project.all
+    client = Client.all
+    @projects = Project.find_by_sql(
+      "select projects.*, managers.name as manager_name, clients.name as client_name from projects left join managers on managers.id = projects.manager_id left join clients on clients.id = projects.client_id"
+    )
     
     respond_with(@projects)
   end
@@ -17,9 +20,6 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    
-    
-
     respond_with(@project)
   end
 

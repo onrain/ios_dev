@@ -11,10 +11,10 @@
   
     %tr
       %th= f.label :client_id
-      %td= f.number_field :client_id
+      %td= f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
     %tr
       %th= f.label :manager_id
-      %td= f.number_field :manager_id
+      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
     %tr
       %th= f.label :name
       %td= f.text_field :name
