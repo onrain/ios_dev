@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  respond_to :xml, :html, :json
+  respond_to :json, :xml, :html
   
   
   
@@ -27,10 +27,21 @@ class ClientsController < ApplicationController
     @company = Company.new
     respond_with(@client)
   end
-
+  
+  def handle
+    client = Client.find(params[:id])
+    hname = params[:handle][:handle_name]
+    res = client.handles.create(handle_name:hname)
+    if res.save
+      render json: Handle.last
+    else
+      render json: res.errors, status: :unprocessable_entity
+    end
+  end
 
   def edit
     @company = Company.new
+    @handle = Handle.new
     @client = Client.find(params[:id])
   end
 
@@ -38,7 +49,6 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(params[:client])
     @company = Company.new
-
     hand = params[:client][:name].to_s
     @client.handle = hand.gsub(" ", ".").downcase
 
@@ -57,7 +67,7 @@ class ClientsController < ApplicationController
 
   def update
     @client = Client.find(params[:id])
-
+    @par = params[:id]
     respond_with(@client) do |format|
       if @client.update_attributes(params[:client])
         format.html { redirect_to @client, notice: 'Client was successfully updated.' }

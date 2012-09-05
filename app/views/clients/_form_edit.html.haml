@@ -8,6 +8,8 @@
   %div{class:"modal-body"}
     = render 'companies/form-remote'
 
+
+
 %table{class:"table"}
   = form_for @client do |f|
     -if @client.errors.any?
@@ -36,11 +38,6 @@
         = f.label :email
       %td
         = f.text_field :email
-    %tr
-      %td 
-        = f.label :handle
-      %td
-        = f.text_field :handle
     %tr
       %td{colspan:"2"}
         = f.submit 'Save', class:"btn"

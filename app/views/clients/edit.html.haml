@@ -1,7 +1,22 @@
+%div{class:"modal hide fade", id:"handle-name"}
+  .modal-header
+    .handle-notice
+    %button{class:"close", :"data-dismiss"=>:"modal"}
+      ×
+    %h3 Handle list
+
+  %div{class:"modal-body"}
+    = render 'form_handle'
+
+
+
 %div{class:"well well-small", align:"center"}
   %h1 Editing client
 
-= render 'form'
+= render 'form_edit'
+
+=link_to "get all handle", '#', id:"get-handles"
+
 
 %div{class:"well well-small"}  
   .btn-group

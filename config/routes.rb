@@ -2,7 +2,8 @@ IOSmanager::Application.routes.draw do
 
   get 'admin' => "admin#index"
  
- 
+  match 'admin/handle/:id', to:"clients#handle"
+
   scope "/admin" do
     resources :clients
     resources :companies
