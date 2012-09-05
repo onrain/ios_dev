@@ -6,6 +6,9 @@
 -for dev in @developer
   %table{class:"table table-bordered", id:"show-recoreds"}
     %tr
+      %th ID
+      %td=dev.id
+    %tr
       %th Name:
       %td= dev.name
     %tr
@@ -20,4 +23,4 @@
 %div{class:"well well-small"}  
   .btn-group
     = link_to 'Edit', edit_developer_path(dev), class:"btn"        
-    = link_to 'Back', developers_path, class:"btn"
+    = link_to 'Back', back(developers_path), class:"btn"

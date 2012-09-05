@@ -8,6 +8,7 @@
 
 %table{class:"table table-bordered", style:"width:1200px; margin: 0 auto;"}
   %tr
+    %th ID
     %th Name
     %th Manager
     %th Email
@@ -17,6 +18,7 @@
 
   - @developers.each do |developer|
     %tr
+      %td= link_to developer.id, developer
       %td= developer.name
       %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
       %td= developer.email

@@ -6,6 +6,9 @@
 
 %table{class:"table table-bordered", id:"show-recoreds"}
   %tr
+    %th ID
+    %td= @company.id
+  %tr
     %th Name:
     %td= @company.name
   %tr
@@ -14,4 +17,4 @@
 %div{class:"well well-small"}  
   .btn-group
     = link_to 'Edit', edit_company_path(@company), class:"btn"
-    = link_to 'Back', companies_path, class:"btn"
+    = link_to 'Back', back(@company), class:"btn"

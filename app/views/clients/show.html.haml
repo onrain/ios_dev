@@ -8,6 +8,11 @@
   - for client in @client
     %tr
       %th
+        ID
+      %td
+        = client.id
+    %tr
+      %th
         Company name:
       %td
         = link_to check_path(client.company_name, client.company_id, path:"companies").html_safe
@@ -29,4 +34,4 @@
 %div{class:"well well-small"}  
   .btn-group
     = link_to 'Edit', edit_client_path(client), class:"btn"
-    = link_to 'Back', clients_path, class:"btn"
+    = link_to 'Back', back(clients_path), class:"btn"

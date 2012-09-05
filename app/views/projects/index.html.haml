@@ -8,6 +8,7 @@
 
 %table{class:"table table-striped table-bordered", style:"width:1200px; margin: 0 auto;"}
   %tr
+    %th ID
     %th Client
     %th Manager
     %th Name
@@ -18,6 +19,7 @@
 
   - @projects.each do |project|
     %tr
+      %td= link_to(project.id, project)
       %td= check_path(project.client_name, project.client_id, path:"clients").html_safe
       %td= check_path(project.manager_name, project.manager_id, path:"managers").html_safe
       %td= project.name

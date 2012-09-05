@@ -7,6 +7,9 @@
 
   %table{class:"table table-bordered", id:"show-recoreds"}
     %tr
+      %th ID
+      %td= app.id
+    %tr
       %th Project:
       %td= link_to app.project_name, project_path(app.project_id)
     %tr
@@ -28,4 +31,4 @@
 %div{class:"well well-small"}  
   .btn-group
     = link_to 'Edit', edit_application_path(app), class:"btn"
-    = link_to 'Back', applications_path, class:"btn"
+    = link_to 'Back', back(applications_path), class:"btn"

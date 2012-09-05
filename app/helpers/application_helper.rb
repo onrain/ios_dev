@@ -10,4 +10,12 @@ module ApplicationHelper
     name
   end
 
+  def back(path)
+    if request.env['HTTP_REFERER'] =~ /admin/
+      res = request.env['HTTP_REFERER']
+	  else
+      path
+    end
+  end
+
 end

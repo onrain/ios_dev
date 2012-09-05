@@ -19,7 +19,7 @@
 
   - @clients.each do |client|
     %tr
-      %td= link_to client.id, client_path(client.id)
+      %td= link_to client.id, client
       %td= check_path(client.company_name, client.company_id, path:"companies").html_safe
       %td= client.name
       %td= client.email
