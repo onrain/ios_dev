@@ -11,7 +11,7 @@
   %tr
     %th Website:
     %td= @company.website
-
-= link_to 'Edit', edit_company_path(@company)
-\|
-= link_to 'Back', companies_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Edit', edit_company_path(@company), class:"btn"
+    = link_to 'Back', companies_path, class:"btn"

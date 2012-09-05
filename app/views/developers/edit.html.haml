@@ -1,7 +1,8 @@
-%h1 Editing developer
+%div{class:"well well-small", align:"center"}
+  %h1 Editing developer
 
 = render 'form'
-
-= link_to 'Show', @developer
-\|
-= link_to 'Back', developers_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Show', @developer, class:"btn"
+    = link_to 'Back', developers_path, class:"btn"

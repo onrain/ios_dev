@@ -1,5 +1,7 @@
-%h1 New client
+%div{class:"well well-small", align:"center"}
+  %h1 New client
 
 = render 'form'
-
-= link_to 'Back', clients_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Back', clients_path, class:"btn"

@@ -17,7 +17,7 @@
     %tr
       %th Personal email:
       %td= dev.personal_email
-
-= link_to 'Edit', edit_developer_path(dev)
-\|              
-= link_to 'Back', developers_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Edit', edit_developer_path(dev), class:"btn"        
+    = link_to 'Back', developers_path, class:"btn"

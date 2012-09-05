@@ -1,5 +1,7 @@
-%h1 New manager
+%div{class:"well well-small", align:"center"}
+  %h1 New manager
 
 = render 'form'
-
-= link_to 'Back', managers_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Back', managers_path, class:"btn"

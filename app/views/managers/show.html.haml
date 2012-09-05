@@ -14,7 +14,7 @@
   %tr
     %th Office email:
     %td= @manager.office_email
-
-= link_to 'Edit', edit_manager_path(@manager)
-\|
-= link_to 'Back', managers_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Edit', edit_manager_path(@manager), class:"btn"
+    = link_to 'Back', managers_path, class:"btn"

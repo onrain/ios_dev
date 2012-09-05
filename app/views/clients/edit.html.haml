@@ -1,7 +1,9 @@
-%h1 Editing client
+%div{class:"well well-small", align:"center"}
+  %h1 Editing client
 
 = render 'form'
 
-= link_to 'Show', @client
-\|
-= link_to 'Back', clients_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Show', @client, class:"btn"
+    = link_to 'Back', clients_path, class:"btn"

@@ -1,7 +1,8 @@
-%h1 Editing manager
+%div{class:"well well-small", align:"center"}
+  %h1 Editing manager
 
 = render 'form'
-
-= link_to 'Show', @manager
-\|
-= link_to 'Back', managers_path
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Show', @manager, class:"btn"
+    = link_to 'Back', managers_path, class:"btn"

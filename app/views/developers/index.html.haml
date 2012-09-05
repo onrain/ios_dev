@@ -3,21 +3,17 @@
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
       x
     =notice
+%div{class:"well well-small", align:"center"}
+  %h4 Listing developers
 
-%h1 Listing developers
-
-%table{class:"table table-striped"}
+%table{class:"table table-bordered", style:"width:1200px; margin: 0 auto;"}
   %tr
     %th Name
     %th Manager
     %th Email
     %th Personal email
-    %th
-      %i{class:"icon-file"}
-    %th
-      %i{class:"icon-wrench"}
-    %th
-      %i{class:"icon-trash"}
+    %th Actions
+
 
   - @developers.each do |developer|
     %tr
@@ -25,10 +21,16 @@
       %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
       %td= developer.email
       %td= developer.personal_email
-      %td{style:"width:100px;"}= link_to 'Show', developer, class:"btn btn-small btn-info"
-      %td{style:"width:100px;"}= link_to 'Edit', edit_developer_path(developer), class:"btn btn-success btn-small"
-      %td{style:"width:100px;"}= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete, class:" btn btn-danger btn-small"
+      %td
+        %div{class:"btn-group"}
+          =link_to "Show", developer, class:"btn"
+          %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
+            %span{class:"caret"}
+          %ul{class:"dropdown-menu"}
+            %li= link_to 'Show', developer
+            %li= link_to 'Edit', edit_developer_path(developer)
+            %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
 
 %br
-
-= link_to 'New Developer', new_developer_path, class:"btn btn-inverse"
+%div{class:"well well-small", align:"center"}
+  = link_to 'New Developer', new_developer_path, class:"btn"
