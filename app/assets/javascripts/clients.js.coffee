@@ -47,16 +47,19 @@ $ ->
     $('.handle-notice').empty()
      
     $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+      $('.handle-notice').empty()
       errors = $.parseJSON(data.responseText)
       if status is 'error'
-        $('.handle-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">'+errors.handle_name+'</span>')
+        $('.handle-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle name '+errors.handle_name+'</span>')
       $('#error-append').mousemove ->
-        $('.handle-notice').empty()
+        $(this).remove()
+        $('.icon-remove').remove()
         
         
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-     
+      $('.handle-notice').empty()
       $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')
       $('#success-append').mouseover ->
-        $('.handle-notice').empty()
+        $(this).remove()
+        $('.icon-ok').remove()
     
