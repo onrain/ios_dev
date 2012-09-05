@@ -1,3 +1,9 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$ ->
+  $('#dev-list').modal(
+    "backdrop" : "static",
+    "keyboard" : true,
+    'show' : false
+    )
+	
+  $('#show-dev').click ->
+	  $('#dev-list').modal(show:true)

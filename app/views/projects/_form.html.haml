@@ -22,9 +22,22 @@
       %th=f.label "Developers"
       
       %td
-        - for dev in Developer.all
-          = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
-          =dev.name
+        =link_to('show developers','#',id:"show-dev")
+        
+        %div{class:"modal hide fade", id:"dev-list"}
+          .modal-header
+            %button{class:"close", :"data-dismiss"=>:"modal"}
+              ×
+            %h3 Select developers.
+            %hr
+            %input{type:"text", class:"searchFilter", onblur:"if(this.value == '')this.value='Searching developers..'", onfocus:"this.value==this.defaultValue?this.value='':null", value:"Searching developers..", name:"keyword"}
+
+          %div{class:"modal-body"}
+            .searchable
+              - for dev in Developer.all
+                %p
+                  = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
+                  %span=dev.name
     %tr
       %th= f.label :svn
       %td= f.text_field :svn
