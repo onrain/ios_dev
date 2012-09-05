@@ -7,10 +7,10 @@
   %table{class:"table table-bordered", id:"show-recoreds"}
     %tr
       %th Client:
-      %td= link_to proj.client_name, project_path(proj.client_id)
+      %td= check_path(proj.client_name, proj.client_id, path:"clients").html_safe
     %tr
       %th Manager:
-      %td= link_to proj.manager_name, project_path(proj.manager_id)
+      %td= check_path(proj.manager_name, proj.manager_id, path:"managers").html_safe
     %tr
       %th Name:
       %td= proj.name

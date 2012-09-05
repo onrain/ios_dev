@@ -10,7 +10,7 @@
       %th
         Company name:
       %td
-        = link_to client.company_name, company_path(client.company_id)
+        = link_to check_path(client.company_name, client.company_id, path:"companies").html_safe
     %tr
       %th
         Name:

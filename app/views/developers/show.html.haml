@@ -10,7 +10,7 @@
       %td= dev.name
     %tr
       %th Manager:
-      %td= link_to dev.manager_name, manager_path(dev.manager_id)
+      %td= check_path(dev.manager_name, dev.manager_id, path:"managers").html_safe
     %tr
       %th Email:
       %td= dev.email

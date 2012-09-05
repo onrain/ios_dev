@@ -22,7 +22,7 @@
   - @developers.each do |developer|
     %tr
       %td= developer.name
-      %td= check_manager(developer.manager_name, developer.manager_id).html_safe
+      %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
       %td= developer.email
       %td= developer.personal_email
       %td{style:"width:100px;"}= link_to 'Show', developer, class:"btn btn-small btn-info"
