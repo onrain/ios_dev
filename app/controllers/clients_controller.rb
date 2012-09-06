@@ -35,7 +35,7 @@ class ClientsController < ApplicationController
     respond_with(@handle) do |format|
       if @handle.save
         format.html {render action:"new", notice: 'Client was successfully created.' }
-        format.json { render json: Handle.last, status: :created, location: @client }
+        format.json { render json: Handle.all, status: :created, location: @client }
       else
         #format.html { render action: "new" }
         format.json { render json: @handle.errors, status: :unprocessable_entity }

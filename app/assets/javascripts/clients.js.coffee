@@ -58,6 +58,12 @@ $ ->
         
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
       $('.handle-notice').empty()
+      $('.app').remove()
+      count = Object.keys(data).length
+      i=0
+      while i<count
+        $('#table-show-handle').append("<tr class='app'><td>"+data[i].handle_name+"</td></tr>")
+        i+=1
       $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')
       $('#success-append').mouseover ->
         $(this).remove()
