@@ -6,11 +6,12 @@
     = javascript_include_tag(:application)
     = javascript_include_tag params[:controller]
     = stylesheet_link_tag params[:controller]
+    = javascript_include_tag 'admin' if request.fullpath =~ /admin/
     = csrf_meta_tags
     
 
   %body
 
-    = render 'layouts/nav'
+    = render 'layouts/nav' if request.fullpath =~ /admin/
 
     = yield

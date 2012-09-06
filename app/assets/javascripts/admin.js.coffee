@@ -1,7 +1,7 @@
 $ ->
   path = window.location.pathname
 
-  if (/admin\/clients/).test(path)
+  if (/clients/).test(path)
     $('#clients-nav').addClass('active')
   if (/admin\/companies/).test(path)
     $('#company-nav').addClass('active')
