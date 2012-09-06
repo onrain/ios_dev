@@ -29,8 +29,7 @@ $ ->
      $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
       $('.form-notice').empty()
       errors = $.parseJSON(data.responseText)
-      if status is 'error'
-        $('.form-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Title '+errors.name+'</span>')
+      $('.form-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Title '+errors.name+'</span>')
       $('#error-append').mousemove ->
         $(this).remove()
         $('.icon-remove').remove()
