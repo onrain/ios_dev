@@ -14,7 +14,7 @@ IOSmanager::Application.routes.draw do
     resources :projects
     resources :applications
   end
-
+  match "*path", :to => "application#routing_error"
 
   # root :to => 'welcome#index'
 end

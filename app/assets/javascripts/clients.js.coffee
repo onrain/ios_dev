@@ -1,4 +1,5 @@
 $ ->
+  
 
   $('#new-company').modal(
       "backdrop" : "static",
