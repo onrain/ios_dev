@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  respond_to :json, :xml, :html
+  respond_to :json, :html, :xml
   
   
   
@@ -30,13 +30,18 @@ class ClientsController < ApplicationController
   
   def handle
     client = Client.find(params[:id])
-    hname = params[:handle][:handle_name]
-    res = client.handles.create(handle_name:hname)
-    if res.save
-      render json: Handle.last
-    else
-      render json: res.errors, status: :unprocessable_entity
+    @handle = client.handles.create(params[:handle])
+
+    respond_with(@handle) do |format|
+      if @handle.save
+        format.html {render action:"new", notice: 'Client was successfully created.' }
+        format.json { render json: Handle.last, status: :created, location: @client }
+      else
+        #format.html { render action: "new" }
+        format.json { render json: @handle.errors, status: :unprocessable_entity }
+      end
     end
+    
   end
 
   def edit
