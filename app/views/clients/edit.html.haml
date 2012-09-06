@@ -9,9 +9,11 @@
     = render 'form_handle'
     %table{class:"table table-bordered table-hover", id:"table-show-handle"}
       -for h in Handle.find_all_by_client_id(params[:id])
-        %tr
-          %td= h.handle_name
-
+        %tr{id:"tr_#{h.id}"}
+          %td
+            = h.handle_name
+            =link_to "x","/admin/remove/#{h.id}", :"data-method"=>:'delete', class:'rem_link', id:"#{h.id}", :"data-remote"=>:'true'
+              
 
 
 %div{class:"well well-small", align:"center"}

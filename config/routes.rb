@@ -2,8 +2,10 @@ IOSmanager::Application.routes.draw do
 
   get 'admin' => "admin#index"
 
-  match '/admin/handle/:id', to:"clients#handle"
-  match 'admin/handle' => "clients#handle"
+  get '/admin/handle/:id', to:"clients#handle"
+  post '/admin/handle/:id' => "clients#handle"
+  delete '/admin/remove/:id' => "clients#remove"
+
   scope "/admin" do
     resources :clients
     resources :companies

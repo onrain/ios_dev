@@ -15,7 +15,7 @@ $ ->
   
   $('#get-handles').click ->
     $('#handle-name').modal(show:true)
-    
+    $('.handle-notice').empty()
     
   $('#get-new-company').click ->
     $('#new-company').modal(show:true)
@@ -58,14 +58,27 @@ $ ->
         
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
       $('.handle-notice').empty()
-      $('.app').remove()
+      $('#table-show-handle').empty()
       count = Object.keys(data).length
       i=0
       while i<count
-        $('#table-show-handle').append("<tr class='app'><td>"+data[i].handle_name+"</td></tr>")
+        $('#table-show-handle').append("<tr id='tr_"+data[i].id+"'><td>"+data[i].handle_name+"<a href='/admin/remove/"+data[i].id+"' data-method='delete' class='rem_link' id='"+data[i].id+"' data-remote='true' ><i class='icon-remove pull-right' style='color:red;'></i></a></td></tr>")
         i+=1
       $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')
       $('#success-append').mouseover ->
         $(this).remove()
         $('.icon-ok').remove()
+  
+  $('.rem_link').live 'click': ->
+    l = $('#table-show-handle tr').length
+    id = $(this).attr('id')
+    if l is 1
+      $('#tr_'+id).parent().remove()
+    else
+      $('#tr_'+id).remove()
+   
+    
+    
+    
+    
     

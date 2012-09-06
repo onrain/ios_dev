@@ -35,15 +35,21 @@ class ClientsController < ApplicationController
     respond_with(@handle) do |format|
       if @handle.save
         format.html {render action:"new", notice: 'Client was successfully created.' }
-        format.json { render json: Handle.all, status: :created, location: @client }
+        format.json { render json: Handle.find_all_by_client_id(params[:id]), status: :created, location: @client }
       else
         #format.html { render action: "new" }
         format.json { render json: @handle.errors, status: :unprocessable_entity }
       end
-    end
-    
+    end 
   end
 
+  def remove
+    @handle = Handle.find(params[:id])
+    if @handle.destroy
+      render json: [status:'deleted']
+    end
+  end
+  
   def edit
     @company = Company.new
     @handle = Handle.new
@@ -56,7 +62,8 @@ class ClientsController < ApplicationController
     @company = Company.new
     hand = params[:client][:name].to_s
     @client.handle = hand.gsub(" ", ".").downcase
-
+    
+    @client.handles.create(handle_name:hand.gsub(" ", ".").downcase) if @client.save
     
     respond_with(@client) do |format|
       if @client.save
