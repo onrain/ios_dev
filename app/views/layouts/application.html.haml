@@ -2,11 +2,8 @@
 %html
   %head
     %title iOSmanager
-    = stylesheet_link_tag "bootstrap_and_overrides"
+    = stylesheet_link_tag "application"
     = javascript_include_tag(:application)
-    = javascript_include_tag params[:controller]
-    = stylesheet_link_tag params[:controller]
-    = javascript_include_tag 'admin' if request.fullpath =~ /admin/
     = csrf_meta_tags
     
 
