@@ -1,8 +1,7 @@
 class ClientsController < ApplicationController
   respond_to :json, :html, :xml
   
-  
-  
+
   def index
     
     @clients = Client.find_by_sql(

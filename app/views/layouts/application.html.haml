@@ -2,9 +2,12 @@
 %html
   %head
     %title iOSmanager
-    = stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag "application"
+    = stylesheet_link_tag "bootstrap_and_overrides"
+    = javascript_include_tag(:application)
+    = javascript_include_tag params[:controller]
+    = stylesheet_link_tag params[:controller]
     = csrf_meta_tags
+    
 
   %body
 
