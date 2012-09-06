@@ -1,6 +1,5 @@
 $ ->
 
-
   $('#new-company').modal(
       "backdrop" : "static",
       "keyboard" : true,
@@ -24,8 +23,10 @@ $ ->
     $('.form-notice').empty()
     
   $('#new-com').click ->
-     $('.form-notice').empty()    
+     $('.form-notice').empty()
+     
      $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+      $('.form-notice').empty()
       errors = $.parseJSON(data.responseText)
       if status is 'error'
         $('.form-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Title '+errors.name+'</span>')
@@ -34,6 +35,7 @@ $ ->
         $('.icon-remove').remove()
     
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+      $('.form-notice').empty()
       $('#client_company_id').append('<option value'+data.id+'>'+data.name+'</option>')
       
       $('.form-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Company was success create!</span>')
@@ -45,7 +47,7 @@ $ ->
       
   $('#new-handle').click ->
     $('.handle-notice').empty()
-     
+    
     $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
       $('.handle-notice').empty()
       errors = $.parseJSON(data.responseText)
@@ -68,6 +70,11 @@ $ ->
       $('#success-append').mouseover ->
         $(this).remove()
         $('.icon-ok').remove()
+  
+  
+  $('#text-f-handle').bind 'input': ->
+    $('#text-f-handle').val($(this).val().toLowerCase().replace(" ",".").replace(",","."))
+  
   
   $('.rem_link').live 'click': ->
     l = $('#table-show-handle tr').length
