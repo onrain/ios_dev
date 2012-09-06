@@ -2,7 +2,7 @@ IOSmanager::Application.routes.draw do
 
   get 'admin' => "admin#index"
 
-  get '/admin/handle/:id', to:"clients#handle"
+  get '/admin/handle/:id' => "clients#handle", as:"handle"
   post '/admin/handle/:id' => "clients#handle"
   delete '/admin/remove/:id' => "clients#remove"
 

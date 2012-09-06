@@ -29,12 +29,14 @@ class ClientsController < ApplicationController
   end
   
   def handle
-    client = Client.find(params[:id])
-    @handle = client.handles.create(params[:handle])
+    @client = Client.find(params[:id])
+    @handle = @client.handles.create(params[:handle])
+    
+    @show_handle = @client.handles.all
 
+    
     respond_with(@handle) do |format|
       if @handle.save
-        format.html {render action:"new", notice: 'Client was successfully created.' }
         format.json { render json: Handle.find_all_by_client_id(params[:id]), status: :created, location: @client }
       else
         #format.html { render action: "new" }

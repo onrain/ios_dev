@@ -77,13 +77,18 @@ $ ->
   
   
   $('.rem_link').live 'click': ->
+    $('.handle-notice').empty()
     l = $('#table-show-handle tr').length
     id = $(this).attr('id')
     if l is 1
       $('#tr_'+id).parent().remove()
     else
       $('#tr_'+id).remove()
-   
+    $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Deleted success!</span>')
+    $('#success-append').mouseover ->
+        $(this).remove()
+        $('.icon-ok').remove()
+  
     
     
     

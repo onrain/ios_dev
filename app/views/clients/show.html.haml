@@ -30,7 +30,7 @@
       %th
         Handle:
       %td
-        = client.handle
+        = link_to client.handle, handle_path(client.id)
 %div{class:"well well-small"}  
   .btn-group
     = link_to 'Edit', edit_client_path(client), class:"btn"
