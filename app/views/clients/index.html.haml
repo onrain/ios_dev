@@ -1,3 +1,22 @@
+.navbar
+  .navbar-inner
+    = link_to "Home", admin_path, class:"brand"
+    %ul{class:"nav"}
+      %li{id:"clients-nav"}
+        = link_to "Clients", clients_path
+      %li{id:"company-nav"}
+        = link_to "Companies", companies_path
+      %li{id:"manager-nav"}
+        = link_to "Managers", managers_path
+      %li{id:"developers-nav"}
+        = link_to "Developers", developers_path
+      %li{id:"projects-nav"}
+        = link_to "Projects", projects_path
+      %li{id:"app-nav"}
+        = link_to "Applications", applications_path
+
+
+
 -if notice
   %div{class:"alert alert-success"}
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
