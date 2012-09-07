@@ -6,9 +6,10 @@ IOSmanager::Application.routes.draw do
   post '/admin/handle/:id' => "clients#handle"
   delete '/admin/remove/:id' => "clients#remove"
 
-  get '/admin/applications' => "applications#index"
-  get '/admin/applications/:id' => "applications#show"
-  get '/admin/applications/:id/edit' => "applications#edit"
+  match '/admin/applications' => "applications#index"
+  match '/admin/applications/:id' => "applications#show"
+  match '/admin/applications/:id/edit' => "applications#edit"
+  match '/admin/applications/new' => "applications#new"
  
   scope "/admin" do
     resources :clients
@@ -16,7 +17,7 @@ IOSmanager::Application.routes.draw do
     resources :managers
     resources :developers
     resources :projects
-    resources :applications
+    #resources :applications
   end
   #match "*path", :to => "application#routing_error"
 
