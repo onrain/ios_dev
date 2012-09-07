@@ -9,7 +9,7 @@ describe Client do
     @client.id.size.should_not eq(0)
   end
   
-  it "should be valid email" do
+  it "should be valid title" do
     FactoryGirl.build(:client, :email=>"").should_not be_valid
     
     FactoryGirl.build(:client, :email=>"new email").should_not be_valid

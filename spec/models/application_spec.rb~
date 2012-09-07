@@ -1,29 +1,21 @@
 require 'spec_helper'
 
-describe Company do
+describe Application do
 
   before(:all) do
-    @company = FactoryGirl.create(:company)
+    @applications = FactoryGirl.create(:application)
   end
-  
-  it 'should be create new company' do
-    @company.id.size.should_not eq(0)
-  end
-  
-  
 
-  it { should validate_presence_of(:name) }
   
-  
-  it { should validate_uniqueness_of(:name) }
-  
-=begin 
-  it "should be valid title" do
-  
-    FactoryGirl.build(:application, :title=>"").should_not be_valid
-    
-    FactoryGirl.build(:application, :title=>"new title").should be_valid
+  it 'should be create new application' do
+     @applications.id.size.should_not eq(0)
   end
+  
+  
+  it { should validate_presence_of(:title) }
+ 
+ 
+  it { should validate_presence_of(:prodect_name) }
   
   it "should be create new title" do
     Application.create(title:"new title").should have(:no).errors_on(:title)
@@ -64,5 +56,4 @@ describe Company do
     @applications.title.should eq('new title')
 
   end
-=end 
 end
