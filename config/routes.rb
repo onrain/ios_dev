@@ -5,8 +5,9 @@ IOSmanager::Application.routes.draw do
   get '/admin/handle/:id' => "clients#handle", as:"handle"
   post '/admin/handle/:id' => "clients#handle"
   delete '/admin/remove/:id' => "clients#remove"
-  get "admin/applications/:id" => "applications#show"
-  get "admin/applications" => "applications#index"
+
+  match 'admin/*applications/:id' => 'applications#show'
+  match 'admin/applications' => "applications#index"
 
   scope "/admin" do
     resources :clients
