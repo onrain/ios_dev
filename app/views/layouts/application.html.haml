@@ -9,6 +9,6 @@
 
   %body
 
-    = render template:'admin/_nav.html.haml' if request.fullpath =~ /admin/
+    = render 'admin/nav'
 
     = yield
