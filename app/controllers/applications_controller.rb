@@ -1,5 +1,5 @@
 class ApplicationsController < ApplicationController
-  respond_to :html, :json, :xml
+  respond_to :json, :html, :xml
   
   
   def index
