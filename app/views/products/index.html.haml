@@ -1,0 +1,41 @@
+-if notice
+  %div{class:"alert alert-success"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
+%div{class:"well well-small", align:"center"}
+  %h4 Listing applications
+
+%table{class:"table table-striped table-bordered", style:"width:1200px; margin: 0 auto;"}
+  %tr
+    %th ID
+    %th Project
+    %th Product name
+    %th Bundle identifier
+    %th Bundle version
+    %th Relative path
+    %th Title
+    %th Actions
+
+  - @applications.each do |application|
+    %tr
+      %td= link_to application.id, application
+      %td= link_to application.project_name, project_path(application.project_id)
+      %td= application.product_name
+      %td= application.bundle_identifier
+      %td= application.bundle_version
+      %td= application.relative_path
+      %td= application.title
+      %td
+        %div{class:"btn-group"}
+          =link_to "Show", application, class:"btn"
+          %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
+            %span{class:"caret"}
+          %ul{class:"dropdown-menu"}
+            = link_to 'Show', application
+            = link_to 'Edit', edit_application_path(application)
+            = link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete
+
+%br
+%div{class:"well well-small", align:"center"}
+  = link_to 'New Application', new_application_path, class:"btn"

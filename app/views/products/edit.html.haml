@@ -1,0 +1,9 @@
+%div{class:"well well-small", align:"center"}
+  %h1 Editing application
+
+= render 'form'
+
+%div{class:"well well-small"}  
+  .btn-group
+    = link_to 'Show', @application, class:"btn"
+    = link_to 'Back', back(applications_path), class:"btn"

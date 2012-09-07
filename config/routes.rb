@@ -12,7 +12,7 @@ IOSmanager::Application.routes.draw do
     resources :managers
     resources :developers
     resources :projects
-    resources :applications
+    resources :products, as:"applications"
   end
   match "*path", :to => "application#routing_error"
 

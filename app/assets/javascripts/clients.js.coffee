@@ -30,18 +30,16 @@ $ ->
       $('.form-notice').empty()
       errors = $.parseJSON(data.responseText)
       $('.form-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Title '+errors.name+'</span>')
-      $('#error-append').mousemove ->
-        $(this).remove()
-        $('.icon-remove').remove()
+      $('.form-notice').mousemove ->
+        $(this).empty()
     
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
       $('.form-notice').empty()
       $('#client_company_id').append('<option value'+data.id+'>'+data.name+'</option>')
       
       $('.form-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Company was success create!</span>')
-      $('#success-append').mouseover ->
-        $(this).remove()
-        $('.icon-ok').remove()
+      $('.form-notice').mousemove ->
+        $(this).empty()
       
       
       
@@ -53,9 +51,8 @@ $ ->
       errors = $.parseJSON(data.responseText)
       if status is 'error'
         $('.handle-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle name '+errors.handle_name+'</span>')
-      $('#error-append').mousemove ->
-        $(this).remove()
-        $('.icon-remove').remove()
+      $('.handle-notice').mousemove ->
+        $(this).empty()
         
         
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
@@ -67,9 +64,8 @@ $ ->
         $('#table-show-handle').append("<tr id='tr_"+data[i].id+"'><td>"+data[i].handle_name+"<a href='/admin/remove/"+data[i].id+"' data-method='delete' class='rem_link' id='"+data[i].id+"' data-remote='true' ><i class='icon-remove pull-right' style='color:red;'></i></a></td></tr>")
         i+=1
       $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')
-      $('#success-append').mouseover ->
-        $(this).remove()
-        $('.icon-ok').remove()
+      $('.handle-notice').mousemove ->
+        $(this).empty()
   
   
   $('#text-f-handle').bind 'input': ->
@@ -85,9 +81,8 @@ $ ->
     else
       $('#tr_'+id).remove()
     $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Deleted success!</span>')
-    $('#success-append').mouseover ->
-        $(this).remove()
-        $('.icon-ok').remove()
+    $('.handle-notice').mousemove ->
+      $(this).empty()
   
     
     
