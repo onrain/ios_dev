@@ -13,6 +13,10 @@ $ ->
       'show' : false
       )
   
+  
+  $('.dropdown-toggle').click ->
+    $('.btn-group').toggleClass('open')
+  
   $('#get-handles').click ->
     $('#handle-name').modal(show:true)
     $('.handle-notice').empty()
