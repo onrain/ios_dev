@@ -3,14 +3,12 @@ class ApplicationsController < ApplicationController
   
   
   def index
-    @applications = Application.find_by_sql("
-    select applications.*, projects.name as project_name from applications left join projects on projects.id = applications.project_id                                        
-    ")
+    @applications = Application.get_app_list
     respond_with(@applications)
   end
 
   def show
-    @application = Application.find_by_sql("select applications.*, projects.name as project_name from applications left join projects on projects.id = applications.project_id where applications.id =  #{params[:id]}")  
+    @application = Application.get_app_list_where_id(params[:id])  
     
 
     respond_with(@application)
