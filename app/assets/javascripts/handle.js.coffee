@@ -7,10 +7,9 @@ $ ->
     company = $('#client_company_id').change ->
       company = $('#client_company_id :selected').text()
 
-      if company?
-        return company = company
-      else
+      unless company?
         return null
+
   space = 0
   $('#client_name').keydown (e) ->
     e = window.event || e
@@ -31,11 +30,12 @@ $ ->
     if typeof(company) isnt 'object' and company isnt 'None'
       $('.handle-variant').children().remove()
       name = $(this).val().replace(/(&nbsp;)+|\s+/g, '')
+      #{appends handle variant}
       $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'>/</span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
-  
-  
       $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'>.</span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
-  
+      $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'></span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
+      $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'>_</span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
+      #{append handle variant}
   
       $('.handle-variant .add').addClass('icon-plus-sign').live('mousemove', -> $(this).css('cursor':'pointer'))
       
