@@ -4,9 +4,7 @@ class ClientsController < ApplicationController
 
   def index
     
-    @clients = Client.find_by_sql(
-     "SELECT companies.name as company_name, clients.* FROM clients
-      LEFT JOIN companies ON companies.id = clients.company_id")
+    @clients = Client.get_clients_list 
     
 
     respond_with(@clients)
@@ -14,9 +12,7 @@ class ClientsController < ApplicationController
 
 
   def show
-    @client = Client.find_by_sql(
-     "SELECT companies.name as company_name, clients.* FROM clients
-      LEFT JOIN companies ON companies.id = clients.company_id where clients.id=#{params[:id]}")
+    @client = Client.get_clients_list_where_id(params[:id])
     respond_with(@client)
   end
 

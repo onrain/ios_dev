@@ -3,14 +3,14 @@ class ProjectsController < ApplicationController
   
   def index
     client = Client.all
-    @projects = Project.find_by_sql("select projects.*, managers.name as manager_name, clients.name as client_name from projects left join managers on managers.id = projects.manager_id left join clients on clients.id = projects.client_id")
+    @projects = Project.get_proj_list
     
     respond_with(@projects)
   end
 
 
   def show
-    @project = Project.find_by_sql("select projects.*, managers.name as manager_name, clients.name as client_name from projects left join managers on managers.id = projects.manager_id left join clients on clients.id = projects.client_id where projects.id = #{params[:id]}")
+    @project = Project.get_proj_list_where_id(params[:id])
 
     respond_with(@project)
   end

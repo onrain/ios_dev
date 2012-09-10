@@ -12,7 +12,7 @@
         %tr{id:"tr_#{h.id}"}
           %td
             = h.handle_name
-            =link_to "<i class='icon-remove pull-right' style='color:red;'></i>".html_safe,"/admin/remove/#{h.id}", :"data-method"=>:'delete', class:'rem_link', id:"#{h.id}", :"data-remote"=>:'true'
+            =link_to "<i class='icon-remove pull-right' style='color:red;'></i>".html_safe,"/admin/remove/#{h.id}", :"data-method"=>:'delete', :"data-confirm" => :"Are you sure?", class:'rem_link', id:"#{h.id}", :"data-remote"=>:'true'
               
 
 

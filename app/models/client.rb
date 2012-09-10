@@ -9,7 +9,14 @@ class Client < ActiveRecord::Base
                     :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
   validates :name, presence:true, length:{minimum:3, maximum:40}
   
-  scope :client_list, lambda { joins(:company).select("companies.name as company_name, clients.*") }  
+  scope :get_clients_list,
+    select:"companies.name as company_name, clients.*",
+    joins:"LEFT JOIN companies ON companies.id = clients.company_id"
   
-  scope :client_show, lambda { |e| joins(:company).select("companies.name as company_name, clients.*").where("clients.id = #{e}") }  
+  scope :get_clients_list_where_id, lambda{ |e|
+    select("companies.name as company_name, clients.*")
+    .joins("LEFT JOIN companies ON companies.id = clients.company_id")
+    .where("clients.id = ?",e)
+  }
+
 end

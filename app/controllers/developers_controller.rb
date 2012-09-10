@@ -3,9 +3,7 @@ class DevelopersController < ApplicationController
   
   
   def index
-    @developers = Developer.find_by_sql(
-     "SELECT managers.name as manager_name, developers.* FROM developers
-      LEFT JOIN managers ON managers.id = developers.manager_id")
+    @developers = Developer.get_dev_list
     
 
     respond_with(@developers)
@@ -13,9 +11,7 @@ class DevelopersController < ApplicationController
 
 
   def show
-    @developer = Developer.find_by_sql(
-     "SELECT managers.name as manager_name, developers.* FROM developers
-      LEFT JOIN managers ON managers.id = developers.manager_id where developers.id = #{params[:id]}")
+    @developer = Developer.get_dev_list_where_id(params[:id])
 
     respond_with(@developer)
   end
