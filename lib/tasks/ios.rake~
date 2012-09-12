@@ -19,7 +19,7 @@ namespace :go do
   end
   
   task :del => :environment do
-    Developers.delete_all
+    Developer.delete_all
     puts "Destroying done!"
   end
 end
