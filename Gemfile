@@ -36,3 +36,8 @@ end
 gem 'jquery-rails'
 
 gem 'haml-rails'
+
+gem 'coffee-filter'
+
+
+gem 'json'

@@ -3,10 +3,14 @@ class ClientsController < ApplicationController
   
 
   def index
+    unless params[:get].blank?
+      return render json:Handle.where(client_id:params[:handle_id]).to_json
+    end
     
     @clients = Client.get_clients_list 
+    @handle = Handle.new
     
-
+    
     respond_with(@clients)
   end
 
@@ -22,22 +26,24 @@ class ClientsController < ApplicationController
     @company = Company.new
     respond_with(@client)
   end
+
   
   def handle
+
+
     @client = Client.find(params[:id])
     @handle = @client.handles.create(params[:handle])
-    
-    @show_handle = @client.handles.all
+         
+       
+       respond_with(@handle) do |format|
+         if @handle.save
+           format.json { render json: Handle.find_all_by_client_id(params[:id]), status: :created, location: @client }
+         else
+           #format.html { render action: "new" }
+           format.json { render json: @handle.errors, status: :unprocessable_entity }
+         end
+       end
 
-    
-    respond_with(@handle) do |format|
-      if @handle.save
-        format.json { render json: Handle.find_all_by_client_id(params[:id]), status: :created, location: @client }
-      else
-        #format.html { render action: "new" }
-        format.json { render json: @handle.errors, status: :unprocessable_entity }
-      end
-    end 
   end
 
   def remove
@@ -57,10 +63,10 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(params[:client])
     @company = Company.new
-    hand = params[:client][:name].to_s
-    @client.handle = hand.gsub(" ", ".").downcase
+    #hand = params[:client][:name].to_s
+    #@client.handle = hand.gsub(" ", ".").downcase
     
-    @client.handles.create(handle_name:hand.gsub(" ", ".").downcase) if @client.save
+    #@client.handles.create(handle_name:hand.gsub(" ", ".").downcase) if @client.save
     
     respond_with(@client) do |format|
       if @client.save

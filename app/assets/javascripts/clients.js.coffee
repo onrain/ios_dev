@@ -5,7 +5,7 @@ $ ->
       @init()
       @company()
       @handle()
-      
+      @index_h_list()
   
     init: ->
       $('#new-company').modal(
@@ -24,24 +24,89 @@ $ ->
         $('#handle-name').modal(show:true)
         $('.handle-notice').empty()
         
+      $('.get-handles').click ->
+        $('#handle-name').modal(show:true)
+        $('.handle-notice').empty()
+        
+        
       $('#get-new-company').click ->
         $('#new-company').modal(show:true)
         $('#cname').val('')
         $('#cwebsite').val('')
         $('.form-notice').empty()
+        
+   
+   
+   
+        
+        
+    index_h_list: ->
+      $('.get-handles').click ->       
+        $(this).removeClass('colored')
+        $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->        
+          $('#append-index-handle').empty()  
+          count = Object.keys(data).length
+          i = 0
+          while i < count
+            $('#append-index-handle').append("<tr><td><a href='/admin/clients/"+(data[i].client_id)+"'>"+data[i].handle_name+"</td></tr>")
+            i += 1
+
+      $('.add-or-get-h').click ->
+        $('.notice-index').empty()
+      
+      getPopTitle = ->
+        return "Add new hundle name."
+  
+      getPopContent = (el) ->
+       return el.next().html()
+        
+      $('.add-or-get-h').mousemove ->
+        $(this).popover({
+          title: getPopTitle()
+          content: getPopContent($(this))
+        })
+      
+    
+      
+      
+      $('#add-index-h').live 'click': ->
+        id = $(this).attr('title')
+        $('#'+id).addClass('colored')
+        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+          #$('.add-or-get-h').popover('hide')
+          $('.notice-index').empty()
+          $('.notice-index').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
+          $('#append-index-handle').empty()     
+          count = Object.keys(data).length
+          i = 0
+          while i < count
+            $('#append-index-handle').append("<tr><td><a href='/admin/clients/"+(data[i].client_id)+"'>"+data[i].handle_name+"</td></tr>")
+            i += 1
+            
+            
+        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+          $('.notice-index').empty()
+          errors = $.parseJSON(data.responseText)
+          $('.notice-index').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle '+errors.handle_name+'</span>')
+
+
+      $('.notice-index').live 'mousemove': ->
+        $(this).empty()
+            
+
     company: ->
       
       $('#new-com').click ->
          $('.form-notice').empty()
          
-         $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+         $('#new-company form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
           $('.form-notice').empty()
           errors = $.parseJSON(data.responseText)
           $('.form-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Title '+errors.name+'</span>')
           $('.form-notice').mousemove ->
             $(this).empty()
         
-        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+        $('#new-company form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
           $('.form-notice').empty()
           $('#client_company_id').append('<option value'+data.id+' selected="selected">'+data.name+'</option>')
           
@@ -92,8 +157,10 @@ $ ->
         $('.handle-notice').mousemove ->
           $(this).empty()
       
-    
-    
-  new Client  
-    
+
+  new Client
+
+  
+  
+  
     

@@ -13,7 +13,6 @@ $ ->
   dev = new Array();
   $('input[type="checkbox"]:checked + span').each ->
     dev[ind] = $(this).text()
-    
-  alert dev[0]
+    ind += 1
   
   #$('.select-dev-list').append("[ "+developers+" ]")

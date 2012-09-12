@@ -1,16 +1,2 @@
-%table{class:"table table-bordered", style:"width:400px; margin:0 auto;"}
-  %div{class:"well well-small", align:"center"}
-    %h4
-      Client
-      \"
-      =@client.name
-      \"
-  %tr
-    %th ID
-    %th Handle name
-  -for h in @show_handle
-    %tr
-      %td=h.id
-      %td=h.handle_name
-%div{class:"well well-small"}
-  =link_to "Back", request.env['HTTP_REFERER'], class:"btn"
+- if flash[:notice]
+  #notice=flash[:notice]

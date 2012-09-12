@@ -9,6 +9,7 @@ IOSmanager::Application.configure do
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
   
+  
   require 'active_support/core_ext'
 
   # Show full error reports and disable caching
