@@ -1,3 +1,8 @@
 .add-or-get-h { color:green; }
 .add-or-get-h:hover{ color:red; cursor: pointer; }
 .colored{color:green;}
+.popover-title{ display: none; }
+.popover{ height: 30px !important; width: 170px; }
+.popover input[type='text'] { position: relative; left:-15px; top:-10px; border: none; }
+.notice-index{ position: absolute; top: -20px; left:-10px; width: 300px;}
+#add-index-h{ position: relative; left: 116px; top:-48px; height: 32px; }

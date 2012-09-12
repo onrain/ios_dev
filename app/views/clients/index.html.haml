@@ -40,14 +40,14 @@
       %td= client.name
       %td= client.email
       %td
-        = link_to client.handle, "?get=handle&handle_id=#{client.id}", class:"get-handles", id:"#{client.id}", remote:'true'
+        = link_to client.handle, "?get=handle&handle_id=#{client.id}", class:"get-handles", id:"#{client.id}", remote:'true', onclick:'$(this).next().popover("hide");'
         &nbsp;&nbsp;
-        %i{class:'icon-plus add-or-get-h', rel:"popover"}
+        %i{class:'icon-plus add-or-get-h'}
         
-        %div{class:"form-handle-in-index", style:"display:none;"}
+        %div{class:"form-handle-in-index", style:"display:none;'"}
           .notice-index
           = form_for(@handle, url:"/admin/handle/#{client.id}", method:"post", remote:true, id:"hundle-form") do |f|
-            =f.text_field :handle_name, style:"width:120px;"
+            =f.text_field :handle_name, style:"width:115px;"
             =f.submit "Add", class:"btn btn-success btn-small", title:"#{client.id}", id:"add-index-h", style:'margin:0px 0px 7px 0px;'
 
 

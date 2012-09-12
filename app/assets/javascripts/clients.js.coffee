@@ -1,5 +1,5 @@
 $ ->
-  
+    
   class Client
     constructor: ->
       @init()
@@ -41,7 +41,8 @@ $ ->
         
         
     index_h_list: ->
-      $('.get-handles').click ->       
+      $('.get-handles').click ->
+        $(".popover").hide()
         $(this).removeClass('colored')
         $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->        
           $('#append-index-handle').empty()  
@@ -51,28 +52,30 @@ $ ->
             $('#append-index-handle').append("<tr><td><a href='/admin/clients/"+(data[i].client_id)+"'>"+data[i].handle_name+"</td></tr>")
             i += 1
 
-      $('.add-or-get-h').click ->
-        $('.notice-index').empty()
       
-      getPopTitle = ->
-        return "Add new hundle name."
-  
-      getPopContent = (el) ->
-       return el.next().html()
         
-      $('.add-or-get-h').mousemove ->
+      
+      $('.popover-inner').children().eq(0).empty()
+
+      $('.add-or-get-h').click ->
+        
+        $('.notice-index').empty()
         $(this).popover({
-          title: getPopTitle()
           content: getPopContent($(this))
         })
       
+      
+        
+      getPopContent = (el) ->
+        return el.next().html()
     
-      
-      
+    
+    
       $('#add-index-h').live 'click': ->
         id = $(this).attr('title')
-        $('#'+id).addClass('colored')
+        
         $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+          $('#'+id).addClass('colored')
           #$('.add-or-get-h').popover('hide')
           $('.notice-index').empty()
           $('.notice-index').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
