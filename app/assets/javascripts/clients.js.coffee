@@ -51,31 +51,26 @@ $ ->
           while i < count
             $('#append-index-handle').append("<tr><td><a href='/admin/clients/"+(data[i].client_id)+"'>"+data[i].handle_name+"</td></tr>")
             i += 1
-
-      
-        
-      
+    
       $('.popover-inner').children().eq(0).empty()
       
-         
-
       $('.add-or-get-h').popover(
         content: ->
           $(this).next().html()
       )
 
-    
+      $('.add-or-get-h').click ->
+        $('.notice-index').empty()  
     
     
       $('#add-index-h').live 'click': ->
         id = $(this).attr('title')
-               
         
         $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
           $('#'+id).addClass('colored')
           
           $('.notice-index').empty()
-          $('.notice-index').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
+          $(this).parent().parent().find('.notice-index').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
           $('#append-index-handle').empty()     
           count = Object.keys(data).length
           i = 0
@@ -87,11 +82,15 @@ $ ->
         $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
           $('.notice-index').empty()
           errors = $.parseJSON(data.responseText)
-          $('.notice-index').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle '+errors.handle_name+'</span>')
+          $(this).parent().parent().find('.notice-index').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle '+errors.handle_name+'</span>')
 
 
       $('.notice-index').live 'mousemove': ->
         $(this).empty()
+        
+        
+        
+        
             
 
     company: ->

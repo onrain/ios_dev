@@ -40,9 +40,9 @@
       %td= client.name
       %td= client.email
       %td
-        = link_to client.handle, "?get=handle&handle_id=#{client.id}", class:"get-handles", id:"#{client.id}", remote:'true', onclick:'$(this).next().popover("hide");'
+        = link_to client.handle, "?get=handle&handle_id=#{client.id}", class:"get-handles", id:"#{client.id}", remote:'true'
         &nbsp;&nbsp;
-        %i{class:'icon-plus add-or-get-h'}
+        %i{class:'icon-plus add-or-get-h', id:"open_#{client.id}"}
         
         %div{class:"form-handle-in-index", style:"display:none;'"}
           .notice-index

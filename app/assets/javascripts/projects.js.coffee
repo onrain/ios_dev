@@ -42,8 +42,55 @@ $ ->
     
     $('#reload').live 'click': ->
       window.location.reload()
-      $('#show-dev').click()
+      #$('#show-dev').click()
     $('#reload').live 'mousemove': ->
       $(this).css('cursor':'pointer')
     $('.dev-notice').mousemove ->
       $(this).empty()
+      
+  $('#project_name').bind 'input': ->    
+    if $(this).val().length > 0
+      $('.change_handle').empty()
+      $('.change_handle').append('<i class="icon-plus-sign" id="proj-pop" style="position:absolute; margin-left:5px; margin-top:6px;"><i/>')
+    
+    if $(this).val().length is 0
+      $('.change_handle').empty()
+
+    $('#proj-pop').popover(
+      content: ->
+        $(this).parent().next().html()
+      placement: 'bottom'
+      )
+    
+    $('.pn').text($(this).val())
+    
+  
+  $('#proj-pop').live 'click': ->
+    if $('#proj-h-variants').text().length == 0
+      id = $('#project_client_id option:selected').val()
+      pn = $('#project_name').val()
+      get_and_push_handle(id, pn)
+  
+  
+     
+  $('#project_client_id option').click ->
+    id = $(this).val()
+    pn = $('#project_name').val()
+    get_and_push_handle(id, pn)
+  
+  get_and_push_handle = (id, pn) ->
+    $.get "/admin/clients?get=handle&handle_id="+id, (data) =>
+      $('#proj-h-variants').empty()
+      count = Object.keys(data).length
+      if count is 0
+        return $('#proj-h-variants').append('<p>Empty.</p>')
+      
+      i=0
+      proj_name = $('#project_name').val()
+      while i < count
+        $('#proj-h-variants').append('<p style="border: 1px solid gray;"><a style="cursor:pointer;">'+data[i].handle_name+'<span class="pn">'+pn+'</span>'+'</a><br />')
+        $('#proj-h-variants').append('<a style="cursor:pointer;">'+data[i].handle_name+'_<span class="pn">'+pn+'</span></a><br />')
+        $('#proj-h-variants').append('<a style="cursor:pointer;">'+data[i].handle_name+'.<span class="pn">'+pn+'</span></a></p>')
+        i+=1
+
+      return 0;
