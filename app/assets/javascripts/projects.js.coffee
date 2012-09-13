@@ -99,8 +99,10 @@ $ ->
       i=0
       proj_name = $('#project_name').val()
       while i < count
-        $('#proj-h-variants').append('<a style="cursor:pointer;">'+data[i].handle_name+'/<span class="pn">'+pn+'</span>'+'</a><hr />')
+        $('#proj-h-variants').append('<a style="cursor:pointer;" class="append-h">'+data[i].handle_name+'/<span class="pn">'+pn+'</span>'+'</a><hr />')
 
         i+=1
-
+      $('.append-h').live 'click': ->
+        $('#project_handle').val($(this).text())
+        
       return 0;
