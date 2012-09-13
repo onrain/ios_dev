@@ -60,7 +60,7 @@ $ ->
   $('.change_handle').append('<i class="icon-plus-sign" id="proj-pop" style="position:absolute; margin-left:5px; margin-top:6px;"><i/>')
   
   
-  
+  $('.popover-inner').children().eq(0).empty()
 
   $('#proj-pop').live 'click': ->
 
@@ -99,9 +99,8 @@ $ ->
       i=0
       proj_name = $('#project_name').val()
       while i < count
-        $('#proj-h-variants').append('<p style="border: 1px solid gray;"><a style="cursor:pointer;">'+data[i].handle_name+'<span class="pn">'+pn+'</span>'+'</a><br />')
-        $('#proj-h-variants').append('<a style="cursor:pointer;">'+data[i].handle_name+'_<span class="pn">'+pn+'</span></a><br />')
-        $('#proj-h-variants').append('<a style="cursor:pointer;">'+data[i].handle_name+'.<span class="pn">'+pn+'</span></a></p>')
+        $('#proj-h-variants').append('<a style="cursor:pointer;">'+data[i].handle_name+'/<span class="pn">'+pn+'</span>'+'</a><hr />')
+
         i+=1
 
       return 0;
