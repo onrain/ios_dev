@@ -47,25 +47,34 @@ $ ->
       $(this).css('cursor':'pointer')
     $('.dev-notice').mousemove ->
       $(this).empty()
+  
+  
+  
+  
       
   $('#project_name').bind 'input': ->    
-    if $(this).val().length > 0
-      $('.change_handle').empty()
-      $('.change_handle').append('<i class="icon-plus-sign" id="proj-pop" style="position:absolute; margin-left:5px; margin-top:6px;"><i/>')
-    
-    if $(this).val().length is 0
-      $('.change_handle').empty()
+          
+    $('.pn').text($(this).val())
+  
+  
+  $('.change_handle').append('<i class="icon-plus-sign" id="proj-pop" style="position:absolute; margin-left:5px; margin-top:6px;"><i/>')
+  
+  
+  
 
-    $('#proj-pop').popover(
+  $('#proj-pop').live 'click': ->
+
+    $(this).popover(
       content: ->
         $(this).parent().next().html()
       placement: 'bottom'
-      )
+    )
     
-    $('.pn').text($(this).val())
+    
     
   
   $('#proj-pop').live 'click': ->
+    
     if $('#proj-h-variants').text().length == 0
       id = $('#project_client_id option:selected').val()
       pn = $('#project_name').val()
@@ -80,7 +89,9 @@ $ ->
   
   get_and_push_handle = (id, pn) ->
     $.get "/admin/clients?get=handle&handle_id="+id, (data) =>
+      
       $('#proj-h-variants').empty()
+      
       count = Object.keys(data).length
       if count is 0
         return $('#proj-h-variants').append('<p>Empty.</p>')
