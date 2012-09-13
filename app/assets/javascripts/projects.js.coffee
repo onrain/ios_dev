@@ -35,7 +35,7 @@ $ ->
     $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
       $('.handle-notice').empty()
       $('.dev-notice').empty()
-      $('.searchable').append("<p><input type='checkbox' id='project_developer_ids_' name='project[developer_ids][]' value='"+data.id+"' /><span>"+data.name+"</span>&nbsp;<span class='icon-exclamation-sign' style='color:red;'></span></p>")     
+      $('.searchable').append("<p><input type='checkbox' id='project_developer_ids_' disabled='disabled' name='project[developer_ids][]' value='"+data.id+"' /><span>"+data.name+"</span>&nbsp;<span class='icon-exclamation-sign' style='color:red;'></span></p>")     
       $('.dev-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Developer was success create!</span>')
       $('.dev-reload-notice').empty()
       $('.dev-reload-notice').html("<a id='reload'>For apply changes please reload page!</a>")

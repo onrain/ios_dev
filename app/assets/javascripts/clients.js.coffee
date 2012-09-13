@@ -42,7 +42,7 @@ $ ->
         
     index_h_list: ->
       $('.get-handles').click ->
-        $(".popover").hide()
+        $('.add-or-get-h').popover('hide')
         $(this).removeClass('colored')
         $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->        
           $('#append-index-handle').empty()  
@@ -56,27 +56,24 @@ $ ->
         
       
       $('.popover-inner').children().eq(0).empty()
+      
+         
 
-      $('.add-or-get-h').click ->
-        
-        $('.notice-index').empty()
-        $(this).popover({
-          content: getPopContent($(this))
-        })
-      
-      
-        
-      getPopContent = (el) ->
-        return el.next().html()
+      $('.add-or-get-h').popover(
+        content: ->
+          $(this).next().html()
+      )
+
     
     
     
       $('#add-index-h').live 'click': ->
         id = $(this).attr('title')
+               
         
         $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
           $('#'+id).addClass('colored')
-          #$('.add-or-get-h').popover('hide')
+          
           $('.notice-index').empty()
           $('.notice-index').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
           $('#append-index-handle').empty()     
