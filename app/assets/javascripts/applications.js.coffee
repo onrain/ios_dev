@@ -1,3 +1,7 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$ ->
+  $('#application_project_id option').click ->
+    $.get '/admin/projects/'+$(this).attr('value'), (data) =>
+      $('.store').empty()
+      $('.store').text(data[0].handle)
+  $('#application_product_name').bind 'input': ->
+    $('#application_relative_path').val($('.store').text()+"/"+$(this).val().toLowerCase())

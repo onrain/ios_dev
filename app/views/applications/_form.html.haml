@@ -8,10 +8,12 @@
         %ul
           - @application.errors.full_messages.each do |msg|
             %li= msg
-
+    %div{class:"store", style:"display:none;"}
     %tr
       %th= f.label :project_id
-      %th= f.select("project_id", Project.all.collect{|e| [e.name, e.id]},{:include_blank => 'None'})
+      %th
+        = f.select("project_id", Project.all.collect{|e| [e.name, e.id]},{:include_blank => 'None'})
+        %p{id:"create-priject-hanle"}
     %tr
       %td= f.label :product_name
       %td= f.text_field :product_name
