@@ -1,5 +1,5 @@
 class DevelopersController < ApplicationController
-  respond_to :html, :json, :xml
+  respond_to :json, :html, :xml
   
   
   def index
@@ -29,14 +29,17 @@ class DevelopersController < ApplicationController
 
 
   def create
-    @developer = Developer.new(params[:developer])
-
+    unless params[:developer_name].blank?
+      @developer = Developer.create(name:params[:developer_name])
+    else
+      @developer = Developer.new(params[:developer])
+    end
     respond_with(@developer) do |format|
       if @developer.save
-        format.html { redirect_to @developer, notice: 'Developer was successfully created.' }
-        format.json { render json: @developer, status: :created, location: @developer }
+        format.html { redirect_to @developer, notice: 'Developer was successfully create.' }
+        format.json { render json: Developer.last, status: :created, location: @developer }
       else
-        format.html { render action: "new" }
+
         format.json { render json: @developer.errors, status: :unprocessable_entity }
       end
     end

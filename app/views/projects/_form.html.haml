@@ -31,6 +31,18 @@
             %h3 Select developers.
             %hr
             %input{type:"text", class:"searchFilter", onblur:"if(this.value == '')this.value='Searching developers..'", onfocus:"this.value==this.defaultValue?this.value='':null", value:"Searching developers..", name:"keyword"}
+            .pull-right
+              %div{class:"btn close", :"data-dismiss"=>:"modal", id:"add-dev-btn"}
+                Change
+
+
+            .dev-notice
+            .dev-reload-notice
+            %input{type:"text", id:"dev-input"}
+            =link_to "Add", '/admin/developers/?developer_name=', remote:'true', :method=>:post, id:'dev-link-remote'
+
+
+
 
           %div{class:"modal-body"}
             .searchable

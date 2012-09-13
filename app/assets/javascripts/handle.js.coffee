@@ -31,7 +31,6 @@ $ ->
       $('.handle-variant').children().remove()
       name = $(this).val().replace(/(&nbsp;)+|\s+/g, '')
       #{appends handle variant}
-      $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'>/</span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
       $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'>.</span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
       $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'></span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")
       $('.handle-variant').append("<div id='hh'>"+"<span id='hc'>"+company+"</span>"+"<span id='type'>_</span>"+"<span id='hn'>"+name+"</span>"+"<span class='add'></span>"+"</div>")

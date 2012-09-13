@@ -2,9 +2,9 @@ class ProjectsController < ApplicationController
   respond_to :json, :html, :xml
   
   def index
-    client = Client.all
+
     @projects = Project.get_proj_list
-    
+
     respond_with(@projects)
   end
 
@@ -18,12 +18,14 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @developer = Developer.new
     respond_with(@project)
   end
 
 
   def edit
     @project = Project.find(params[:id])
+    @developer = Developer.new
   end
 
 
@@ -49,7 +51,7 @@ class ProjectsController < ApplicationController
 
     respond_with(@project) do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.html { redirect_to @project, notice: params[:project][:developer_ids] }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
