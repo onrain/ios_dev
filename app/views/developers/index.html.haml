@@ -7,13 +7,15 @@
   %h4 Listing developers
   = link_to 'New Developer', new_developer_path, class:"btn"
 
-%table{class:"table table-bordered", style:"width:900px; margin: 0 auto;"}
+%table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
   %tr{class:"all-sort"}
     %th=sortable "id", "ID"
     %th=sortable "name", "Name"
     %th=sortable "manager", "Manager"
     %th=sortable "email", "Email"
     %th=sortable "personal_email", "Personal email"
+    %th=sortable "created_at", "Date create"
+    %th=sortable "updated_at", "Last update"
     %th Actions
 
 
@@ -24,6 +26,8 @@
       %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
       %td= developer.email
       %td= developer.personal_email
+      %td= set_time developer.created_at
+      %td= set_time developer.updated_at
       %td
         %div{class:"btn-group"}
           =link_to "Show", developer, class:"btn"
@@ -33,6 +37,7 @@
             %li= link_to 'Show', developer
             %li= link_to 'Edit', edit_developer_path(developer)
             %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
+      
 
 %div{class:"well well-small"}
   %div{style:'display:table; margin:0 auto;'}

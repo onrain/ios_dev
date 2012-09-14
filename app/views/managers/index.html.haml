@@ -14,6 +14,8 @@
     %th=sortable "name", "Name"
     %th=sortable "personal_email", "Personal email"
     %th=sortable "office_email", "Office email"
+    %th=sortable "created_at", "Date create"
+    %th=sortable "updated_at", "Last update"
     %th Actions
   
 
@@ -23,6 +25,8 @@
       %td= manager.name
       %td= manager.personal_email
       %td= manager.office_email
+      %td= set_time manager.created_at
+      %td= set_time manager.updated_at
       %td
         %div{class:"btn-group"}
           =link_to "Show", manager, class:"btn"
