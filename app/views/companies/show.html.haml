@@ -4,7 +4,7 @@
       x
     =notice
 
-%table{class:"table table-bordered", id:"show-recoreds"}
+%table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
   %tr
     %th ID
     %td= @company.id
@@ -14,7 +14,7 @@
   %tr
     %th Website:
     %td= @company.website
-%div{class:"well well-small"}  
+%div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_company_path(@company), class:"btn"
     = link_to 'Back', companies_path, class:"btn"

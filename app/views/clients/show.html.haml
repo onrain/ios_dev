@@ -4,7 +4,7 @@
       x
     =notice
 
-%table{class:"table table-bordered", id:"show-recoreds"}
+%table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
   - for client in @client
     %tr
       %th
@@ -31,7 +31,7 @@
         Handle:
       %td
         = link_to client.handle, handle_path(client.id)
-%div{class:"well well-small"}  
+%div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_client_path(client), class:"btn"
     = link_to 'Back', clients_path, class:"btn"

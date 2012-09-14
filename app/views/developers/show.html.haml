@@ -4,7 +4,7 @@
       x
     =notice
 -for dev in @developer
-  %table{class:"table table-bordered", id:"show-recoreds"}
+  %table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
     %tr
       %th ID
       %td=dev.id
@@ -20,7 +20,7 @@
     %tr
       %th Personal email:
       %td= dev.personal_email
-%div{class:"well well-small"}  
+%div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_developer_path(dev), class:"btn"        
     = link_to 'Back', developers_path, class:"btn"

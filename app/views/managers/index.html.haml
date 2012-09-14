@@ -8,7 +8,7 @@
   = link_to 'New Manager', new_manager_path, class:"btn"
 
 
-%table{class:"table table-striped table-bordered", style:"width:900px; margin:0 auto;"}
+%table{class:"table table-striped table-bordered", style:"width:1000px; margin:0 auto;"}
   %tr{class:"all-sort"}
     %th=sortable "id", "ID"
     %th=sortable "name", "Name"
@@ -21,7 +21,7 @@
 
   - @managers.each do |manager|
     %tr
-      %td= manager.id
+      %td= link_to manager.id, manager_path(manager.id)
       %td= manager.name
       %td= manager.personal_email
       %td= manager.office_email
