@@ -30,3 +30,7 @@
             %li= link_to 'Show', manager
             %li= link_to 'Edit', edit_manager_path(manager)
             %li= link_to 'Destroy', manager, :confirm => 'Are you sure?', :method => :delete
+
+%div{class:"well well-small"}
+  %div{style:'display:table; margin:0 auto;'}
+    = paginate @managers

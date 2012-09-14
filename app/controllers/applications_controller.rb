@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
   
   
   def index
-    @applications = Application.get_app_list
+    @applications = Application.get_app_list.page(params[:page]).per(10)
     respond_with(@applications)
   end
 

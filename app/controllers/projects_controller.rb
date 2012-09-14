@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   
   def index
 
-    @projects = Project.get_proj_list
+    @projects = Project.get_proj_list.page(params[:page]).per(10)
 
     respond_with(@projects)
   end

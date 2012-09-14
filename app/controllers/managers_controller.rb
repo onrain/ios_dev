@@ -1,7 +1,7 @@
 class ManagersController < ApplicationController
   respond_to :html, :json, :xml
   def index
-    @managers = Manager.all
+    @managers = Manager.page(params[:page]).per(10)
     respond_with(@managers)
   end
 

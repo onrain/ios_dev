@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
   
   
   def index
-    @companies = Company.all
+    @companies = Company.page(params[:page]).per(10)
     @res = Company.last
     respond_with(@companies) do |format|
       format.json{render json: @res}

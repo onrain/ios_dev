@@ -33,10 +33,7 @@
             %li= link_to 'Show', developer
             %li= link_to 'Edit', edit_developer_path(developer)
             %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
+
 %div{class:"well well-small"}
   %div{style:'display:table; margin:0 auto;'}
     = paginate @developers
-
-%br
-
-  

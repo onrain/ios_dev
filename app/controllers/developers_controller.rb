@@ -3,7 +3,7 @@ class DevelopersController < ApplicationController
   
   
   def index
-    @developers = Developer.get_dev_list.page(params[:page]).per(5)
+    @developers = Developer.get_dev_list.page(params[:page]).per(10)
     
 
     respond_with(@developers)

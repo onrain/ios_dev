@@ -37,3 +37,7 @@
             = link_to 'Show', application
             = link_to 'Edit', edit_application_path(application)
             = link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete
+
+%div{class:"well well-small"}
+  %div{style:'display:table; margin:0 auto;'}
+    = paginate @applications

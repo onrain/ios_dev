@@ -7,11 +7,10 @@ class ClientsController < ApplicationController
       @res = Handle.where(client_id:params[:handle_id]).to_a
       client = Client.find(params[:handle_id])
       @res[@res.size] = {handle_name:client.handle, client_id:client.id}
-      
       return render json: @res
     end
     
-    @clients = Client.get_clients_list 
+    @clients = Client.get_clients_list.page(params[:page]).per(10)
     @handle = Handle.new
     
     
