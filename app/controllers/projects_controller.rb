@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
   respond_to :json, :html, :xml
-  
+  helper_method :sort_column, :sort_direction
+
   def index
 
-    @projects = Project.get_proj_list.page(params[:page]).per(10)
+    @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
 
     respond_with(@projects)
   end
@@ -70,4 +71,18 @@ class ProjectsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+private
+  def sort_column
+    Client.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+
+
+
 end
