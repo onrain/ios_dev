@@ -25,13 +25,13 @@
   = link_to 'New Client', new_client_path, class:"btn"
 
 %table{class:"table table-striped table-bordered", style:"width:900px; margin: 0 auto;"}
-  %tr
-    %th ID
-    %th Company Name
-    %th Name
-    %th Email
-    %th Handle
-    %th Actions
+  %tr{class:"all-sort"}
+    %th=sortable "id", "ID"
+    %th=sortable "company_name", "Company Name"
+    %th=sortable "name", "Name"
+    %th=sortable "email", "Email"
+    %th=sortable "handle","Handle"
+    %th
 
 
   - @clients.each do |client|
