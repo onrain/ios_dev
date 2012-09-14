@@ -35,6 +35,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'kaminari'
+
 gem 'haml-rails'
 
 gem 'coffee-filter'
