@@ -69,5 +69,24 @@ $ ->
               <td><a href='/admin/applications/"+data[i].id+"'>"+data[i].product_name+"</a></td>
             </tr>")
           i+=1
+          
+          
+  $(".get-list-developers").click ->
+    id = $(this).attr('id')
+    $.get '/admin/developers?get=product&id='+id, (data) =>
+      count = Object.keys(data).length
+      if count isnt 0
+        $('#index-modal').modal(show:true)
+        $('.append-index-modal').empty()
+        $('#index-title').empty()
+        $('#index-title').append('Show developers list')
+        i = 0
+        while i < count
+          $('.append-index-modal').append("<tr>
+              <td><a href='/admin/developers/"+data[i].id+"'>"+data[i].name+"</a></td>
+            </tr>")
+          i+=1
+      else if count is 0
+        $(this).attr('disabled':'disabled')
 
   

@@ -62,9 +62,7 @@ module IOSmanager
 
     config.time_zone = "Europe/Kiev"
     
-    config.active_record.default_timezone = "Europe/Kiev"
-
-
+    config.active_record.default_timezone = :utc
    
   end
 end

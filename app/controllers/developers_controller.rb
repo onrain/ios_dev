@@ -3,6 +3,13 @@ class DevelopersController < ApplicationController
   helper_method :sort_column, :sort_direction
   
   def index
+    
+    unless params[:get].blank?
+      project = Project.find(params[:id])
+      @get_developers_in_admin_index = project.developers
+      return render json:  @get_developers_in_admin_index
+    end
+
     @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     
 
