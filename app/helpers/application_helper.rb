@@ -18,4 +18,10 @@ module ApplicationHelper
     end
   end
 
+
+  def set_time(current_time)
+    return "" if current_time.nil?
+    current_time.strftime('%B %d, %Y at %H:%M')
+  end
+
 end
