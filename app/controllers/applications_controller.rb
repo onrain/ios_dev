@@ -4,7 +4,7 @@ class ApplicationsController < ApplicationController
 
   
   def index
-    @applications = Application.get_app_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    @applications = Application.get_app_list.page(params[:page]).per(10).order("#{sort_column} #{sort_direction}")
     respond_with(@applications)
   end
 
