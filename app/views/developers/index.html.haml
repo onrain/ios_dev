@@ -8,12 +8,12 @@
   = link_to 'New Developer', new_developer_path, class:"btn"
 
 %table{class:"table table-bordered", style:"width:900px; margin: 0 auto;"}
-  %tr
-    %th ID
-    %th Name
-    %th Manager
-    %th Email
-    %th Personal email
+  %tr{class:"all-sort"}
+    %th=sortable "id", "ID"
+    %th=sortable "name", "Name"
+    %th=sortable "manager", "Manager"
+    %th=sortable "email", "Email"
+    %th=sortable "personal_email", "Personal email"
     %th Actions
 
 

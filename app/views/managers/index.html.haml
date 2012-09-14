@@ -9,15 +9,17 @@
 
 
 %table{class:"table table-striped table-bordered", style:"width:900px; margin:0 auto;"}
-  %tr
-    %th Name
-    %th Personal email
-    %th Office email
+  %tr{class:"all-sort"}
+    %th=sortable "id", "ID"
+    %th=sortable "name", "Name"
+    %th=sortable "personal_email", "Personal email"
+    %th=sortable "office_email", "Office email"
     %th Actions
   
 
   - @managers.each do |manager|
     %tr
+      %td= manager.id
       %td= manager.name
       %td= manager.personal_email
       %td= manager.office_email
