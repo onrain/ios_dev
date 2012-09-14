@@ -1,7 +1,8 @@
 %div{class:"well well-small", align:"center"}
   %h4 Listing companies
+  = link_to 'New Company', new_company_path, class:"btn"
 
-%table{class:"table table-striped table-bordered", style:"width:800px; margin:0 auto;"}
+%table{class:"table table-striped table-bordered", style:"width:900px; margin:0 auto;"}
   %tr
     %th ID
     %th Name
@@ -23,7 +24,3 @@
             %li= link_to 'Show', company
             %li= link_to 'Edit', edit_company_path(company)
             %li= link_to 'Destroy', company, :confirm => 'Are you sure?', :method => :delete
-
-%br
-%div{class:"well well-small", align:"center"}
-  = link_to 'New Company', new_company_path, class:"btn"

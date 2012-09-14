@@ -5,8 +5,10 @@
     =notice
 %div{class:"well well-small", align:"center"}
   %h4 Listing managers
+  = link_to 'New Manager', new_manager_path, class:"btn"
 
-%table{class:"table table-striped table-bordered", style:"width:1200px; margin:0 auto;"}
+
+%table{class:"table table-striped table-bordered", style:"width:900px; margin:0 auto;"}
   %tr
     %th Name
     %th Personal email
@@ -28,7 +30,3 @@
             %li= link_to 'Show', manager
             %li= link_to 'Edit', edit_manager_path(manager)
             %li= link_to 'Destroy', manager, :confirm => 'Are you sure?', :method => :delete
-
-%br
-%div{class:"well well-small", align:"center"}
-  = link_to 'New Manager', new_manager_path, class:"btn"

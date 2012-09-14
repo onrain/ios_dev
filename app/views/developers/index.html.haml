@@ -5,8 +5,9 @@
     =notice
 %div{class:"well well-small", align:"center"}
   %h4 Listing developers
+  = link_to 'New Developer', new_developer_path, class:"btn"
 
-%table{class:"table table-bordered", style:"width:1200px; margin: 0 auto;"}
+%table{class:"table table-bordered", style:"width:900px; margin: 0 auto;"}
   %tr
     %th ID
     %th Name
@@ -32,7 +33,3 @@
             %li= link_to 'Show', developer
             %li= link_to 'Edit', edit_developer_path(developer)
             %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
-
-%br
-%div{class:"well well-small", align:"center"}
-  = link_to 'New Developer', new_developer_path, class:"btn"

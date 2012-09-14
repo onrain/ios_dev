@@ -22,8 +22,9 @@
 
 %div{class:"well well-small", align:"center"}
   %h4 Listing clients
+  = link_to 'New Client', new_client_path, class:"btn"
 
-%table{class:"table table-striped table-bordered", style:"width:1200px; margin: 0 auto;"}
+%table{class:"table table-striped table-bordered", style:"width:900px; margin: 0 auto;"}
   %tr
     %th ID
     %th Company Name
@@ -62,6 +63,3 @@
             %li= link_to 'Edit', edit_client_path(client)
             %li= link_to 'Destroy', client, :confirm => 'Are you sure?', :method => :delete
 
-%br
-%div{class:"well well-small", align:"center"}
-  = link_to 'New Client', new_client_path, class:"btn"

@@ -5,8 +5,10 @@
     =notice
 %div{class:"well well-small", align:"center"}
   %h4 Listing applications
+  = link_to 'New Application', new_application_path, class:"btn"
 
-%table{class:"table table-striped table-bordered", style:"width:1200px; margin: 0 auto;"}
+
+%table{class:"table table-striped table-bordered", style:"width:900px; margin: 0 auto;"}
   %tr
     %th ID
     %th Project
@@ -35,7 +37,3 @@
             = link_to 'Show', application
             = link_to 'Edit', edit_application_path(application)
             = link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete
-
-%br
-%div{class:"well well-small", align:"center"}
-  = link_to 'New Application', new_application_path, class:"btn"
