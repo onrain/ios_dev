@@ -9,14 +9,14 @@
 
 
 %table{class:"table table-striped table-bordered", style:"width:900px; margin: 0 auto;"}
-  %tr
-    %th ID
-    %th Project
-    %th Product name
-    %th Bundle identifier
-    %th Bundle version
-    %th Relative path
-    %th Title
+  %tr{class:"all-sort"}
+    %th=sortable "id", "ID"
+    %th=sortable "project_name", "Project"
+    %th=sortable "product_name", "Product name"
+    %th=sortable "bundle_identifier", "Bundle identifier"
+    %th=sortable "bundle_version", "Bundle version"
+    %th=sortable "relative_path", "Relative path"
+    %th=sortable "title", "Title"
     %th Actions
 
   - @applications.each do |application|

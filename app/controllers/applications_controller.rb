@@ -1,9 +1,10 @@
 class ApplicationsController < ApplicationController
   respond_to :json, :html, :xml
-  
+  helper_method :sort_column, :sort_direction
+
   
   def index
-    @applications = Application.get_app_list.page(params[:page]).per(10)
+    @applications = Application.get_app_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     respond_with(@applications)
   end
 
@@ -66,4 +67,15 @@ class ApplicationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+private
+  def sort_column
+    Application.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+
 end
