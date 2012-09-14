@@ -1,3 +1,14 @@
+%div{class:"modal hide fade", id:"index-modal"}
+  .modal-header
+    .index-notice
+    %button{class:"close", :"data-dismiss"=>:"modal"}
+      ×
+    %h3{id:"index-title"}
+
+  %div{class:"modal-body"}
+    %table{class:"table table-bordered append-index-modal"}
+
+
 %h1
   Welcome
 
@@ -13,7 +24,7 @@
       %td=link_to list.name, project_path(list)
       %td=link_to list.client_name, client_path(list.client_id)
       %td=link_to list.manager_name, manager_path(list.manager_id)
-      %td=link_to "Applications list", '#', id:"#{list.product_id}"
-      %td=link_to "Show developers", '#', id:"#{list.id}"
+      %td=app_link("Show developers", "applications", list.product_id)
+      %td=link_to "Show developers", '#', id:"#{list.id}", class:"get-list-developers"
     
   

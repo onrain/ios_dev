@@ -18,6 +18,16 @@ $ ->
     $(this).removeClass('field_with_errors')
   
   
+  
+  
+  $('#index-modal').modal(
+          "backdrop" : "static",
+          "keyboard" : true,
+          'show' : false
+          )
+  
+
+  
   $('.sort').css('color':'black')
   $('.sort').mousemove ->
     $(this).css('text-decoration':'none')
@@ -40,5 +50,24 @@ $ ->
     when 'desc' 
       $('#'+sort).addClass('icon-chevron-down')
       $('#'+sort).parent().addClass('select-th')
-   
+      
+      
+  
+  
+  $(".get-list-applications").click ->
+    id = $(this).attr('id')
+    if id isnt ''
+      $('#index-modal').modal(show:true)
+      $.get '/admin/applications?get=product&id='+id, (data) =>
+        count = Object.keys(data).length
+        $('.append-index-modal').empty()
+        $('#index-title').empty()
+        $('#index-title').append('Show applications list')
+        i = 0
+        while i < count
+          $('.append-index-modal').append("<tr>
+              <td><a href='/admin/applications/"+data[i].id+"'>"+data[i].product_name+"</a></td>
+            </tr>")
+          i+=1
+
   
