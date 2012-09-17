@@ -8,14 +8,14 @@
   %div{class:"modal-body"}
     %table{class:"table table-bordered append-index-modal"}
 
-%h1
-  Welcome
+
+
 
 %table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
   %tr
-    %th Project name
-    %th Client name
-    %th Manager
+    %th=sortable 'name', 'Project name'
+    %th=sortable 'client_name', 'Client name'
+    %th=sortable 'manager_name', 'Manager'
     %th Applications list
     %th Developers list
   - for list in @projects
@@ -23,7 +23,20 @@
       %td=link_to list.name, project_path(list)
       %td=link_to list.client_name, client_path(list.client_id)
       %td=link_to list.manager_name, manager_path(list.manager_id)
-      %td=app_link("Show developers", "applications", list.product_id)
+      %td=app_link("Show applications", "applications", list.product_id)
       %td=link_to "Show developers", '#', id:"#{list.id}", class:"get-list-developers"
-    
-  
+
+  %tr
+    %td{colspan:'5'}
+      %ul{class:"limit pull-right"}
+        %li=link_to '10', '?lim=10'
+        %li /
+        %li=link_to '30', '?lim=30'
+        %li /
+        %li=link_to '50', '?lim=50'
+        %li /
+        %li=link_to 'all', '?lim=all'
+      
+%div{class:"well well-small"}
+  %div{style:'display:table; margin:0 auto;'}
+    = paginate @projects
