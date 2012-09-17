@@ -26,7 +26,7 @@
       %td= link_to application.id, application
       %td= link_to application.project_name, project_path(application.project_id)
       %td= application.product_name
-      %td= application.bundle_identifier
+      %td= application.bundle_identifier.nil?
       %td= application.bundle_version
       %td= application.relative_path
       %td= application.title

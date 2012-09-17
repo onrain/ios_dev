@@ -24,8 +24,8 @@
       %td= link_to developer.id, developer
       %td= developer.name
       %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
-      %td= developer.email
-      %td= developer.personal_email
+      %td= check_f(developer.email).html_safe
+      %td= check_f(developer.personal_email).html_safe
       %td= set_time developer.created_at
       %td= set_time developer.updated_at
       %td

@@ -88,6 +88,7 @@ $ ->
           i+=1
       else if count is 0
         $(this).attr('disabled':'disabled')
+        $(this).attr('title', 'Empty!')
         $('#link-to-edit-app').remove()
         $(this).after('<span id="link-to-edit-app"><span class="icon-plus-sign" style="color:green;"></span></span>')
   $('#link-to-edit-app').live 'click': ->
