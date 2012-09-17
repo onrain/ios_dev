@@ -4,10 +4,11 @@ class ClientsController < ApplicationController
 
   def index
     unless params[:get].blank?
+      return render json: {} if params[:handle_id].blank?
       @res = Handle.where(client_id:params[:handle_id]).to_a
       client = Client.find(params[:handle_id])
       @res[@res.size] = {handle_name:client.handle, client_id:client.id}
-      return render json: @res
+      return render json: @res 
     end
     
     @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)

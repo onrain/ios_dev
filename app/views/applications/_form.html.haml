@@ -10,15 +10,15 @@
             %li= msg
     %div{class:"store", style:"display:none;"}
     %tr
-      %th= f.label :project_id
-      %th
+      %td= f.label :project_id
+      %td
         = f.select("project_id", Project.all.collect{|e| [e.name, e.id]},{:include_blank => 'None'})
         %p{id:"create-priject-hanle"}
     %tr
       %td= f.label :product_name
       %td= f.text_field :product_name
     %tr
-      %th= f.label :bundle_identifier
+      %td= f.label :bundle_identifier
       %td= f.text_field :bundle_identifier
     %tr
       %td= f.label :bundle_version
