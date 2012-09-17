@@ -88,5 +88,10 @@ $ ->
           i+=1
       else if count is 0
         $(this).attr('disabled':'disabled')
-
+        $('#link-to-edit-app').remove()
+        $(this).after('<span id="link-to-edit-app"><span class="icon-plus-sign" style="color:green;"></span></span>')
+  $('#link-to-edit-app').live 'click': ->
+    id = $(this).parent().children().eq(0).attr('id')
+    if confirm("Doesn't have any developers.\nDo yo want edit this project (id="+id+")?")
+      document.location.href = '/admin/projects/'+id+'/edit'
   
