@@ -42,4 +42,6 @@ gem 'haml-rails'
 gem 'coffee-filter'
 
 
+gem 'capistrano'
+
 gem 'json'
