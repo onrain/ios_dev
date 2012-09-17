@@ -6,7 +6,7 @@ class ApplicationsController < ApplicationController
   def index
     
     unless params[:get].blank?
-      @get_app_in_admin_index = Application.find_all_by_id(params[:id])
+      @get_app_in_admin_index = Application.find_all_by_project_id(params[:id])
       return render json: @get_app_in_admin_index
     end
 

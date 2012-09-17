@@ -41,6 +41,7 @@ gem 'haml-rails'
 
 gem 'coffee-filter'
 
+gem 'capistrano-deploy', :group => :development, :require => false
 
 gem 'capistrano'
 
