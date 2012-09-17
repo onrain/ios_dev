@@ -11,8 +11,15 @@ module ApplicationHelper
   end
   
   def check_f(param)
-    param ||="<div style='color:gray; font-size:13px;'>empty</div>"
+    if param.nil? or param.empty?
+      param ="<div style='color:gray; font-size:13px;'>empty</div>".html_safe
+    else
+      param
+    end
   end
+
+
+
 
   def back(path)
     if request.env['HTTP_REFERER'] =~ /admin/

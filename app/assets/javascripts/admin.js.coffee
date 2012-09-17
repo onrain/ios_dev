@@ -94,5 +94,5 @@ $ ->
   $('#link-to-edit-app').live 'click': ->
     id = $(this).parent().children().eq(0).attr('id')
     if confirm("Doesn't have any developers.\nDo yo want edit this project (id="+id+")?")
-      document.location.href = '/admin/projects/'+id+'/edit'
+      window.open('/admin/projects/'+id+'/edit')
   

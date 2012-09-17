@@ -16,10 +16,10 @@
       %td= check_path(dev.manager_name, dev.manager_id, path:"managers").html_safe
     %tr
       %th Email:
-      %td= dev.email
+      %td= check_f dev.email
     %tr
       %th Personal email:
-      %td= dev.personal_email
+      %td= check_f dev.personal_email
 %div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_developer_path(dev), class:"btn"        

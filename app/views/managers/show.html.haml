@@ -10,10 +10,10 @@
     %td= @manager.name
   %tr
     %th Personal email:
-    %td= @manager.personal_email
+    %td= check_f @manager.personal_email
   %tr
     %th Office email:
-    %td= @manager.office_email
+    %td= check_f @manager.office_email
 %div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_manager_path(@manager), class:"btn"

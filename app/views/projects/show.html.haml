@@ -19,10 +19,10 @@
       %td= proj.name
     %tr
       %th Svn:
-      %td proj.svn
+      %td= check_f proj.svn
     %tr
       %th Handle:
-      %td= proj.handle
+      %td= check_f proj.handle
 %div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_project_path(proj), class:"btn"

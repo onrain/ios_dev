@@ -17,16 +17,16 @@
       %td= app.product_name
     %tr
       %th Bundle identifier:
-      %td= app.bundle_identifier
+      %td= check_f app.bundle_identifier
     %tr
       %th Bundle version:
-      %td= app.bundle_version
+      %td= check_f app.bundle_version
     %tr
       %th Relative path:
-      %td= app.relative_path
+      %td= check_f app.relative_path
     %tr
       %th Title:
-      %td= app.title
+      %td= check_f app.title
 
 %div{class:"well well-small well-width"}  
   .btn-group

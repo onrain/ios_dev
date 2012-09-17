@@ -4,7 +4,7 @@ $ ->
       $.get '/admin/projects/'+$(this).attr('value'), (data) =>
         if data[0].handle is ''
           $('#goto-edit-project').remove()
-          $('#application_project_id').after('<div id="goto-edit-project">Project handled name is empty. &nbsp; <a href="/admin/projects/'+$(this).val()+'/edit" target="blank">Edit project</a></div>')
+          $('#application_project_id').after('<div id="goto-edit-project">Project handle name is empty. &nbsp; <a href="/admin/projects/'+$(this).val()+'/edit" target="blank">Edit project</a></div>')
         $('.store').empty()
         $('.store').text(data[0].handle)
 

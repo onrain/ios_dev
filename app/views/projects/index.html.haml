@@ -26,8 +26,8 @@
       %td= check_path(project.client_name, project.client_id, path:"clients").html_safe
       %td= check_path(project.manager_name, project.manager_id, path:"managers").html_safe
       %td= project.name
-      %td= project.svn
-      %td= project.handle
+      %td= check_f(project.svn)
+      %td= check_f(project.handle)
       %td= set_time project.created_at
       %td= set_time project.updated_at
       %td
