@@ -56,40 +56,6 @@ $ ->
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   $('#app-list').modal(
           "backdrop" : "static",
           "keyboard" : true,
@@ -161,9 +127,8 @@ $ ->
     
 
     $('#delete_'+id).live 'click': ->
-      $('.close').click()
-      $('.append-projects').empty()
-      alert('Record deleted success!')
+      location.reload(true)
+
 
         
     
@@ -240,39 +205,7 @@ $ ->
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   
   $('#show-dev').click ->
     $('#dev-list').modal(show:true)
@@ -321,36 +254,6 @@ $ ->
   $('.error_proj').click ->
     $(this).val('')
     $(this).removeClass('error_proj')
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   

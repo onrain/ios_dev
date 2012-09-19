@@ -1,14 +1,8 @@
 = stylesheet_link_tag 'admin', media:'all'
 = javascript_include_tag(:admin)
 
-%div{class:"modal hide fade", id:"app-list"}
-  .modal-header
-    %button{class:"close", :"data-dismiss"=>:"modal"}
-      ×
-    %h4{id:"app-title"}
+= render 'projects/modal_for_app'
 
-  %div{class:"modal-body"}
-    .index-content
 
 
 

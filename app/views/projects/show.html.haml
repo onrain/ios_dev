@@ -1,3 +1,5 @@
+= render 'modal_for_app'
+
 -if notice
   %div{class:"alert alert-success"}
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
@@ -30,7 +32,7 @@
           - i = 0
           - unless @application.empty? 
             - for app in @application
-              = link_to app.product_name, application_path(app.id)
+              = link_to app.product_name, '#', id:app.id, class:"prev-app"
               = ','  unless i+1 == @application.size
               - i += 1
           - else
@@ -40,9 +42,11 @@
     %tr{id:'new-application'}
       %td{colspan:'2'}
         .notice-project
-        = link_to 'Hide', '#', id:"hide_btn", class:"btn btn-info btn-small"
-        &nbsp;&nbsp;
-        .icon-chevron-up
+        %div{class:"well well-small", style:"width:30px;", id:"hide_btn"}
+          %div{class:"icon-chevron-up", style:"margin-left:7px;"}
+          Hide
+
+
         = form_for(@new_app, remote:true) do |f|
           %table{class:"table table-bordered"}
             -if @new_app.errors.any?
