@@ -33,6 +33,7 @@ $ ->
     $('.index-content').empty()
     insert_text = '
         <table class="table table-bordered table-app">
+        <div class="notice-app"></div>
           <tr>
             <th>ID</th>
             <td>'+data.id+'</td>
@@ -75,6 +76,7 @@ $ ->
   
   
   $('.prev-app').live 'click': ->
+    $('.notice-app').empty()
     $('.index-content').empty()
     $('#app-title').empty()
     $('#app-list').modal('show':true)
@@ -93,7 +95,7 @@ $ ->
           <table class="table table-bordered table-app">
               <tr>
                 <th>Project ID</th>
-                <td class="show-and-edit-app" id="id"><input id="application_project_id" name="application[project_id]" size="30" type="text" value="'+data.project_id+'" /></td>
+                <td class="show-and-edit-app" id="id"><input id="application_project_name" name="application[project_id]" size="30" type="text" value="'+data.project_id+'" /></td>
               </tr>
               <tr>
                 <th>Product name</th>
@@ -129,9 +131,22 @@ $ ->
         $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
           $('.index-content').empty()
           $('.index-content').append(append_html(data))
+          $('.notice-app').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Application was success update!</span>')    
+          $('.notice-app').mousemove ->
+            $(this).empty()
 
-
-
+        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+          $('.notice-project').empty()
+          errors = $.parseJSON(data.responseText)
+          if typeof(errors.title) isnt 'undefined'
+            $('#application_title').val(errors.title).addClass('error_proj')
+          if typeof(errors.product_name) isnt 'undefined'  
+            $('#application_product_name').val(errors.product_name).addClass('error_proj')
+        $('.notice-app').empty()
+  $('.error_proj').live 'click': ->
+    $(this).val('')
+    $(this).removeClass('error_proj')
+  
   
   $('.sort').css('color':'black')
   $('.sort').mousemove ->
