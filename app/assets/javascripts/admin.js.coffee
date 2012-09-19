@@ -66,6 +66,8 @@ $ ->
             <th>Action</th>
             <td>
               <a id="edit_'+data.id+'"class="btn btn-small">Edit</a>
+              &nbsp;
+              <a rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'" href="/admin/applications/'+data.id+'?proj='+data.project_id+'">Destroy</a>
             </td>
           </tr>
         </table>
@@ -85,7 +87,17 @@ $ ->
       $('#app-title').append('Application: '+data.product_name)
       $('.index-content').empty()
       $('.index-content').append(append_html(data))
-      
+    
+    
+
+    $('#delete_'+id).live 'click': ->
+      $('.close').click()
+      $('.append-projects').empty()
+      alert('Record deleted success!')
+
+        
+    
+     
     $('#edit_'+id).live 'click': ->
 
       $.get '/admin/applications?get=app&id='+id, (data) =>
@@ -142,10 +154,21 @@ $ ->
             $('#application_title').val(errors.title).addClass('error_proj')
           if typeof(errors.product_name) isnt 'undefined'  
             $('#application_product_name').val(errors.product_name).addClass('error_proj')
-        $('.notice-app').empty()
+            
+        $('.notice-app').empty()    
+
+
+        
   $('.error_proj').live 'click': ->
     $(this).val('')
     $(this).removeClass('error_proj')
+  
+  
+  
+  
+      
+  
+  
   
   
   $('.sort').css('color':'black')

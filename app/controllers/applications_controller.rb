@@ -84,7 +84,8 @@ class ApplicationsController < ApplicationController
 
     respond_with(@application) do |format|
       format.html { redirect_to applications_url }
-      format.json { head :no_content }
+      format.json { render json: [status:'deleted'] }
+
     end
   end
 

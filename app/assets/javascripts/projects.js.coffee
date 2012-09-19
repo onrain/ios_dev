@@ -76,9 +76,9 @@ $ ->
     
       
   
-    $('.error_proj').click ->
-      $(this).val('')
-      $(this).removeClass('error_proj')
+  $('.error_proj').click ->
+    $(this).val('')
+    $(this).removeClass('error_proj')
   
   
   
