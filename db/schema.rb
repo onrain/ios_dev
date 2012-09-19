@@ -11,17 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120905125902) do
+ActiveRecord::Schema.define(:version => 20120918112955) do
 
   create_table "applications", :force => true do |t|
     t.integer  "project_id"
     t.string   "product_name"
     t.string   "bundle_identifier"
-    t.string   "bundle_version"
+    t.float    "bundle_version",    :default => 1.0
     t.string   "relative_path"
     t.string   "title"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   create_table "clients", :force => true do |t|

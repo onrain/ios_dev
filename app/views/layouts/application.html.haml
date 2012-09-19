@@ -3,20 +3,21 @@
   %head
     %title iOSmanager
     /= stylesheet_link_tag "application", :media => "all"
-    = javascript_include_tag "application"
-    = csrf_meta_tags
 
+    = csrf_meta_tags
+    = javascript_include_tag(:application)
     = stylesheet_link_tag "bootstrap_and_overrides"
-    -if request.fullpath =~ /clients/
-      = stylesheet_link_tag "clients", :media => "all"
-    -if request.fullpath =~ /projects/
-      = stylesheet_link_tag "projects", :media => "all"
+    = set_layouts
 
 
   %body
-        
+    - if request.fullpath =~ /admin$/
+      = stylesheet_link_tag 'admin', media:'all'
+      = javascript_include_tag(:admin)
     -if request.fullpath =~ /admin/
       = stylesheet_link_tag 'scaffolds', media:'all'
+      
+
       :css
         .select-th { background: rgba(153,153,153,0.3) !important; }
         .well-width{ width:980px; margin: auto; }
@@ -25,8 +26,10 @@
         ul.limit li {float: left; list-style: none; font-size: 16x; padding-left:5px;}
         .icon-plus-sign{color:green;}
         .icon-plus-sign:hover{cursor:pointer;}
-
-  
+        .icon-edit{position:absolute !important; margin-left:75px;}
+        .icon-edit:hover{cursor:pointer; color:#cccccc; }
+        .icon-ok-sign{color:green;}
+        .icon-ok-sign:hover{cursor:pointer;}
       = render 'admin/nav'
 
     = yield

@@ -7,6 +7,7 @@ class ApplicationsController < ApplicationController
     
     unless params[:get].blank?
       @get_app_in_admin_index = Application.find_all_by_project_id(params[:id])
+      @get_app_in_admin_index = Application.find(params[:id]) if params[:get].eql? 'app'
       return render json: @get_app_in_admin_index
     end
 
@@ -39,8 +40,9 @@ class ApplicationsController < ApplicationController
 
     respond_with(@application) do |format|
       if @application.save
+        proj_id = params[:application][:project_id]
         format.html { redirect_to @application, notice: 'Application was successfully created.' }
-        format.json { render json: @application, status: :created, location: @application }
+        format.json { render json: Application.where(project_id:proj_id), status: :created, location: @application }
       else
         format.html { render action: "new" }
         format.json { render json: @application.errors, status: :unprocessable_entity }

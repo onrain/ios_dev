@@ -23,6 +23,58 @@
     %tr
       %th Handle:
       %td= check_f proj.handle
+    %tr
+      %th Applications
+      %td
+        .append-applications
+          - i = 0
+          - unless @application.empty? 
+            - for app in @application
+              = link_to app.product_name, application_path(app.id)
+              = ','  unless i+1 == @application.size
+              - i += 1
+          - else
+            Empty
+        %hr
+        = link_to "Add new application", '#', class:"btn btn-success btn-small", id:"show-btn"
+    %tr{id:'new-application'}
+      %td{colspan:'2'}
+        .notice-project
+        = link_to 'Hide', '#', id:"hide_btn", class:"btn btn-info btn-small"
+        &nbsp;&nbsp;
+        .icon-chevron-up
+        = form_for(@new_app, remote:true) do |f|
+          %table{class:"table"}
+            -if @new_app.errors.any?
+              %div{class:"alert alert-error"}
+                %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+                  &times;
+                %h3= "#{pluralize(@new_app.errors.count, "error")} prohibited this post from being saved:"
+                %ul
+                  - @new_app.errors.full_messages.each do |msg|
+                    %li= msg
+            %div{class:"store", style:"display:none;"}
+            = f.hidden_field :project_id, value:proj.id
+            %tr
+              %td= f.label :product_name
+              %td= f.text_field :product_name
+            %tr
+              %td= f.label :bundle_identifier
+              %td= f.text_field :bundle_identifier
+            %tr
+              %td= f.label :bundle_version
+              %td= f.text_field :bundle_version
+            %tr
+              %td= f.label :relative_path
+              %td= f.text_field :relative_path
+            %tr
+              %td= f.label :title
+              %td= f.text_field :title
+            %tr
+              %td{colspan:"2"}= f.submit 'Save', class:"btn"
+        
+        
+          
 %div{class:"well well-small well-width"}  
   .btn-group
     = link_to 'Edit', edit_project_path(proj), class:"btn"

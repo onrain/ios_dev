@@ -1,1 +1,1 @@
-rvm rvmrc load
+rvmrc load

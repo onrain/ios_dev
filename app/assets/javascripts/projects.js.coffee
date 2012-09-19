@@ -5,6 +5,48 @@ $ ->
     'show' : false
     )
 	
+  
+  
+  
+  
+  
+  $('#new-application').hide()
+  
+  
+  $('#show-btn').click ->
+    $('.notice-project').empty()
+    $('#new-application').show()
+    $('#show-btn').hide()
+  
+  
+  $('#hide_btn').click ->
+    $('.notice-project').empty()
+    $('#new-application').hide()
+    $('#show-btn').show()
+
+  
+  
+  
+  
+  
+  
+  $('.prev-app').click ->
+    alert 1
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   $('#show-dev').click ->
     $('#dev-list').modal(show:true)
     $('#dev-input').val('')
@@ -16,93 +58,75 @@ $ ->
     $('input[type="checkbox"]:checked + span').each ->
       $('.select-dev-list').append("[ "+$(this).text()+" ]")
       
-      
-      
-      
-  $('#dev-input').bind 'input': ->
-    $('#dev-link-remote').attr('href', "/admin/developers/?developer_name="+$(this).val())
   
-  
-  $('#dev-link-remote').click ->
-      $('.handle-notice').empty()
-    $('a[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-      $('.handle-notice').empty()
-      errors = $.parseJSON(data.responseText)
-      if status is 'error'
-        $('.dev-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle name '+errors.name+'</span>')
 
-      
-    $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-      $('.handle-notice').empty()
-      $('.dev-notice').empty()
-      $('.searchable').append("<p><input type='checkbox' id='project_developer_ids_' disabled='disabled' name='project[developer_ids][]' value='"+data.id+"' /><span>"+data.name+"</span>&nbsp;<span class='icon-exclamation-sign' style='color:red;'></span></p>")     
-      $('.dev-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Developer was success create!</span>')
-      $('.dev-reload-notice').empty()
-      $('.dev-reload-notice').html("<a id='reload'>For apply changes please reload page!</a>")
-    
-    $('#reload').live 'click': ->
-      window.location.reload()
-      #$('#show-dev').click()
-    $('#reload').live 'mousemove': ->
-      $(this).css('cursor':'pointer')
-    $('.dev-notice').mousemove ->
-      $(this).empty()
   
   
   
   
-      
-  $('#project_name').bind 'input': ->    
+  
+  
+  $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
           
-    $('.pn').text($(this).val())
-  
-  
-  $('.change_handle').append('<i class="icon-plus-sign" id="proj-pop" style="position:absolute; margin-left:5px; margin-top:6px;"><i/>')
-  
-  
-  $('.popover-inner').children().eq(0).empty()
-
-  $('#proj-pop').live 'click': ->
-
-    $(this).popover(
-      content: ->
-        $(this).parent().next().html()
-      placement: 'bottom'
-    )
-    
-    
-    
-  
-  $('#proj-pop').live 'click': ->
-    
-    if $('#proj-h-variants').text().length == 0
-      id = $('#project_client_id option:selected').val()
-      pn = $('#project_name').val()
-      get_and_push_handle(id, pn)
-  
-  
-     
-  $('#project_client_id option').click ->
-    id = $(this).val()
-    pn = $('#project_name').val()
-    get_and_push_handle(id, pn)
-  
-  get_and_push_handle = (id, pn) ->
-    $.get "/admin/clients?get=handle&handle_id="+id, (data) =>
+    $('.notice-project').empty()
+    $('.notice-project').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
+    $('.append-applications').empty()     
+    count = Object.keys(data).length
+    i = 0
+    while i < count
+      $('.append-applications').append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
+      if i+1 isnt count
+        $('.append-applications').append(", ")
+      i += 1
       
-      $('#proj-h-variants').empty()
       
-      count = Object.keys(data).length
-      if count is 0
-        return $('#proj-h-variants').append('<p>Empty.</p>')
-      
-      i=0
-      proj_name = $('#project_name').val()
-      while i < count
-        $('#proj-h-variants').append('<a style="cursor:pointer;" class="append-h">'+data[i].handle_name+'/<span class="pn">'+pn+'</span>'+'</a><hr />')
+  $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+    $('.notice-project').empty()
+    errors = $.parseJSON(data.responseText)
 
-        i+=1
-      $('.append-h').live 'click': ->
-        $('#project_handle').val($(this).text())
-        
-      return 0;
+    if typeof(errors.title) isnt 'undefined'
+      $('#application_title').val(errors.title).addClass('error_proj')
+    if typeof(errors.product_name) isnt 'undefined'  
+      $('#application_product_name').val(errors.product_name).addClass('error_proj')
+    
+      
+  
+    $('.error_proj').click ->
+      $(this).val('')
+      $(this).removeClass('error_proj')
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

@@ -1,3 +1,15 @@
+%div{class:"modal hide fade", id:"app-list"}
+  .modal-header
+    %button{class:"close", :"data-dismiss"=>:"modal"}
+      ×
+
+    %div{class:"modal-body"}
+      .index-content
+
+
+
+
+
 -if notice
   %div{class:"alert alert-success"}
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
@@ -27,7 +39,7 @@
       %td= link_to application.project_name, project_path(application.project_id)
       %td= application.product_name
       %td= check_f(application.bundle_identifier)
-      %td= check_f(application.bundle_version)
+      %td= application.bundle_version
       %td= check_f(application.relative_path)
       %td= check_f(application.title)
       %td= set_time application.created_at

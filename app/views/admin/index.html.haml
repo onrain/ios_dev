@@ -1,3 +1,14 @@
+%div{class:"modal hide fade", id:"app-list"}
+  .modal-header
+    %button{class:"close", :"data-dismiss"=>:"modal"}
+      ×
+    %h4{id:"app-title"}
+
+  %div{class:"modal-body"}
+    .index-content
+
+
+
 %table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
   %tr
     %th=sortable 'name', 'Project name'
