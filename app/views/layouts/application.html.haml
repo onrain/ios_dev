@@ -14,8 +14,6 @@
      
     -if request.fullpath =~ /admin/
       = stylesheet_link_tag 'scaffolds', media:'all'
-      = stylesheet_link_tag 'admin', media:'all'
-      = javascript_include_tag(:admin)
 
       :css
         .select-th { background: rgba(153,153,153,0.3) !important; }
@@ -32,6 +30,7 @@
         .icon-ok-sign:hover{cursor:pointer;}
         .append-projects{ width:130px;}
         .error_proj{border-width: 2px; color: red !important; border-color: rgba(204,51,51,0.5) !important;}
+        a.prev-app:hover{cursor: pointer;}
       = render 'admin/nav'
 
     = yield

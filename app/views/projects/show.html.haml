@@ -44,7 +44,7 @@
         &nbsp;&nbsp;
         .icon-chevron-up
         = form_for(@new_app, remote:true) do |f|
-          %table{class:"table"}
+          %table{class:"table table-bordered"}
             -if @new_app.errors.any?
               %div{class:"alert alert-error"}
                 %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}

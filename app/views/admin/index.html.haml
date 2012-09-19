@@ -1,3 +1,6 @@
+= stylesheet_link_tag 'admin', media:'all'
+= javascript_include_tag(:admin)
+
 %div{class:"modal hide fade", id:"app-list"}
   .modal-header
     %button{class:"close", :"data-dismiss"=>:"modal"}
@@ -9,7 +12,7 @@
 
 
 
-%table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
+%table{class:"table table-bordered", style:"width:900px; margin: 0 auto;"}
   %tr
     %th=sortable 'id', 'ID'
     %th=sortable 'name', 'Project name'
