@@ -34,6 +34,18 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
   end
 
+  def remote_update
+    @application = Application.find(params[:id])
+
+    respond_with(@application) do |format|
+      if @application.update_attributes(params[:application])
+        format.json { render json: Application.find(params[:id]) }
+      else
+        format.json { render json: @application.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   def create
     @application = Application.new(params[:application])

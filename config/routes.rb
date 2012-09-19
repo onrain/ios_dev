@@ -5,7 +5,7 @@ IOSmanager::Application.routes.draw do
   get '/admin/handle/:id' => "clients#handle", as:"handle"
   post '/admin/handle/:id' => "clients#handle"
   delete '/admin/remove/:id' => "clients#remove"
-
+  post '/admin/remote_update/:id' => "applications#remote_update", as:"remote_app"
 
   scope "/admin" do
     resources :clients

@@ -11,12 +11,11 @@
 
 
   %body
-    - if request.fullpath =~ /admin$/
-      = stylesheet_link_tag 'admin', media:'all'
-      = javascript_include_tag(:admin)
+     
     -if request.fullpath =~ /admin/
       = stylesheet_link_tag 'scaffolds', media:'all'
-      
+      = stylesheet_link_tag 'admin', media:'all'
+      = javascript_include_tag(:admin)
 
       :css
         .select-th { background: rgba(153,153,153,0.3) !important; }
@@ -29,7 +28,9 @@
         .icon-edit{position:absolute !important; margin-left:75px;}
         .icon-edit:hover{cursor:pointer; color:#cccccc; }
         .icon-ok-sign{color:green;}
+        table.table-app td{width:50%;}
         .icon-ok-sign:hover{cursor:pointer;}
+        .append-projects{ word-wrap: break-word; }
       = render 'admin/nav'
 
     = yield

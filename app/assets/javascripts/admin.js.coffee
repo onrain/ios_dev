@@ -26,23 +26,20 @@ $ ->
           'show' : false
           )
   
-  $('.index-content').parent().append('<div id="store" style="display:none;"></div')
+ 
   
   
-  
-  $('.prev-app').live 'click': ->
+  append_html = (data) ->
     $('.index-content').empty()
-    $('#app-title').empty()
-    $('#app-list').modal('show':true)
-    id = $(this).attr('id')
-    $.get '/admin/applications?get=app&id='+id, (data) =>
-      count = Object.keys(data).length
-      $('#app-title').append('Application: '+data.product_name)
-      $('.index-content').append('
-        <table class="table table-bordered">
+    insert_text = '
+        <table class="table table-bordered table-app">
           <tr>
             <th>ID</th>
-            <td class="show-and-edit-app" id="id">'+data.id+'</td>
+            <td>'+data.id+'</td>
+          </tr>
+          <tr>
+            <th>Project ID</th>
+            <td class="show-and-edit-app" id="project_id">'+data.project_id+'</td>
           </tr>
           <tr>
             <th>Product name</th>
@@ -64,56 +61,77 @@ $ ->
             <th>Title</th>
             <td class="show-and-edit-app" id="title">'+data.title+'</td>
           </tr>
+          <tr>
+            <th>Action</th>
+            <td>
+              <a id="edit_'+data.id+'"class="btn btn-small">Edit</a>
+            </td>
+          </tr>
         </table>
-        ')
+        '
+  
+  
+  
+  
+  
+  $('.prev-app').live 'click': ->
+    $('.index-content').empty()
+    $('#app-title').empty()
+    $('#app-list').modal('show':true)
+    id = $(this).attr('id')
+    $.get '/admin/applications?get=app&id='+id, (data) =>
+      $('#app-title').append('Application: '+data.product_name)
+      $('.index-content').empty()
+      $('.index-content').append(append_html(data))
       
-  
-  
-  
-  $('.show-and-edit-app').live 'mousemove': ->
-    if $(this).children().eq(1).attr('class') isnt 'icon-ok-sign save-app pull-right'
-      $('.edit-app').remove()
-      $(this).append('<i class="icon-edit edit-app pull-right" style="font-size:19px;"></i>')
-    
-  $('.show-and-edit-app').live 'mouseleave': ->
-    $('.edit-app').remove()
-  
-  
-   
-  
-  $('.edit-app').live 'click': ->
-    flag = 1  
-    
-    len = $('.index-content').find('input').length
-    
-    
-    this_el = $(this).parent().eq(0)
-    this_id = this_el.attr('id')
-    th = $(this).parent().parent().find('th').text()
-    th_text = th.toLowerCase().replace(" ","_")
-    
-    if len > 0
-      if confirm('Are you sure?')
-        flag = 1
-      else flag = 0
+    $('#edit_'+id).live 'click': ->
 
+      $.get '/admin/applications?get=app&id='+id, (data) =>
+        $('.index-content').empty()
+        $('.index-content').append('
+         <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
+          <table class="table table-bordered table-app">
+              <tr>
+                <th>Project ID</th>
+                <td class="show-and-edit-app" id="id"><input id="application_project_id" name="application[project_id]" size="30" type="text" value="'+data.project_id+'" /></td>
+              </tr>
+              <tr>
+                <th>Product name</th>
+                <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
+              </tr>
+              <tr>
+                <th>Bundle identifier</th>
+                <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
+              </tr>
+              <tr>
+                <th>Bundle version</th>
+                <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
+              </tr>
+              <tr>
+                <th>Relative path</th>
+                <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" /></td>
+              </tr>
+              <tr>
+                <th>Title</th>
+                <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
+              </tr>
+              <tr>
+                <th>Action</th>
+                <td>
+                  <input class="btn" name="commit" type="submit" value="Save" />
+                </td>
+              </tr>
+          </table>
+        </form>
+          ')
         
-    if flag is 1
-      
-      $('#store').text(this_el.text())
-  
-  
-  
-  
-  
-      $('#store').after("<span id='el_id'>"+this_id+"</span>")
-      this_el.empty()
-      this_el.append('<input type="text" name="'+th_text+'" id="'+$('#store').children().eq(0).html()+'" value="'+$('#store').text()+'">')
-  
-      this_el.append('<i class="icon-ok-sign save-app pull-right" style="font-size:19px;" title="Save this?"></i>')
+        
+        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+          $('.index-content').empty()
+          $('.index-content').append(append_html(data))
 
-  
-  
+
+
   
   $('.sort').css('color':'black')
   $('.sort').mousemove ->

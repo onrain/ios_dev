@@ -11,6 +11,7 @@
 
 %table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
   %tr
+    %th=sortable 'id', 'ID'
     %th=sortable 'name', 'Project name'
     %th=sortable 'client_name', 'Client name'
     %th=sortable 'manager_name', 'Manager'
@@ -18,13 +19,14 @@
 
   - for list in @projects
     %tr
+      %td=link_to list.id, project_path(list)
       %td=link_to list.name, project_path(list)
 
       %td=link_to list.client_name, client_path(list.client_id)
       %td=link_to list.manager_name, manager_path(list.manager_id)
       %td
         =app_link("Show applications", "applications", list.id)
-        %div{class:"append-projects"}
+        %div{class:"append-projects", style:"width:100px;"}
 
   %tr
     %td{colspan:'5'}
