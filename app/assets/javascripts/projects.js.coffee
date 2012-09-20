@@ -321,5 +321,35 @@ $ ->
   
   
   
+  $('#application_product_name').bind 'input': ->
+
+    $('.relative-variant').empty()
+    client = $('#proj-client-h').text().toLowerCase().replace(/\s+/g,'')
+    project = $('#proj-name').text().toLowerCase().replace(/\s+/g,'')
+    
+    name = $(this).val().toLowerCase().replace(/\s+/g,'')
+    clidot = $('#proj-client-h').text().toLowerCase().replace(/\s+/g,'.')
+    namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
+    $('.relative-variant').append(
+      '<p><span id="handle"><span>'+client+'.'+project+'.<span class="rel_name">'+name+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span>'+client+'_'+project+'_<span class="rel_name">'+name+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span>'+project+'_'+client+'_<span class="rel_name">'+name+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+
+    )
+    
+    
+    
+  $('.icon-ok').live 'click': ->
+    value_rel = $(this).parent().children().eq(0).text()
+    $('#application_relative_path').val(value_rel)
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   

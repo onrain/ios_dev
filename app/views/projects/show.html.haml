@@ -12,13 +12,13 @@
       %td= proj.id
     %tr
       %th Client:
-      %td= check_path(proj.client_name, proj.client_id, path:"clients").html_safe
+      %td{id:"proj-client-h"}= check_path(proj.client_name, proj.client_id, path:"clients").html_safe
     %tr
       %th Manager:
       %td= check_path(proj.manager_name, proj.manager_id, path:"managers").html_safe
     %tr
       %th Name:
-      %td= proj.name
+      %td{id:"proj-name"}= proj.name
     %tr
       %th Svn:
       %td= check_f proj.svn
@@ -70,7 +70,9 @@
               %td= f.text_field :bundle_version
             %tr
               %td= f.label :relative_path
-              %td= f.text_field :relative_path
+              %td
+                = f.text_field :relative_path
+                .relative-variant
             %tr
               %td= f.label :title
               %td= f.text_field :title
