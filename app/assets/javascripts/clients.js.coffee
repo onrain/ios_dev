@@ -4,9 +4,8 @@ $ ->
     constructor: ->
       @init()
       @company()
-      @handle()
-      @index_h_list()
-  
+      @handle_name()
+   
     init: ->
       $('#new-company').modal(
           "backdrop" : "static",
@@ -14,19 +13,6 @@ $ ->
           'show' : false
           )
       
-      $('#handle-name').modal(
-          "backdrop" : "static",
-          "keyboard" : true,
-          'show' : false
-          )
-        
-      $('#get-handles').click ->
-        $('#handle-name').modal(show:true)
-        $('.handle-notice').empty()
-        
-      $('.get-handles').click ->
-        $('#handle-name').modal(show:true)
-        $('.handle-notice').empty()
         
         
       $('#get-new-company').click ->
@@ -38,58 +24,7 @@ $ ->
    
    
    
-        
-        
-    index_h_list: ->
-      $('.get-handles').click ->
-        $('.add-or-get-h').popover('hide')
-        $(this).removeClass('colored')
-        $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->        
-          $('#append-index-handle').empty()  
-          count = Object.keys(data).length
-          i = 0
-          while i < count
-            $('#append-index-handle').append("<tr><td><a href='/admin/clients/"+(data[i].client_id)+"'>"+data[i].handle_name+"</td></tr>")
-            i += 1
-    
-      $('.popover-inner').children().eq(0).empty()
       
-      $('.add-or-get-h').popover(
-        content: ->
-          $(this).next().html()
-      )
-
-      $('.add-or-get-h').click ->
-        $('.notice-index').empty()  
-    
-    
-      $('#add-index-h').live 'click': ->
-        id = $(this).attr('title')
-        
-        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-          $('#'+id).addClass('colored')
-          
-          $('.notice-index').empty()
-          $(this).parent().parent().find('.notice-index').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
-          $('#append-index-handle').empty()     
-          count = Object.keys(data).length
-          i = 0
-          while i < count
-            $('#append-index-handle').append("<tr><td><a href='/admin/clients/"+(data[i].client_id)+"'>"+data[i].handle_name+"</td></tr>")
-            i += 1
-            
-            
-        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-          $('.notice-index').empty()
-          errors = $.parseJSON(data.responseText)
-          $(this).parent().parent().find('.notice-index').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle '+errors.handle_name+'</span>')
-
-
-      $('.notice-index').live 'mousemove': ->
-        $(this).empty()
-        
-        
-        
         
             
 
@@ -113,49 +48,31 @@ $ ->
           $('.form-notice').mousemove ->
             $(this).empty()
       
-    handle: ->  
-      
-      $('#new-handle').click ->
-        $('.handle-notice').empty()
+    handle_name: ->  
+      $('#client_name').bind 'input': ->
+        $('.handle-variant').empty()
+        company = $('#client_company_id :selected').text().toLowerCase().replace(/\s+/g,'')
+        name = $(this).val().toLowerCase().replace(/\s+/g,'')
+        comdot = $('#client_company_id :selected').text().toLowerCase().replace(/\s+/g,'.')
+        namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
+        $('.handle-variant').append(
+          '<p><span id="handle"><span>'+name+'.<span class="comp_name">'+company+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+          '<p><span id="handle"><span class="comp_name">'+company+'</span>.'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+          '<p><span id="handle"><span class="comp_name">'+company+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+          '<p><span id="handle"><span class="comp_name">'+comdot+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+          '<p><span id="handle"><span class="comp_name">'+company+'</span>_'+namedot+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+          '<p><span id="handle"><span class="comp_name">'+company+'</span>_'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span>'
+          '<p><span id="handle"><span class="comp_name">'+company.substring(0,3)+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+        )
         
-        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-          $('.handle-notice').empty()
-          errors = $.parseJSON(data.responseText)
-          if status is 'error'
-            $('.handle-notice').append('<span class="icon-remove" style="color:red;"></span>&nbsp;<span id="error-append" style="color:red;">Handle name '+errors.handle_name+'</span>')
-          $('.handle-notice').mousemove ->
-            $(this).empty()
-            
-            
-        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-          $('.handle-notice').empty()
-          $('#table-show-handle').empty()
-          count = Object.keys(data).length
-          i=0
-          while i<count
-            $('#table-show-handle').append("<tr id='tr_"+data[i].id+"'><td>"+data[i].handle_name+"<a href='/admin/remove/"+data[i].id+"' data-method='delete' class='rem_link' id='"+data[i].id+"' data-remote='true' data-confirm='Are you sure?' ><i class='icon-remove pull-right' style='color:red;'></i></a></td></tr>")
-            i+=1
-          $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')
-          $('.handle-notice').mousemove ->
-            $(this).empty()
-      
-      
-      $('#text-f-handle').bind 'input': ->
-        $('#text-f-handle').val($(this).val().toLowerCase().replace(" ",".").replace(",","."))
-      
-      
-      $('.rem_link').live 'click': ->
-        $('.handle-notice').empty()
-        l = $('#table-show-handle tr').length
-        id = $(this).attr('id')
-        if l is 1
-          $('#tr_'+id).parent().remove()
-        else
-          $('#tr_'+id).remove()
-        $('.handle-notice').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Deleted success!</span>')
-        $('.handle-notice').mousemove ->
-          $(this).empty()
-      
+      $('#client_company_id option').click ->
+        company = $(this).text().toLowerCase().replace(/\s+/g,'')
+        $('.comp_name').empty()
+        $('.comp_name').text(company)
+        
+      $('.icon-ok').live 'click': ->
+        value_h = $(this).parent().children().eq(0).text()
+        $('#client_handle').val(value_h)
 
   new Client
 

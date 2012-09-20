@@ -57,6 +57,9 @@
               %td
                 = f.text_field :handle
                 .handle-variant
+                - comp = Company.find(params[:id])
+                %di{id:"comp_name", style:"display:none"}
+                  =comp.name
             %tr
               %td{colspan:"2"}
                 = f.submit 'Save', class:"btn"

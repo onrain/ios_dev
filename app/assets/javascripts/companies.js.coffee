@@ -13,6 +13,7 @@ $ ->
   
   
   $('#add-client-btn').click ->
+    $('.handle-variant').empty()
     $('#client_name').val('')
     $('#client_email').val('')
     $('#client_handle').val('')
@@ -52,6 +53,29 @@ $ ->
   $('.error_proj').live 'click': ->
     $(this).val('')
     $(this).removeClass('error_proj')
+
+
+  $('#client_name').bind 'input': ->
+    $('.handle-variant').empty()
+    company = $('#comp_name').text().toLowerCase().replace(/\s+/g,'')
+    name = $(this).val().toLowerCase().replace(/\s+/g,'')
+    comdot = $('#comp_name').text().toLowerCase().replace(/\s+/g,'.')
+    namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
+    $('.handle-variant').append(
+      '<p><span id="handle"><span>'+name+'.<span class="comp_name">'+company+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="comp_name">'+company+'</span>.'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="comp_name">'+company+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="comp_name">'+comdot+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="comp_name">'+company+'</span>_'+namedot+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="comp_name">'+company+'</span>_'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span>'
+      '<p><span id="handle"><span class="comp_name">'+company.substring(0,3)+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+    )
+    
+    
+  $('.icon-ok').live 'click': ->
+    value_h = $(this).parent().children().eq(0).text()
+    $('#client_handle').val(value_h)
+
 
 
 
