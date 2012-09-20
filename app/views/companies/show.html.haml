@@ -21,8 +21,11 @@
     %td
       .client_list
         - if @clients.size > 0
+        - i = 0
           - for cl in @clients
             = link_to cl.name, '#', id:cl.id, class:'prev-client'
+            = ','  unless i+1 == @clients.size
+            - i += 1
         - else
           empty.
   %tr

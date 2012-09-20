@@ -40,6 +40,6 @@
             %li= link_to 'Show', client
             %li= link_to 'Edit', edit_client_path(client)
             %li= link_to 'Destroy', client, :confirm => 'Are you sure?', :method => :delete
-%div{class:"well well-small"}
-  %div{style:'display:table; margin:0 auto;'}
+%div{style:'display:table; margin:0 auto;'}
+  %p
     = paginate @clients

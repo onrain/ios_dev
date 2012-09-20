@@ -47,6 +47,6 @@
             %li= link_to 'Edit', edit_project_path(project)
             %li= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
 
-%div{class:"well well-small"}
-  %div{style:'display:table; margin:0 auto;'}
+%div{style:'display:table; margin:0 auto;'}
+  %p 
     = paginate @projects

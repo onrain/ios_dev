@@ -12,9 +12,15 @@ $ ->
   
   $('#application_bundle_identifier').bind 'input': ->
     $('#wait').remove()
-    $(this).after('<span id="wait">&nbsp;&nbsp;<img src="/assets/load.gif"></span>');
-    $.get '/admin/application?ch=true&val='+$(this).val(), (data) =>
-      #uniqueness
+    #$(this).after('<span id="wait">&nbsp;&nbsp;<img src="/assets/load.gif"></span>');
+    $.get '/admin/applications?ch=true&val='+$(this).val(), (data) =>
+      count = Object.keys(data).length
+      #$('#wait').remove()
+      $('#res').remove()
+      if count is 0
+        $(this).after('&nbsp;&nbsp;<div id="res" style="color:green">Alright!</div>')
+      else
+        $(this).after('&nbsp;&nbsp;<div id="res" style="color:red">This value already taken!</div>')
   
   
   
@@ -267,6 +273,50 @@ $ ->
   $('.error_proj').click ->
     $(this).val('')
     $(this).removeClass('error_proj')
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  $('#project_name').bind 'input': ->
+    $('.proj-h-variants').empty()
+    client = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'')
+    name = $(this).val().toLowerCase().replace(/\s+/g,'')
+    clidot = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'.')
+    namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
+    $('.proj-h-variants').append(
+      '<p><span id="handle"><span>'+name+'.<span class="cli_name">'+client+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="cli_name">'+client+'</span>.'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="cli_name">'+client+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="cli_name">'+clidot+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+      '<p><span id="handle"><span class="cli_name">'+client+'</span>_'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span>'
+      '<p><span id="handle"><span class="cli_name">'+client.substring(0,3)+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+    )
+    
+    
+  $('#project_client_id option').click ->
+    company = $(this).text().toLowerCase().replace(/\s+/g,'')
+    $('.cli_name').empty()
+    $('.cli_name').text(company)
+    
+  $('.icon-ok').live 'click': ->
+    value_h = $(this).parent().children().eq(0).text()
+    $('#project_handle').val(value_h)
   
   
   

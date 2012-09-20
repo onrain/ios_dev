@@ -11,6 +11,12 @@ class ApplicationsController < ApplicationController
       return render json: @get_app_in_admin_index
     end
 
+    unless params[:ch].blank?
+      @check = Application.find_all_by_bundle_identifier(params[:val])
+      return render json: @check
+    end
+
+
     @applications = Application.get_app_list.page(params[:page]).per(10).order("#{sort_column} #{sort_direction}")
     respond_with(@applications)
   end
