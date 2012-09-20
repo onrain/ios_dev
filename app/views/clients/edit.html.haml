@@ -1,27 +1,8 @@
-%div{class:"modal hide fade", id:"handle-name"}
-  .modal-header
-    .handle-notice
-    %button{class:"close", :"data-dismiss"=>:"modal"}
-      ×
-    %h3 Handle list
-
-  %div{class:"modal-body"}
-    = render 'form_handle'
-    %table{class:"table table-bordered table-hover", id:"table-show-handle"}
-      -for h in Handle.find_all_by_client_id(params[:id])
-        %tr{id:"tr_#{h.id}"}
-          %td
-            = h.handle_name
-            =link_to "<i class='icon-remove pull-right' style='color:red;'></i>".html_safe,"/admin/remove/#{h.id}", :"data-method"=>:'delete', :"data-confirm" => :"Are you sure?", class:'rem_link', id:"#{h.id}", :"data-remote"=>:'true'
-              
-
 
 %div{class:"well well-small", align:"center"}
   %h1 Editing client
 
 = render 'form_edit'
-%div{class:"well well-small"}
-  %h4=link_to "Get all handle", '#', id:"get-handles"
 
 
 %div{class:"well well-small"}  

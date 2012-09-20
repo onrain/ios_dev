@@ -10,6 +10,19 @@ $ ->
   
   
   
+  $('#application_bundle_identifier').bind 'input': ->
+    $('#wait').remove()
+    $(this).after('<span id="wait">&nbsp;&nbsp;<img src="/assets/load.gif"></span>');
+    $.get '/admin/application?ch=true&val='+$(this).val(), (data) =>
+      #uniqueness
+  
+  
+  
+  
+  
+  
+  
+  
   $('#new-application').hide()
   
   

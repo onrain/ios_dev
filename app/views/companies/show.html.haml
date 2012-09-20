@@ -1,3 +1,5 @@
+= render 'modal_for_clients'
+
 -if notice
   %div{class:"alert alert-success"}
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
@@ -7,14 +9,63 @@
 %table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
   %tr
     %th ID
-    %td= @company.id
+    %td= @company_show.id
   %tr
     %th Name:
-    %td= @company.name
+    %td= @company_show.name
   %tr
     %th Website:
-    %td= check_f @company.website
+    %td= check_f @company_show.website
+  %tr
+    %th Clients
+    %td
+      .client_list
+        - if @clients.size > 0
+          - for cl in @clients
+            = link_to cl.name, '#', id:cl.id, class:'prev-client'
+        - else
+          empty.
+  %tr
+    %td{colspan:"2"}
+
+      %div{class:"btn btn-success", id:"add-client-btn"}
+        Add new Client
+      #add-new-client
+        .companies-notice
+        %div{class:"well well-small", style:"width:30px;", id:"hide_btn"}
+          %div{class:"icon-chevron-up", style:"margin-left:7px;"}
+          Hide
+        = form_for @client, remote:true do |f|
+          %table{class:"table table-bordered", style:"margin: 0 auto;"}
+            
+            %tr
+              %td  
+                = f.hidden_field :company_id, value:"#{params[:id]}"
+            %tr
+              %td
+                = f.label :name
+              %td
+                = f.text_field :name
+            %tr
+              %td
+                = f.label :email
+              %td
+                = f.text_field :email
+            %tr
+              %td 
+                = f.label :handle
+              %td
+                = f.text_field :handle
+                .handle-variant
+            %tr
+              %td{colspan:"2"}
+                = f.submit 'Save', class:"btn"
+ 
+
+
+
+
 %div{class:"well well-small well-width"}  
   .btn-group
-    = link_to 'Edit', edit_company_path(@company), class:"btn"
+    = link_to 'Edit', edit_company_path(@company_show), class:"btn"
     = link_to 'Back', companies_path, class:"btn"

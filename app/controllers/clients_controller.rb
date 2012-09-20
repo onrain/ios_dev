@@ -3,12 +3,18 @@ class ClientsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
+=begin    
     unless params[:get].blank?
       return render json: {} if params[:handle_id].blank?
       @res = Handle.where(client_id:params[:handle_id]).to_a
       client = Client.find(params[:handle_id])
       @res[@res.size] = {handle_name:client.handle, client_id:client.id}
       return render json: @res 
+    end
+=end
+    unless params[:get].blank?
+      @all_clients_for_company = Client.find(params[:id])
+      return render json: @all_clients_for_company
     end
     
     @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
@@ -75,7 +81,7 @@ class ClientsController < ApplicationController
     respond_with(@client) do |format|
       if @client.save
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
+        format.json { render json: Client.where(company_id:params[:client][:company_id]) }
       else
         format.html { render action: "new" }
         format.json { render json: @client.errors, status: :unprocessable_entity }
@@ -83,6 +89,18 @@ class ClientsController < ApplicationController
     end
   end
 
+
+  def remote_update
+    @client = Client.find(params[:id])
+
+    respond_with(@client) do |format|
+      if @client.update_attributes(params[:client])
+        format.json { render json: Client.find(params[:id]) }
+      else
+        format.json { render json: @client.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def update
     @client = Client.find(params[:id])

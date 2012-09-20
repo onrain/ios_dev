@@ -91,9 +91,7 @@ $ ->
     
 
     $('#delete_'+id).live 'click': ->
-      $('.close').click()
-      $('.append-projects').empty()
-      alert('Record deleted success!')
+      location.reload(true)
 
         
     

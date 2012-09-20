@@ -13,7 +13,11 @@ class CompaniesController < ApplicationController
 
 
   def show
-    @company = Company.find(params[:id])
+    @client = Client.new
+    @company = Company.new
+    @clients = Client.where(company_id:params[:id])
+
+    @company_show = Company.find(params[:id])
 
     respond_with @company
   end
