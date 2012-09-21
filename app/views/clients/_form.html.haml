@@ -13,10 +13,10 @@
   %div{class:"modal-body"}
     = render 'companies/form-remote'
 
-%table{class:"table"}
+%table{class:"table", style:"width:1000px; margin: 0 auto;"}
   = form_for @client do |f|
     -if @client.errors.any?
-      %div{class:"alert alert-error"}
+      %div{class:"alert alert-error", style:"width:950px; margin: 0 auto;"}
         %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
           &times;
         %h3= "#{pluralize(@client.errors.count, "error")} prohibited this post from being saved:"

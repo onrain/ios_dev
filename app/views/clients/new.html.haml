@@ -1,10 +1,10 @@
-%div{class:"well well-small", align:"center"}
+%div{class:"well well-small", align:"center", align:"center", style:"width:980px; margin: 0 auto;"}
   %h1 New client
 
 
 
 
 = render 'form'
-%div{class:"well well-small"}  
-  .btn-group
+%div{class:"well well-small", style:"width:1000px; margin: 0 auto;"}  
+  %div{class:"btn-group pull-right"}
     = link_to 'Back', clients_path, class:"btn"

@@ -6,8 +6,20 @@ $ ->
     )
 	
   
-  
-  
+  $('#dev-link-remote').click ->
+    $('.notice-app').empty()
+    $('.dev-reload-notice').empty()
+    name = $('#dev-input').val()
+    $.get '/admin/developers/?developer_name='+name, (data) =>
+      if typeof(data.id) isnt 'undefined'
+        $('.searchable').append('<p><input type="checkbox" value="'+data.id+'" name="project[developer_ids][]" id="project_developer_ids_" disabled="disabled"><span>'+data.name+'</span>&nbsp;&nbsp;<span class="icon-exclamation-sign" style="color:red;"></span></p>')    
+        $('.notice-app').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Developer was success update!</span>')    
+        $('.dev-reload-notice').append('<a href="#" onclick="location.reload();">For apply changes please reload this page!</a>')
+        $('.notice-app').mousemove ->
+          $(this).empty()
+      else
+        $('#dev-input').addClass('error_proj').val('Can`t be blank!')
+
   
   
   $('#application_bundle_identifier').bind 'input': ->

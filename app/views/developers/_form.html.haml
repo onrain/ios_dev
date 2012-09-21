@@ -1,7 +1,7 @@
-%table{class:"table"}
+%table{class:"table", style:"width:1000px; margin: 0 auto;"}
   = form_for @developer do |f|
     -if @developer.errors.any?
-      %div{class:"alert alert-error"}
+      %div{class:"alert alert-error", style:"width:970px; margin: 0 auto;"}
         %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
           &times;
         %h3= "#{pluralize(@developer.errors.count, "error")} prohibited this post from being saved:"
