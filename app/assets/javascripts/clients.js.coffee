@@ -48,14 +48,21 @@ $ ->
           $('.form-notice').mousemove ->
             $(this).empty()
       
-    handle_name: ->  
+    handle_name: ->
+
       $('#client_name').bind 'input': ->
         $('.handle-variant').empty()
         company = $('#client_company_id :selected').text().toLowerCase().replace(/\s+/g,'')
 
         name = $(this).val().toLowerCase()
-        comdot = $('#client_company_id :selected').text().toLowerCase().replace(/\s+/g,'.')
-        namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
+
+       
+        
+        
+        
+        
+        
+            
         res = name.split(" ")
         j = 1
         i = 0
@@ -71,36 +78,87 @@ $ ->
           $('.variant2').append('<div id="handle'+i+'"></div>')
           $('.variant3').append('<div id="handle'+i+'"></div>')
           while k < j
+
             $('.variant0 #handle'+i).append(res[k])
+            $('.app').remove()
+            $('.variant0 #handle'+i).mousemove ->
+              $('.app').remove()
+              $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+
+              
             if k+1 < j
               $('.variant1 #handle'+i).append(res[k]+".")
+              
+              
+              
+              $('.app').remove()
+              $('.variant1 #handle'+i).mousemove ->
+                $('.app').remove()
+                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+              
+              
             else if k>0
               $('.variant1 #handle'+i).append(res[k])
+            
+            
+            
             if k+1 < j
               $('.variant2 #handle'+i).append(res[k]+"-")
+                          
+              $('.app').remove()
+              $('.variant2 #handle'+i).mousemove ->
+                $('.app').remove()
+                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+                
             else if k>0
               $('.variant2 #handle'+i).append(res[k])
+              
+              
+              
             if k+1 < j
               $('.variant3 #handle'+i).append(res[k]+"_")
+              $('.app').remove()
+              $('.variant3 #handle'+i).mousemove ->
+                $('.app').remove()
+                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
             else if k>0
               $('.variant3 #handle'+i).append(res[k])
             k++    
           j++
           i++
-        
+        $('div[id*="handle"]').mousemove ->
+          $(this).css('cursor':'pointer', 'text-decoration':'underline')
+        $('div[id*="handle"]').mouseleave ->
+          $(this).css('text-decoration':'none')
+          
+          
+          
+          
+        $('div[id*="handle"]').click ->
+          
+          company = $('#client_company_id option:selected').text().toLowerCase().replace(/\s+/g,'')
+          company_val = $('#client_company_id option:selected').val()
+          if company_val is ''
+            company = ''
+            
+          $('#client_handle').val(company+'/'+$(this).text())
+          
+          $('#client_company_id option').click ->
+            company = $('#client_company_id option:selected').text().toLowerCase().replace(/\s+/g,'')
+            company_val = $('#client_company_id option:selected').val()
+            if company_val is ''
+              company = ''
+            
+            handle_val = $('#client_handle').val()
+            pos_slesh = handle_val.indexOf('/')
+
+            handle_name = handle_val.substring(pos_slesh+1, handle_val.length)
+
+            $('#client_handle').val(company+'/'+handle_name)
+
 
         
-      $('#client_company_id option').click ->
-        company = $(this).text().toLowerCase().replace(/\s+/g,'')
-        
-        if company is 'none'
-          return false
-        $('.comp_name').empty()
-        $('.comp_name').text(company)
-        
-      $('.icon-ok').live 'click': ->
-        value_h = $(this).parent().children().eq(0).text()
-        $('#client_handle').val(value_h)
+      
       
        
         

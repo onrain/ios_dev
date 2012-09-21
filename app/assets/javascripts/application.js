@@ -35,29 +35,4 @@ $(this).removeClass('field_with_errors');
 });
 });
 
-/*
-client = new Object();
-client.click = 0
-client.count = function(el){
 
-	    var click = this.click++;
-	    el.attr('id', click);
-	    
-	    if(parseInt(el.attr('id')) > 1)
-	    {
-			  $('.add-or-get-h').popover('hide')
-			  $('.add-or-get-h').attr('id','0')
-		  }
-	}
-	
-	
-
-
-
-onclick
-client.count($(this))
-
-id for all el is 0 default
-
-
-*/

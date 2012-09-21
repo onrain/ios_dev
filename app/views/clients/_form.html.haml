@@ -28,7 +28,7 @@
       %td
         Select company
       %td  
-        = f.select("company_id", Company.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+        = f.select("company_id", Company.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'Please, select company!'})
         &nbsp;
         = link_to "Add new company", '#', id:"get-new-company"
     %tr
