@@ -62,16 +62,32 @@ $ ->
         variant = 4
         count = 0
         while count < variant
-          $('.handle-variant').append("<div id='variant"+count+"'></div>")
-          while i < res.length
-            k = 0
-            $('#variant'+count).append('<div id="handle'+i+'"></div>')
-            while k < j
-              $('#handle'+i).append(res[k])
-              k++
-            j++
-            i++
+          $('.handle-variant').append("<div class='variant"+count+"'></div>")
           count++
+        while i < res.length
+          k = 0
+          $('.variant0').append('<div id="handle'+i+'"></div>')
+          $('.variant1').append('<div id="handle'+i+'"></div>')
+          $('.variant2').append('<div id="handle'+i+'"></div>')
+          $('.variant3').append('<div id="handle'+i+'"></div>')
+          while k < j
+            $('.variant0 #handle'+i).append(res[k])
+            if k+1 < j
+              $('.variant1 #handle'+i).append(res[k]+".")
+            else if k>0
+              $('.variant1 #handle'+i).append(res[k])
+            if k+1 < j
+              $('.variant2 #handle'+i).append(res[k]+"-")
+            else if k>0
+              $('.variant2 #handle'+i).append(res[k])
+            if k+1 < j
+              $('.variant3 #handle'+i).append(res[k]+"_")
+            else if k>0
+              $('.variant3 #handle'+i).append(res[k])
+            k++    
+          j++
+          i++
+        
 
         
       $('#client_company_id option').click ->
