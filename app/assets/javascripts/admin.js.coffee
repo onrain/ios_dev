@@ -214,11 +214,24 @@ $ ->
           i = 0
           $(this).parent().parent().eq(0).after('
            <tr id="tr_'+id+'">
-             <td colspan="5" id="'+id+'"></td>
+             
            </tr>
             ')
           while i < count 
-            $('td[id="'+id+'"]').append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
+            $('#tr_'+id).append(
+              '
+                <td colspan="5">
+                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a></td>
+                 <td style="height:20px">
+                    <div class="app-panel">
+                      <span class="icon-pencil"></span>&nbsp;<span class="icon-eye-open"></span>&nbsp;<span class="icon-trash"></span>
+                    </div>
+              </td>'
+
+              
+              
+              
+            )
             if i+1 isnt count
               $(this).next().append(", ")
             i+=1
