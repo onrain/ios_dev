@@ -80,7 +80,7 @@ class ClientsController < ApplicationController
     
     respond_with(@client) do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
+        format.html { redirect_to @client, js: 'alert(5);' }
         format.json { render json: Client.where(company_id:params[:client][:company_id]) }
       else
         format.html { render action: "new" }

@@ -1,0 +1,10 @@
+if typeof(data[0]) is 'undefined'
+            $(this).next().append("empty.")
+          else
+            $(this).next().append("<hr />")
+            while i < count
+              
+              $(this).next().append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
+              if i+1 isnt count
+                $(this).next().append(", ")
+              i+=1

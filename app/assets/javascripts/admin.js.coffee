@@ -195,28 +195,31 @@ $ ->
       
   
   click = 0
+
   $(".get-list-applications").click ->
-    if click is 0
-      click +=1
+    
+    if $(this).attr('class').match(/icon-chevron-up/)
+      parent_id = $(this).parent().parent().attr('id')
+      _pos = parent_id.indexOf('_')
+      parent = parent_id.substring(_pos+1, parent_id.length)
+      $('#tr_'+parent).remove()
+      $(this).toggleClass('icon-chevron-up')
+    else  
+      $(this).toggleClass('icon-chevron-up')
+  
       id = $(this).attr('id')
       if id isnt ''
         $.get '/admin/applications?get=product&id='+id, (data) =>
           count = Object.keys(data).length
           i = 0
-          if typeof(data[0]) is 'undefined'
-            $(this).next().append("empty.")
-          else
-            $(this).next().append("<hr />")
-            while i < count
-              
-              $(this).next().append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
-              if i+1 isnt count
-                $(this).next().append(", ")
-              i+=1
-            
-
-    else if click is 1
-      $('.append-projects').empty()
-      click = 0
-      
+          $(this).parent().parent().eq(0).after('
+           <tr id="tr_'+id+'">
+             <td colspan="5" id="'+id+'"></td>
+           </tr>
+            ')
+          while i < count 
+            $('td[id="'+id+'"]').append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
+            if i+1 isnt count
+              $(this).next().append(", ")
+            i+=1
   

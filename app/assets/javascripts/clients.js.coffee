@@ -30,6 +30,13 @@ $ ->
 
     company: ->
       
+      
+      
+      if $('#client_company_id').children().length > 1
+        $('#client_company_id').children().eq(1).attr('selected','selected')
+      
+      
+      
       $('#new-com').click ->
          $('.form-notice').empty()
          
@@ -56,11 +63,6 @@ $ ->
 
         name = $(this).val().toLowerCase()
 
-       
-        
-        
-        
-        
         
             
         res = name.split(" ")
@@ -156,12 +158,6 @@ $ ->
 
             $('#client_handle').val(company+'/'+handle_name)
 
-
-        
-      
-      
-       
-        
         
         
         
