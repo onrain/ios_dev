@@ -198,35 +198,33 @@ $ ->
 
   $(".get-list-applications").click ->
     
-    if $(this).attr('class').match(/icon-chevron-up/)
+    if $(this).attr('class').match(/icon-chevron-down/)
       parent_id = $(this).parent().parent().attr('id')
       _pos = parent_id.indexOf('_')
       parent = parent_id.substring(_pos+1, parent_id.length)
-      $('#tr_'+parent).remove()
-      $(this).toggleClass('icon-chevron-up')
+      $('.tr_'+parent).remove()
+      $(this).toggleClass('icon-chevron-down')
     else  
-      $(this).toggleClass('icon-chevron-up')
+      $(this).toggleClass('icon-chevron-down')
   
       id = $(this).attr('id')
       if id isnt ''
         $.get '/admin/applications?get=product&id='+id, (data) =>
           count = Object.keys(data).length
           i = 0
-          $(this).parent().parent().eq(0).after('
-           <tr id="tr_'+id+'">
-             
-           </tr>
-            ')
+
           while i < count 
-            $('#tr_'+id).append(
-              '
-                <td colspan="5">
-                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a></td>
-                 <td style="height:20px">
-                    <div class="app-panel">
+            $(this).parent().parent().eq(0).after('
+             <tr class="tr_'+id+'">
+                <td colspan="2">
+                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a>
+                </td>
+                 <td colspan="3">
+                    <div class="app-panel pull-right">
                       <span class="icon-pencil"></span>&nbsp;<span class="icon-eye-open"></span>&nbsp;<span class="icon-trash"></span>
                     </div>
-              </td>'
+                 </td>
+              </tr>'
 
               
               

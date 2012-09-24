@@ -8,3 +8,13 @@ if typeof(data[0]) is 'undefined'
               if i+1 isnt count
                 $(this).next().append(", ")
               i+=1
+
+<tr>
+     <td colspan="5"">
+         <a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a></td>
+                         <td style="height:20px">
+                           <div class="app-panel">
+                             <span class="icon-pencil"></span>&nbsp;<span class="icon-eye-open"></span>&nbsp;<span class="icon-trash"></span>
+                           </div>
+     </td>
+</tr>
