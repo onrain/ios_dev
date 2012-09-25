@@ -6,13 +6,15 @@
 
 
 
+
 %table{class:"table table-bordered", style:"width:800px; margin: 0 auto;"}
   %tr
     %th{style:"width:10px !important; background-color: rgba(204,204,204,0.7);"}
     %th=sortable 'id', 'ID'
     %th=sortable 'name', 'Project name'
     %th=sortable 'client_name', 'Client name'
-    %th Applications list
+    %th Manager
+
 
   - for list in @projects
     %tr{id:"parent_#{list.id}"}
@@ -23,4 +25,38 @@
 
       %td=link_to list.client_name, client_path(list.client_id)
       %td=link_to list.manager_name, manager_path(list.manager_id)
+      
+      %td{class:"new_app_form", id:"proj_#{list.id}", style:"display:none;"}
+        .notice-admin
+        = form_for(@new_app, remote:true) do |f|
+          %table{class:"table table-bordered"}
+            -if @new_app.errors.any?
+              %div{class:"alert alert-error"}
+                %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+                  &times;
+                %h3= "#{pluralize(@new_app.errors.count, "error")} prohibited this post from being saved:"
+                %ul
+                  - @new_app.errors.full_messages.each do |msg|
+                    %li= msg
+            %div{class:"store", style:"display:none;"}
+            = f.hidden_field :project_id, value:list.id
+            %tr
+              %td= f.label :product_name
+              %td= f.text_field :product_name
+            %tr
+              %td= f.label :bundle_identifier
+              %td= f.text_field :bundle_identifier
+            %tr
+              %td= f.label :bundle_version
+              %td= f.text_field :bundle_version
+            %tr
+              %td= f.label :relative_path
+              %td
+                = f.text_field :relative_path
+                .relative-variant
+            %tr
+              %td= f.label :title
+              %td= f.text_field :title
+            %tr
+              %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
 

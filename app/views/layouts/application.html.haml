@@ -21,8 +21,8 @@
         #show-recoreds th{ width:30%;  }
         a[disabled="disabled"]{color:#ccc;}
         ul.limit li {float: left; list-style: none; font-size: 16x; padding-left:5px;}
-        .icon-plus-sign{color:green;}
-        .icon-plus-sign:hover{cursor:pointer;}
+        .icon-plus{color:black;}
+        .icon-plus:hover{cursor:pointer; text-decoration:none;}
         .icon-edit{position:absolute !important; margin-left:75px;}
         .icon-edit:hover{cursor:pointer; color:#cccccc; }
         .icon-ok-sign{color:green;}
@@ -37,6 +37,8 @@
         td .icon-play:hover {cursor:pointer;}
         .app-panel span:hover{cursor:pointer;}
         #hide_btn:hover{background: rgba(0,0,0,0.1); cursor:pointer;}
+        .table_no_border-left td, .table_no_border-left th { border-left: none;}
+
       = render 'admin/nav'
 
     = yield

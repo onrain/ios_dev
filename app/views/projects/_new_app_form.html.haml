@@ -1,0 +1,31 @@
+= form_for(@new_app, remote:true) do |f|
+  %table{class:"table table-bordered"}
+    -if @new_app.errors.any?
+      %div{class:"alert alert-error"}
+        %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+          &times;
+        %h3= "#{pluralize(@new_app.errors.count, "error")} prohibited this post from being saved:"
+        %ul
+          - @new_app.errors.full_messages.each do |msg|
+            %li= msg
+    %div{class:"store", style:"display:none;"}
+    = f.hidden_field :project_id, value:proj.id
+    %tr
+      %td= f.label :product_name
+      %td= f.text_field :product_name
+    %tr
+      %td= f.label :bundle_identifier
+      %td= f.text_field :bundle_identifier
+    %tr
+      %td= f.label :bundle_version
+      %td= f.text_field :bundle_version
+    %tr
+      %td= f.label :relative_path
+      %td
+        = f.text_field :relative_path
+        .relative-variant
+    %tr
+      %td= f.label :title
+      %td= f.text_field :title
+    %tr
+      %td{colspan:"2"}= f.submit 'Save', class:"btn"

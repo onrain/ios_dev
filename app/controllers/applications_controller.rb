@@ -11,6 +11,12 @@ class ApplicationsController < ApplicationController
       return render json: @get_app_in_admin_index
     end
 
+
+    unless params[:meth].blank?
+      duplicate(params[:id])
+      return render json: [nothink:true]
+    end
+
     unless params[:ch].blank?
       @check = Application.find_all_by_bundle_identifier(params[:val])
       return render json: @check
@@ -102,6 +108,17 @@ private
   
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def duplicate(id)
+    app = Application.find(id)
+    max_id = Application.find(:first, :select => 'max(id) as max').max
+    max_id += 1
+    app.id = max_id
+    app.title += " copy"
+    app.product_name += " copy"
+    app.relative_path += " copy"
+    clone_app = Application.create(app.attributes)
   end
 
 

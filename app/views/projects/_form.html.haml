@@ -1,3 +1,7 @@
+:css
+  .dropdown-menu{position:absolute; margin: 0 auto; width:220px;}
+  .icon-chevron-down:hover{cursor:pointer;}
+
 %table{class:"table", style:"width:1000px; margin: 0 auto;"}
   = form_for @project do |f|
     -if @project.errors.any?
@@ -11,7 +15,22 @@
   
     %tr
       %th= f.label :client_id
-      %td= f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+      %td
+        %div{class:"select_client", style:"display:none;"}
+          = f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+        %div{class:"client_list", style:"display:none;"}
+          -for cl in Client.all
+            %li{id:"#{cl.id}"}
+              %a{href:"#", class:"client_name_class"}
+                = cl.name
+        .input-prepend
+          = text_field_tag('autocomplete-client', nil, class:"clients", :"data-provide"=>:"typeahead", autocomplete:"off")
+          .add-on
+            .dropdown
+              %i{class:"icon-chevron-down dropdown-toggle", :"data-toggle"=>:"dropdown"}
+              %ul{class:"dropdown-menu", role:"menu", style:"margin-left:-230px; margin-top:5px;"}
+                %li{id:"append-clients"}
+
     %tr
       %th= f.label :manager_id
       %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})

@@ -288,47 +288,103 @@ $ ->
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     
   $('#project_name').bind 'input': ->
     $('.proj-h-variants').empty()
     client = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'')
-    name = $(this).val().toLowerCase().replace(/\s+/g,'')
-    clidot = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'.')
-    namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
-    $('.proj-h-variants').append(
-      '<p><span id="handle"><span>'+name+'.<span class="cli_name">'+client+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="cli_name">'+client+'</span>.'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="cli_name">'+client+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="cli_name">'+clidot+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="cli_name">'+client+'</span>_'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span>'
-      '<p><span id="handle"><span class="cli_name">'+client.substring(0,3)+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-    )
-    
-    
-  $('#project_client_id option').click ->
-    company = $(this).text().toLowerCase().replace(/\s+/g,'')
-    $('.cli_name').empty()
-    $('.cli_name').text(company)
-    
-  $('.icon-ok').live 'click': ->
-    value_h = $(this).parent().children().eq(0).text()
-    $('#project_handle').val(value_h)
+
+    name = $(this).val().toLowerCase()
+        
+    res = name.split(" ")
+
+    j = 1
+    i = 0
+    variant = 4
+    count = 0
+    while count < variant
+      $('.proj-h-variants').append("<div class='variant"+count+"'></div>")
+      count++
+    while i < res.length
+      k = 0
+      $('.variant0').append('<div id="handle'+i+'"></div>')
+      $('.variant1').append('<div id="handle'+i+'"></div>')
+      $('.variant2').append('<div id="handle'+i+'"></div>')
+      $('.variant3').append('<div id="handle'+i+'"></div>')
+      while k < j
+
+        $('.variant0 #handle'+i).append(res[k])
+        $('.app').remove()
+        $('.variant0 #handle'+i).mousemove ->
+          $('.app').remove()
+          $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+
+          
+        if k+1 < j
+          $('.variant1 #handle'+i).append(res[k]+".")
+          
+          
+          
+          $('.app').remove()
+          $('.variant1 #handle'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+          
+          
+        else if k>0
+          $('.variant1 #handle'+i).append(res[k])
+        
+        
+        
+        if k+1 < j
+          $('.variant2 #handle'+i).append(res[k]+"-")
+                      
+          $('.app').remove()
+          $('.variant2 #handle'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+            
+        else if k>0
+          $('.variant2 #handle'+i).append(res[k])
+          
+          
+          
+        if k+1 < j
+          $('.variant3 #handle'+i).append(res[k]+"_")
+          $('.app').remove()
+          $('.variant3 #handle'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+        else if k>0
+          $('.variant3 #handle'+i).append(res[k])
+        k++    
+      j++
+      i++
+      
+    $('div[id*="handle"]').mousemove ->
+      $(this).css('cursor':'pointer', 'text-decoration':'underline')
+    $('div[id*="handle"]').mouseleave ->
+      $(this).css('text-decoration':'none')
+      
+      $('div[id*="handle"]').click ->
+
+        $('#project_handle').val($(this).text())
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -358,10 +414,41 @@ $ ->
   
   
   
+  if $('#project_manager_id option').length > 1
+    $('#project_manager_id').children().eq(1).attr('selected', 'selected')
+    
+  
+  $.get '/admin/clients.json', (data) =>
+    
+    subjects = []
+    count = Object.keys(data).length
+    i = 0
+    while i < count  
+      subjects.push(data[i].name)
+      i++
+
+    $('#autocomplete-client').typeahead(source: subjects)
   
   
+  $('#autocomplete-client').val($('#project_client_id option[selected="selected"]').text())
+    
+    
+  $('#autocomplete-client').bind 'input': ->
+    client_name = $(this).val()
+    $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
   
-  
+  $('.add-on').click ->
+
+    $('#append-clients').empty()
+    $('#append-clients').append($('.client_list').html())
+    
+    $('.client_name_class').live 'click': ->
+      client_name = $(this).text()
+      client_name = ltrim(client_name)
+      client_name = rtrim(client_name)
+      $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
+      $('#autocomplete-client').val(client_name)
+
   
   
   

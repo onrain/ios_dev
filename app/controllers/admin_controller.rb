@@ -13,7 +13,7 @@ class AdminController < ApplicationController
     left join clients on clients.id = projects.client_id
     left join managers on managers.id = projects.manager_id group by projects.id')
     .limit(lim).page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    
+    @new_app = Application.new
     respond_with(@projects)
   end
 
