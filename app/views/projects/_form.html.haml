@@ -62,17 +62,20 @@
                 {
                   $('#check_'+developer[i]).attr('checked', true); 
                 }
-              }, 200);
+              }, 400);
               }
               _delay();
               $('#project_manager_id option').click(function(){
+               if($(this).val()  == '')
+               {return false;}
               _delay();
               });
             });
     %tr
       %th= f.label :handle
       %td
-        = f.text_field :handle
+        = f.text_field :handle, class:"input-xlarge"
+        %div{id:"client-handle", style:"display:none;"}
         %div{class:"proj-h-variants"}
           
     %tr

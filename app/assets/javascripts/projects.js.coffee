@@ -368,13 +368,42 @@ $ ->
     $('div[id*="handle"]').mouseleave ->
       $(this).css('text-decoration':'none')
       
-      $('div[id*="handle"]').click ->
+    $('div[id*="handle"]').click ->
+      $('#project_handle').val('')
+      store = $('#client-handle').text().replace(/\s+/g,'')
+      store = store+'/'+$(this).text().toLowerCase().replace(/\s+/g,'')
+      $('#project_handle').val(store)
+  
+  ###### point
+  $('.add-on').click ->
 
-        $('#project_handle').val($(this).text())
+    $('#append-clients').empty()
+    $('#append-clients').append($('.client_list').html())
+    $('#append-clients').append('<li><a href="/admin/clients/new" target="blank" style="background-color:#cccccc;">Add new client</a></li>')
+     
+    $('.client_name_class').click ->
+      client_name = $(this).text()
+      client_name = ltrim(client_name)
+      client_name = rtrim(client_name)
+      $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
+      $('#autocomplete-client').val(client_name)
+      
+      id = $(this).parent().attr('id')  
+      $.get '/admin/clients?handle='+id, (data) =>
+        $('#client-handle').text(data.handle.replace(/\s/g,''))        
 
+        ph_slash_len = $('#project_handle').val().split('/')
+        if ph_slash_len.length > 2
   
-  
-  
+          proj_h = $('#project_handle').val().replace(/\s/g,'')
+          pos_proj_h = proj_h.lastIndexOf('/')
+          substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
+          store = $('#client-handle').text().replace(/\s+/g,'')
+          store = store+'/'+substr_proj_h
+          $('#project_handle').val(store)
+     
+    ######### end point
+    
   
   
   
@@ -437,23 +466,6 @@ $ ->
     client_name = $(this).val()
     $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
   
-  $('.add-on').click ->
-
-    $('#append-clients').empty()
-    $('#append-clients').append($('.client_list').html())
-    $('#append-clients').append('<li><a href="/admin/clients/new" target="blank" style="background-color:#cccccc;">Add new client</a></li>')
-     
-    $('.client_name_class').live 'click': ->
-      client_name = $(this).text()
-      client_name = ltrim(client_name)
-      client_name = rtrim(client_name)
-      $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
-      $('#autocomplete-client').val(client_name)
-      
-  
-  
-  
-  
   
   
   id = $('#project_manager_id option:selected').val()
@@ -479,7 +491,8 @@ $ ->
         
   $('#project_manager_id option').click ->
     id = $(this).val()
-    
+    if id is ''
+      return false
     $.get '/admin/developers?m='+id, (data) =>
       count = Object.keys(data).length
       i = 0
@@ -499,3 +512,10 @@ $ ->
       $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
     else
       $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+      
+  path = window.location.pathname
+
+  if path is '/admin/projects/new'
+    if $('#project_manager_id option').length > 1
+      $('#project_manager_id option').eq(1).attr('selected','selected')
+      $('#project_manager_id option').children().eq(1).attr('selecte','selected')

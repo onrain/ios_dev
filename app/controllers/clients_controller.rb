@@ -12,6 +12,10 @@ class ClientsController < ApplicationController
       return render json: @res 
     end
 =end
+    unless params[:handle].blank?
+      @client_handle = Client.find(params[:handle])
+      return render json: @client_handle
+    end
     unless params[:get].blank?
       @all_clients_for_company = Client.find(params[:id])
       return render json: @all_clients_for_company
