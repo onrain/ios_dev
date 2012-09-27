@@ -1,29 +1,4 @@
-             <tr class="tr_'+id+'">
-             <table>
-              <tr>
-                <td id="app-name-td_'+data[i].id+'">
-                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a>
-                </td>
-                <td id="td_content_'+data[i].id+'" colspan="3">
-                  '+data[i].id+'
-                </td>
-                <td>
-                   '+data[i].product_name+'
-                </td>
-                <td>
-                  '+data[i].title+'
-                </td>
-                <td>
-                   '+data[i].bundle_version+'
-                </td>
-                <td>
-                   '+data[i].relative_path+'
-                </td>
-                    <td width="50">
-                       <div class="app-panel pull-right">
-                         <a id="'+data[i].id+'"class="icon-pencil edit-link" href="#" style="color:black;"></a>&nbsp;<a id="'+data[i].id+'"class="icon-eye-open show-link" href="#" style="color:black;"></a>&nbsp;<a rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_" href="/admin/applications/'+data[i].id+'?proj='+data[i].project_id+'"></a>
-                       </div>
-                    </td>
-                  </tr>
-                </table>
-              </tr>'
+'<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+        <span>'+data[i].name+'</span>
+        <input type="checkbox" value="'+data[i].id+'" name="project[developer_ids][]" id="project_developer_ids_" checked="checked">
+</span>'

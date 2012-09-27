@@ -414,8 +414,8 @@ $ ->
   
   
   
-  if $('#project_manager_id option').length > 1
-    $('#project_manager_id').children().eq(1).attr('selected', 'selected')
+  #if $('#project_manager_id option').length > 1
+  #  $('#project_manager_id').children().eq(1).attr('selected', 'selected')
     
   
   $.get '/admin/clients.json', (data) =>
@@ -441,14 +441,61 @@ $ ->
 
     $('#append-clients').empty()
     $('#append-clients').append($('.client_list').html())
-    
+    $('#append-clients').append('<li><a href="/admin/clients/new" target="blank" style="background-color:#cccccc;">Add new client</a></li>')
+     
     $('.client_name_class').live 'click': ->
       client_name = $(this).text()
       client_name = ltrim(client_name)
       client_name = rtrim(client_name)
       $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
       $('#autocomplete-client').val(client_name)
+      
+  
+  
+  
+  
+  
+  
+  id = $('#project_manager_id option:selected').val()
+  $.get '/admin/developers?m='+id, (data) =>
+    count = Object.keys(data).length
 
-  
-  
-  
+    i = 0
+    while i < count
+      $('.select_box_developers').append(
+        '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+          <span>'+data[i].name+'</span>
+          <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
+        </span>'
+        )  
+      i++
+    $('.select_box_developers input[type="checkbox"]').click ->
+      val_dev = $(this).val()
+      unless $(this).attr('checked')
+        $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
+      else
+        $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+        
+        
+  $('#project_manager_id option').click ->
+    id = $(this).val()
+    
+    $.get '/admin/developers?m='+id, (data) =>
+      count = Object.keys(data).length
+      i = 0
+      if count > 0
+        $('.select_box_developers').empty()
+        while i < count
+          $('.select_box_developers').append(
+            '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+              <span>'+data[i].name+'</span>
+              <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
+            </span>'
+            )  
+          i++
+  $('.select_box_developers input[type="checkbox"]').click ->
+    val_dev = $(this).val()
+    unless $(this).attr('checked')
+      $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
+    else
+      $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)

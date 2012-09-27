@@ -41,37 +41,34 @@
       %th=f.label "Developers"
       
       %td
-        =link_to('show developers','#',id:"show-dev")
-        .select-dev-list
-        %div{class:"modal hide fade", id:"dev-list"}
-          .modal-header
-            %button{class:"close", :"data-dismiss"=>:"modal"}
-              ×
-            %h3 Select developers.
-            %hr
-            %input{type:"text", class:"searchFilter", onblur:"if(this.value == '')this.value='Searching developers..'", onfocus:"this.value==this.defaultValue?this.value='':null", value:"Searching developers..", name:"keyword"}
-            .pull-right
-              %div{class:"btn close", :"data-dismiss"=>:"modal", id:"add-dev-btn"}
-                Change
-
-
-            .dev-notice
-            .dev-reload-notice
-            %input{type:"text", id:"dev-input"}
-            =link_to "Add", '#', id:'dev-link-remote'
-
-
-
-
-          %div{class:"modal-body"}
-            .searchable
-              - for dev in Developer.all
-                %p
-                  = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
-                  %span=dev.name
-    %tr
-      %th= f.label :svn
-      %td= f.text_field :svn
+        %div{style:"display:none", class:"dev_point"}   
+          - for dev in Developer.all
+            = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
+        .select_box_developers
+        - unless params[:id].blank?
+          - res = []
+          - project = Project.find(params[:id])
+          - project.developers.each do |p|
+            
+            - res << p.id
+          
+          - res = res.to_json
+          :javascript
+            $(function(){
+              function _delay(){
+              setTimeout(function() {
+                var developer = #{res};
+                for(var i = 0; i<developer.length; i++)
+                {
+                  $('#check_'+developer[i]).attr('checked', true); 
+                }
+              }, 200);
+              }
+              _delay();
+              $('#project_manager_id option').click(function(){
+              _delay();
+              });
+            });
     %tr
       %th= f.label :handle
       %td

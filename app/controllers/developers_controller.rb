@@ -15,6 +15,12 @@ class DevelopersController < ApplicationController
       end
     end
 
+
+    unless params[:m].blank?
+      id = params[:m]
+      return render json: Developer.where("manager_id = ?",id)
+    end
+
     respond_with(@developers)
   end
 
