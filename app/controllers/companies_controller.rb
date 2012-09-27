@@ -3,12 +3,21 @@ class CompaniesController < ApplicationController
   helper_method :sort_column, :sort_direction
   
   def index
+
+    flash[:notice] = nil
+    unless params[:n].blank?
+      case(params[:n])
+        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
+        when 'created' then flash[:notice] = 'Developer was successfully create.'
+        else return nil 
+      end
+    end
+
     @companies = Company.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     @res = Company.last
     respond_with(@companies) do |format|
       format.json{render json: @res}
     end
-    
   end
 
 
@@ -40,7 +49,7 @@ class CompaniesController < ApplicationController
     respond_with(@company) do |format|
       if @company.save
         @last = Company.last
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
+        format.html { redirect_to @company, companies_path+'?n=created' }
         format.json { render json: @last }
       else
         format.html { render action: "new" }
@@ -55,7 +64,7 @@ class CompaniesController < ApplicationController
 
     respond_with(@company) do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        format.html { redirect_to companies_path+'?n=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

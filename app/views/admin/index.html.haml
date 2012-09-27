@@ -52,8 +52,9 @@
             %tr
               %td= f.label :relative_path
               %td
-                = f.text_field :relative_path
+                = f.text_field :relative_path, class:"input-xxlarge" 
                 .relative-variant
+                #relative_store
             %tr
               %td= f.label :title
               %td= f.text_field :title

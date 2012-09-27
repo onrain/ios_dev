@@ -4,6 +4,16 @@ class ManagersController < ApplicationController
   
   def index
     @managers = Manager.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    flash[:notice] = nil
+
+    unless params[:n].blank?
+      case(params[:n])
+        when 'updated' then flash[:notice] = 'Manager was successfully updated.'
+        when 'created' then flash[:notice] = 'Manager was successfully create.'
+        else return nil 
+      end
+    end
+
     respond_with(@managers)
   end
 
@@ -28,7 +38,7 @@ class ManagersController < ApplicationController
 
     respond_with(@manager) do |format|
       if @manager.save
-        format.html { redirect_to @manager, notice: 'Manager was successfully created.' }
+        format.html { redirect_to managers_path+'?n=craeted' }
         format.json { render json: @manager, status: :created, location: @manager }
       else
         format.html { render action: "new" }
@@ -43,7 +53,7 @@ class ManagersController < ApplicationController
 
     respond_with(@manager) do |format|
       if @manager.update_attributes(params[:manager])
-        format.html { redirect_to @manager, notice: 'Manager was successfully updated.' }
+        format.html { redirect_to managers_path+'?n=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

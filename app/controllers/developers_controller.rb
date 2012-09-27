@@ -4,9 +4,18 @@ class DevelopersController < ApplicationController
   
   def index
     @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    
-    unless params[:developer_name].nil?
+    flash[:notice] = nil
 
+    unless params[:n].blank?
+      case(params[:n])
+        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
+        when 'created' then flash[:notice] = 'Developer was successfully create.'
+        else return nil 
+      end
+    end
+
+
+    unless params[:developer_name].nil?
       unless params[:developer_name].blank?
         @developer = Developer.create(name:params[:developer_name])
         return render json: Developer.last
@@ -50,8 +59,7 @@ class DevelopersController < ApplicationController
 
     respond_with(@developer) do |format|
       if @developer.save
-        format.html { redirect_to @developer, notice: 'Developer was successfully create.' }
-        #format.json { render json: Developer.last, status: :created, location: @developer }
+        format.html { redirect_to developers_path+'?n=created' }
       else
 
         format.json { render json: @developer.errors, status: :unprocessable_entity }
@@ -65,7 +73,7 @@ class DevelopersController < ApplicationController
 
     respond_with(@developer) do |format|
       if @developer.update_attributes(params[:developer])
-        format.html { redirect_to @developer, notice: 'Developer was successfully updated.' }
+        format.html { redirect_to developers_path+'?n=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

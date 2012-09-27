@@ -3,15 +3,16 @@ class ClientsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-=begin    
-    unless params[:get].blank?
-      return render json: {} if params[:handle_id].blank?
-      @res = Handle.where(client_id:params[:handle_id]).to_a
-      client = Client.find(params[:handle_id])
-      @res[@res.size] = {handle_name:client.handle, client_id:client.id}
-      return render json: @res 
+    flash[:notice] = nil
+
+    unless params[:n].blank?
+      case(params[:n])
+        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
+        when 'created' then flash[:notice] = 'Developer was successfully create.'
+        else return nil 
+      end
     end
-=end
+
     unless params[:handle].blank?
       @client_handle = Client.find(params[:handle])
       return render json: @client_handle
@@ -77,14 +78,10 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(params[:client])
     @company = Company.new
-    #hand = params[:client][:name].to_s
-    #@client.handle = hand.gsub(" ", ".").downcase
-    
-    #@client.handles.create(handle_name:hand.gsub(" ", ".").downcase) if @client.save
-    
+   
     respond_with(@client) do |format|
       if @client.save
-        format.html { redirect_to @client, js: 'alert(5);' }
+        format.html { redirect_to clients_path+'?n=created' }
         format.json { render json: Client.where(company_id:params[:client][:company_id]) }
       else
         format.html { render action: "new" }
@@ -111,7 +108,7 @@ class ClientsController < ApplicationController
     @par = params[:id]
     respond_with(@client) do |format|
       if @client.update_attributes(params[:client])
-        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
+        format.html { redirect_to clients_path+'?n=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

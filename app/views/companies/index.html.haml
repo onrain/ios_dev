@@ -1,3 +1,10 @@
+-if notice
+  %div{class:"alert alert-success", style:"width:550px; margin: 0 auto;"}
+    %button{:class=>"close", :"data-dismiss"=>:"alert"}
+      x
+    =notice
+
+
 %div{class:"well well-small", align:"center", align:"center", style:"width:580px; margin: 0 auto;"}
   %h4 Listing companies
   = link_to 'New Company', new_company_path, class:"btn"

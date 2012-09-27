@@ -246,7 +246,7 @@ $ ->
                   </tr>
                   <tr>
                     <th>Relative path</th>
-                    <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" /></td>
+                    <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path"  class="input-xxlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" /></td>
                   </tr>
                   <tr>
                     <th>Title</th>
@@ -298,11 +298,18 @@ $ ->
   $('.add_new').live 'click': ->
     id = $(this).attr('id')
     parent_el = $(this).parent().parent().parent().parent()
-
+    
     if parent_el.children().eq(1).length isnt 0
       parent_el.children().eq(1).remove()
 
     else
+      
+      
+      $.get '/admin/projects?p='+id, (data) =>
+        $('#relative_store').text(data.handle) 
+      
+            
+      
       parent_el.append(
         '<table style="margin: 0 auto; width:100%;" class="table table-bordered open-new-app">
           <tr>
@@ -313,8 +320,90 @@ $ ->
       )
       
       $('#append_'+id).append($('#proj_'+id).html())
+      
+      
+      
+      $('#application_product_name').live 'input': ->
+        $('.relative-variant').empty()
+        name = $(this).val().toLowerCase()
+        res = name.split(" ")
+        j = 1
+        i = 0
+        variant = 4
+        count = 0
+        while count < variant
+          $('.relative-variant').append("<div class='variant"+count+"'></div>")
+          count++
+        while i < res.length
+          k = 0
+          $('.variant0').append('<div id="relative'+i+'"></div>')
+          $('.variant1').append('<div id="relative'+i+'"></div>')
+          $('.variant2').append('<div id="relative'+i+'"></div>')
+          $('.variant3').append('<div id="relative'+i+'"></div>')
+          while k < j
+    
+            $('.variant0 #relative'+i).append(res[k])
+            $('.app').remove()
+            $('.variant0 #relative'+i).mousemove ->
+              $('.app').remove()
+              $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+    
+              
+            if k+1 < j
+              $('.variant1 #relative'+i).append(res[k]+".")
+              
+              
+              
+              $('.app').remove()
+              $('.variant1 #relative'+i).mousemove ->
+                $('.app').remove()
+                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+              
+              
+            else if k>0
+              $('.variant1 #relative'+i).append(res[k])
             
- 
+            
+            
+            if k+1 < j
+              $('.variant2 #relative'+i).append(res[k]+"-")
+                          
+              $('.app').remove()
+              $('.variant2 #relative'+i).mousemove ->
+                $('.app').remove()
+                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+                
+            else if k>0
+              $('.variant2 #relative'+i).append(res[k])
+              
+              
+              
+            if k+1 < j
+              $('.variant3 #relative'+i).append(res[k]+"_")
+              $('.app').remove()
+              $('.variant3 #relative'+i).mousemove ->
+                $('.app').remove()
+                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+            else if k>0
+              $('.variant3 #relative'+i).append(res[k])
+            k++    
+          j++
+          i++
+        $('div[id*="relative"]').mousemove ->
+          $(this).css('cursor':'pointer', 'text-decoration':'underline')
+        $('div[id*="relative"]').mouseleave ->
+          $(this).css('text-decoration':'none')
+          
+        $('div[id*="relative"]').click ->
+
+          name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
+          store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
+
+          $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+
+
+
+
   $('#save-new-app').live 'click': ->
 
     $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
