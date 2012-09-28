@@ -1,6 +1,8 @@
 = stylesheet_link_tag 'admin', media:'all'
 = javascript_include_tag(:admin)
 
+
+
 = render 'projects/modal_for_app'
 
 
@@ -52,7 +54,7 @@
             %tr
               %td= f.label :relative_path
               %td
-                = f.text_field :relative_path, class:"input-xxlarge" 
+                = f.text_field :relative_path, class:"input-xlarge" 
                 .relative-variant
                 %div{id:"relative_store", style:"display:none;"}
             %tr

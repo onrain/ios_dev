@@ -246,7 +246,11 @@ $ ->
                   </tr>
                   <tr>
                     <th>Relative path</th>
-                    <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path"  class="input-xxlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" /></td>
+                    <td class="show-and-edit-app" id="relative_path">
+                      <input id="application_relative_path"  class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
+                      <div class="relative-variant"></div>
+                      <div id="relative_store" style="display:none;"></div>
+                    </td>
                   </tr>
                   <tr>
                     <th>Title</th>
@@ -261,6 +265,9 @@ $ ->
               </table>
             </form>
               ')
+            
+            
+            
             $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
               $('.index-content').empty()
               $('.index-content').append(append_html(data))
@@ -295,6 +302,9 @@ $ ->
         $('#duplicate').live 'click': ->
           $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
             document.location.reload(true)
+  
+  
+  
   $('.add_new').live 'click': ->
     $('.relative-variant').empty()
     id = $(this).attr('id')
@@ -324,83 +334,95 @@ $ ->
       
       
       
-      $('#application_product_name').live 'input': ->
-        $('.relative-variant').empty()
-        name = $(this).val().toLowerCase()
-        res = name.split(" ")
-        j = 1
-        i = 0
-        variant = 4
-        count = 0
-        while count < variant
-          $('.relative-variant').append("<div class='variant"+count+"'></div>")
-          count++
-        while i < res.length
-          k = 0
-          $('.variant0').append('<div id="relative'+i+'"></div>')
-          $('.variant1').append('<div id="relative'+i+'"></div>')
-          $('.variant2').append('<div id="relative'+i+'"></div>')
-          $('.variant3').append('<div id="relative'+i+'"></div>')
-          while k < j
+  $('#application_product_name').live 'input': ->
     
-            $('.variant0 #relative'+i).append(res[k])
-            $('.app').remove()
-            $('.variant0 #relative'+i).mousemove ->
-              $('.app').remove()
-              $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-    
-              
-            if k+1 < j
-              $('.variant1 #relative'+i).append(res[k]+".")
-              
-              
-              
-              $('.app').remove()
-              $('.variant1 #relative'+i).mousemove ->
-                $('.app').remove()
-                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-              
-              
-            else if k>0
-              $('.variant1 #relative'+i).append(res[k])
-            
-            
-            
-            if k+1 < j
-              $('.variant2 #relative'+i).append(res[k]+"-")
-                          
-              $('.app').remove()
-              $('.variant2 #relative'+i).mousemove ->
-                $('.app').remove()
-                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-                
-            else if k>0
-              $('.variant2 #relative'+i).append(res[k])
-              
-              
-              
-            if k+1 < j
-              $('.variant3 #relative'+i).append(res[k]+"_")
-              $('.app').remove()
-              $('.variant3 #relative'+i).mousemove ->
-                $('.app').remove()
-                $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-            else if k>0
-              $('.variant3 #relative'+i).append(res[k])
-            k++    
-          j++
-          i++
-        $('div[id*="relative"]').mousemove ->
-          $(this).css('cursor':'pointer', 'text-decoration':'underline')
-        $('div[id*="relative"]').mouseleave ->
-          $(this).css('text-decoration':'none')
+    $('.relative-variant').empty()
+    name = $(this).val().toLowerCase()
+    res = name.split(" ")
+    j = 1
+    i = 0
+    variant = 4
+    count = 0
+    while count < variant
+      $('.relative-variant').append("<div class='variant"+count+"'></div>")
+      count++
+    while i < res.length
+      k = 0
+      $('.variant0').append('<div id="relative'+i+'"></div>')
+      $('.variant1').append('<div id="relative'+i+'"></div>')
+      $('.variant2').append('<div id="relative'+i+'"></div>')
+      $('.variant3').append('<div id="relative'+i+'"></div>')
+      while k < j
+
+        $('.variant0 #relative'+i).append(res[k])
+        $('.app').remove()
+        $('.variant0 #relative'+i).mousemove ->
+          $('.app').remove()
+          $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+
           
-        $('div[id*="relative"]').click ->
+        if k+1 < j
+          $('.variant1 #relative'+i).append(res[k]+".")
+          
+          
+          
+          $('.app').remove()
+          $('.variant1 #relative'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+          
+          
+        else if k>0
+          $('.variant1 #relative'+i).append(res[k])
+        
+        
+        
+        if k+1 < j
+          $('.variant2 #relative'+i).append(res[k]+"-")
+                      
+          $('.app').remove()
+          $('.variant2 #relative'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+            
+        else if k>0
+          $('.variant2 #relative'+i).append(res[k])
+          
+          
+          
+        if k+1 < j
+          $('.variant3 #relative'+i).append(res[k]+"_")
+          $('.app').remove()
+          $('.variant3 #relative'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+        else if k>0
+          $('.variant3 #relative'+i).append(res[k])
+        k++    
+      j++
+      i++
+    $('div[id*="relative"]').mousemove ->
+      $(this).css('cursor':'pointer', 'text-decoration':'underline')
+    $('div[id*="relative"]').mouseleave ->
+      $(this).css('text-decoration':'none')
+      
+    $('div[id*="relative"]').click ->
+      
+      relative =  $('input[id="application_relative_path"]').val().replace(/\s+/g,'')
+      
+      if relative.split('/').length > 2
+        name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
+  
+        num_slash = relative.lastIndexOf('/')
+        store_project = relative.substring(0, num_slash)
 
-          name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
-          store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
+        $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+      else
 
-          $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+        name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
+        store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
+  
+        $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
 
 
 
