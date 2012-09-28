@@ -296,12 +296,12 @@ $ ->
         $('#application_project_name #'+data.project_id).attr('selected':'selected')
 
 
-        $('#tr_delete_').live 'click': ->
-          $(this).parent().parent().parent().remove()
-        
-        $('#duplicate').live 'click': ->
-          $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-            document.location.reload(true)
+  $('#tr_delete_').live 'click': ->
+    $(this).parent().parent().parent().remove()
+  
+  $('#duplicate').live 'click': ->
+    $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+      document.location.reload(true)
   
   
   
