@@ -375,6 +375,20 @@ $ ->
       $('#project_handle').val(store)
   
   ###### point
+  
+  
+  path_name = window.location.pathname
+  if (/edit/).test(path_name)
+    name = $('#autocomplete-client').val()
+
+    id = $('#project_client_id:contains("'+name+'")').val()
+    $.get '/admin/clients?handle='+id, (data) =>
+      $('#client-handle').text(data.handle.replace(/\s/g,'')) 
+   
+  
+  
+  
+  
   $('.add-on').click ->
 
     $('#append-clients').empty()
