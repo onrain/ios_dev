@@ -296,6 +296,7 @@ $ ->
           $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
             document.location.reload(true)
   $('.add_new').live 'click': ->
+    $('.relative-variant').empty()
     id = $(this).attr('id')
     parent_el = $(this).parent().parent().parent().parent()
     
