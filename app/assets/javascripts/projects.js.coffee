@@ -229,13 +229,6 @@ $ ->
     $(this).val('')
     $(this).removeClass('error_proj')
   
-  
-  
-  
-  
-  
-  
-  
 
   
   $('#show-dev').click ->
@@ -249,11 +242,6 @@ $ ->
     $('input[type="checkbox"]:checked + span').each ->
       $('.select-dev-list').append("[ "+$(this).text()+" ]")
       
-  
-
-  
-  
-  
   
   
   
@@ -285,10 +273,6 @@ $ ->
   $('.error_proj').click ->
     $(this).val('')
     $(this).removeClass('error_proj')
-    
-    
-    
-
     
     
     
@@ -418,15 +402,7 @@ $ ->
     ######### end point
     
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   
   
   

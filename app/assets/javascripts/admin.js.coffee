@@ -223,7 +223,7 @@ $ ->
        <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
         <table class="table table-bordered table-app">
             <tr>
-              <th>Project ID</th>
+              <th>Project</th>
               <td class="show-and-edit-app" id="id">
                 <select name="application[project_id]" id="application_project_name">
                   
@@ -306,6 +306,7 @@ $ ->
   
   
   $('.add_new').live 'click': ->
+    $('.notice-admin').empty()
     $('.relative-variant').empty()
     id = $(this).attr('id')
     parent_el = $(this).parent().parent().parent().parent()
