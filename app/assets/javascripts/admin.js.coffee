@@ -211,91 +211,91 @@ $ ->
               $(this).next().append(", ")
             i+=1
    
-        $('.edit-link').live 'click': ->
-          id = $(this).attr('id')
-          $('#app-list').modal('show':true)
-          $.get '/admin/applications?get=app&id='+id, (data) =>
-                               
-            $('#app-title').empty()
-            $('#app-title').append('Application: '+data.product_name)
-            $('.index-content').empty()
-            $('.index-content').append('
-             <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
-              <table class="table table-bordered table-app">
-                  <tr>
-                    <th>Project ID</th>
-                    <td class="show-and-edit-app" id="id">
-                      <select name="application[project_id]" id="application_project_name">
-                        
-                      </select>
-                   
-                    
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Product name</th>
-                    <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
-                  </tr>
-                  <tr>
-                    <th>Bundle identifier</th>
-                    <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
-                  </tr>
-                  <tr>
-                    <th>Bundle version</th>
-                    <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
-                  </tr>
-                  <tr>
-                    <th>Relative path</th>
-                    <td class="show-and-edit-app" id="relative_path">
-                      <input id="application_relative_path"  class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
-                      <div class="relative-variant"></div>
-                      <div id="relative_store" style="display:none;"></div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Title</th>
-                    <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
-                  </tr>
-                  <tr>
-                    <th>Action</th>
-                    <td>
-                      <input class="btn" name="commit" type="submit" value="Save" />
-                    </td>
-                  </tr>
-              </table>
-            </form>
-              ')
-            
-            
-            
-            $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-              $('.index-content').empty()
-              $('.index-content').append(append_html(data))
-              $('.notice-app').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Application was success update!</span>')    
-              $('.notice-app').mousemove ->
-                $(this).empty()
-    
-            $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-              $('.notice-project').empty()
-              errors = $.parseJSON(data.responseText)
-              if typeof(errors.title) isnt 'undefined'
-                $('#application_title').val(errors.title).addClass('error_proj')
-              if typeof(errors.product_name) isnt 'undefined'  
-                $('#application_product_name').val(errors.product_name).addClass('error_proj')
-                
-            $('.notice-app').empty()    
-            $.get '/admin/projects.json', (proj) =>
-              $('#application_project_name').empty()
-              count = Object.keys(proj).length
-              i = 0
-              while i<count
-                $('#application_project_name').append(
-                  '<option id="'+proj[i].id+'" value="'+proj[i].id+'">'+proj[i].name+'</option>'
-                )
-                i++
-              $('#application_project_name #'+data.project_id).attr('selected':'selected')
-        
-        
+  $('.edit-link').live 'click': ->
+    id = $(this).attr('id')
+    $('#app-list').modal('show':true)
+    $.get '/admin/applications?get=app&id='+id, (data) =>
+                         
+      $('#app-title').empty()
+      $('#app-title').append('Application: '+data.product_name)
+      $('.index-content').empty()
+      $('.index-content').append('
+       <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
+        <table class="table table-bordered table-app">
+            <tr>
+              <th>Project ID</th>
+              <td class="show-and-edit-app" id="id">
+                <select name="application[project_id]" id="application_project_name">
+                  
+                </select>
+             
+              
+              </td>
+            </tr>
+            <tr>
+              <th>Product name</th>
+              <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
+            </tr>
+            <tr>
+              <th>Bundle identifier</th>
+              <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
+            </tr>
+            <tr>
+              <th>Bundle version</th>
+              <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
+            </tr>
+            <tr>
+              <th>Relative path</th>
+              <td class="show-and-edit-app" id="relative_path">
+                <input id="application_relative_path"  class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
+                <div class="relative-variant"></div>
+                <div id="relative_store" style="display:none;"></div>
+              </td>
+            </tr>
+            <tr>
+              <th>Title</th>
+              <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
+            </tr>
+            <tr>
+              <th>Action</th>
+              <td>
+                <input class="btn" name="commit" type="submit" value="Save" />
+              </td>
+            </tr>
+        </table>
+      </form>
+        ')
+      
+      
+      
+      $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+        $('.index-content').empty()
+        $('.index-content').append(append_html(data))
+        $('.notice-app').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Application was success update!</span>')    
+        $('.notice-app').mousemove ->
+          $(this).empty()
+
+      $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+        $('.notice-project').empty()
+        errors = $.parseJSON(data.responseText)
+        if typeof(errors.title) isnt 'undefined'
+          $('#application_title').val(errors.title).addClass('error_proj')
+        if typeof(errors.product_name) isnt 'undefined'  
+          $('#application_product_name').val(errors.product_name).addClass('error_proj')
+          
+      $('.notice-app').empty()    
+      $.get '/admin/projects.json', (proj) =>
+        $('#application_project_name').empty()
+        count = Object.keys(proj).length
+        i = 0
+        while i<count
+          $('#application_project_name').append(
+            '<option id="'+proj[i].id+'" value="'+proj[i].id+'">'+proj[i].name+'</option>'
+          )
+          i++
+        $('#application_project_name #'+data.project_id).attr('selected':'selected')
+
+
         $('#tr_delete_').live 'click': ->
           $(this).parent().parent().parent().remove()
         

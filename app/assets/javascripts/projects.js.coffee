@@ -407,8 +407,7 @@ $ ->
         $('#client-handle').text(data.handle.replace(/\s/g,''))        
 
         ph_slash_len = $('#project_handle').val().split('/')
-        if ph_slash_len.length > 2
-  
+        if ph_slash_len.length > 1
           proj_h = $('#project_handle').val().replace(/\s/g,'')
           pos_proj_h = proj_h.lastIndexOf('/')
           substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
