@@ -81,7 +81,7 @@ class ClientsController < ApplicationController
    
     respond_with(@client) do |format|
       if @client.save
-        format.html { redirect_to clients_path+'?n=created' }
+        format.html { redirect_to clients_path, notice:'Developer was successfully create.' }
         format.json { render json: Client.where(company_id:params[:client][:company_id]) }
       else
         format.html { render action: "new" }
@@ -108,7 +108,7 @@ class ClientsController < ApplicationController
     @par = params[:id]
     respond_with(@client) do |format|
       if @client.update_attributes(params[:client])
-        format.html { redirect_to clients_path+'?n=updated' }
+        format.html { redirect_to clients_path, notice:"Developer was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
