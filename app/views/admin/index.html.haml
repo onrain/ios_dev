@@ -24,8 +24,6 @@
       %td=link_to list.id, project_path(list)
       %td=link_to list.name, project_path(list)
 
-      %td=link_to check_path(list.client_name, list.client_id, path:"clients").html_safe
-      %td=link_to list.manager_name, manager_path(list.manager_id)
       
       %td{class:"new_app_form", id:"proj_#{list.id}", style:"display:none;"}
         .notice-admin

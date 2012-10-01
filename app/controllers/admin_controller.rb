@@ -15,7 +15,7 @@ class AdminController < ApplicationController
     .limit(lim).page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     @new_app = Application.new
 
-    #respond_with(@projects)
+    respond_with(@projects)
 
   end
 
