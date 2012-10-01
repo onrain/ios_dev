@@ -36,7 +36,6 @@ class DevelopersController < ApplicationController
 
   def show
     @developer = Developer.get_dev_list_where_id(params[:id])
-
     respond_with(@developer)
   end
 

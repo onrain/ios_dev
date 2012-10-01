@@ -14,6 +14,14 @@
   %tr
     %th Office email:
     %td= check_f @manager.office_email
+  %tr
+    %th Projects
+    %td
+      - i = 0
+      - for proj in @projects
+        =link_to proj.name, project_path(proj)
+        = ',' unless i+1 == @projects.size
+        - i +=1
 %div{class:"well well-small well-width"}  
   %div{class:"btn-group pull-right"}
     = link_to 'Edit', edit_manager_path(@manager), class:"btn"

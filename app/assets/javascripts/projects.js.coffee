@@ -30,9 +30,9 @@ $ ->
       #$('#wait').remove()
       $('#res').remove()
       if count is 0
-        $(this).after('&nbsp;&nbsp;<div id="res" style="color:green">Alright!</div>')
+        $(this).after('<span id="res" style="color:green"><i class="icon-ok-sign"></i></span>')
       else
-        $(this).after('&nbsp;&nbsp;<div id="res" style="color:red">This value already taken!</div>')
+        $(this).after('&nbsp;&nbsp;<span id="res" style="color:red">This value already taken!</span>')
   
   
   
@@ -47,41 +47,103 @@ $ ->
   $('#show-btn').click ->
     $('.notice-project').empty()
     $('#new-application').show()
-    $('#show-btn').hide()
+    $('.show-btn').hide()
   
   
   $('#hide_btn').click ->
     $('.notice-project').empty()
     $('#new-application').hide()
-    $('#show-btn').show()
+    $('.show-btn').show()
 
   
   
   
   click = 0
   $(".get-list-applications").click ->
-    if click is 0
-      click +=1
+    if $(this).attr('class').match(/icon-chevron-down/)
+      parent_id = $(this).parent().parent().attr('id')
+      _pos = parent_id.indexOf('_')
+      parent = parent_id.substring(_pos+1, parent_id.length)
+      $('.tr_'+parent).remove()
+      $(this).toggleClass('icon-chevron-down')
+    else  
+      $(this).toggleClass('icon-chevron-down')
+  
       id = $(this).attr('id')
       if id isnt ''
         $.get '/admin/applications?get=product&id='+id, (data) =>
           count = Object.keys(data).length
           i = 0
-          if typeof(data[0]) is 'undefined'
-            $(this).next().append("empty.")
-          else
-            $(this).next().append("<hr />")
-            while i < count
-              
-              $(this).next().append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
-              if i+1 isnt count
-                $(this).next().append(", ")
-              i+=1
+          $(this).parent().parent().eq(0).after('
+          <tr class="tr_'+id+'">
+            <td colspan="7">
+            <table width="100%" class="table_no_border-left table_'+id+'">
             
+              <tr class="tr_'+id+'">
+                <th>Application name</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Bundle version</th>
+                <th>Bundle identifier</th>
+                <th>Relative path</th>
+                <th>Actions</th>    
+              </tr>
+              
+            </table>
+            <table width="100%">
+              <tr>
+                <td colspan="7" style="background-color: rgba(204,204,204, 0.3);">
+                  <a class="icon-plus pull-right add_new" id="'+id+'" style="margin-right:5px;"></a>
+                </td>
+              </tr>
+            </table>
+            </td>
+          </tr>
+            ')
 
-    else if click is 1
-      $('.append-projects').empty()
-      click = 0
+          while i < count 
+            $('.table_'+id+' tbody').append('
+              <tr>
+
+                <td id="app-name-td_'+data[i].id+'">
+                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a>
+                </td>
+                
+                <td>
+                  '+data[i].id+'
+                </td>
+                
+                <td>
+                  '+data[i].title+'
+                </td>
+                
+                <td>
+                   '+data[i].bundle_version+'
+                </td>
+                
+                <td>
+                   '+data[i].bundle_identifier+'
+                </td>
+                
+                <td>
+                   '+data[i].relative_path+'
+                </td>
+                
+                <td width="50">
+                  <div class="app-panel pull-right">
+                    <a id="'+data[i].id+'"class="icon-pencil edit-link" href="#" style="color:black;"></a>&nbsp;
+                    <a rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_" href="/admin/applications/'+data[i].id+'?proj='+data[i].project_id+'"></a>&nbsp
+                    <a class="icon-retweet" style="color:black;" href="/admin/applications?meth=clone&id='+data[i].id+'" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"></a>
+                   </div>
+                </td>
+              </tr>
+
+              ')
+ 
+            
+            if i+1 isnt count
+              $(this).next().append(", ")
+            i+=1
   
   
   
@@ -106,10 +168,6 @@ $ ->
             <td>'+data.id+'</td>
           </tr>
           <tr>
-            <th>Project ID</th>
-            <td class="show-and-edit-app" id="project_id">'+data.project_id+'</td>
-          </tr>
-          <tr>
             <th>Product name</th>
             <td class="show-and-edit-app" id="product_name">'+data.product_name+'</td>
           </tr>
@@ -132,7 +190,7 @@ $ ->
           <tr>
             <th>Action</th>
             <td>
-              <a id="edit_'+data.id+'"class="btn btn-small">Edit</a>
+              <a id="'+data.id+'" class="edit-link btn btn-small">Edit</a>
               &nbsp;
               <a rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'" href="/admin/applications/'+data.id+'?proj='+data.project_id+'">Destroy</a>
             </td>
@@ -154,74 +212,88 @@ $ ->
       $('#app-title').append('Application: '+data.product_name)
       $('.index-content').empty()
       $('.index-content').append(append_html(data))
-    
-    
-
-    $('#delete_'+id).live 'click': ->
-      location.reload(true)
 
 
         
     
      
-    $('#edit_'+id).live 'click': ->
+  $('.edit-link').live 'click': ->
+    
+    
+    id = $(this).attr('id')
+    $('#app-list').modal('show':true)
 
-      $.get '/admin/applications?get=app&id='+id, (data) =>
+    $.get '/admin/applications?get=app&id='+id, (data) =>
+      $('.index-content').empty()
+      $('.index-content').append('
+       <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
+        <table class="table table-bordered table-app">
+            <tr>
+            <th>Project</th>
+            <td class="show-and-edit-app" id="id">
+              <select name="application[project_id]" id="application_project_name"></select>
+            </td>
+          </tr>
+            <tr>
+              <th>Product name</th>
+              <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
+            </tr>
+            <tr>
+              <th>Bundle identifier</th>
+              <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
+            </tr>
+            <tr>
+              <th>Bundle version</th>
+              <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
+            </tr>
+            <tr>
+              <th>Relative path</th>
+              <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
+                <div class="relative-variant"></div>
+              </td>
+            </tr>
+            <tr>
+              <th>Title</th>
+              <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
+            </tr>
+            <tr>
+              <th>Action</th>
+              <td>
+                <input class="btn" name="commit" type="submit" value="Save" />
+              </td>
+            </tr>
+        </table>
+      </form>
+        ')
+      
+      
+      $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
         $('.index-content').empty()
-        $('.index-content').append('
-         <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
-          <table class="table table-bordered table-app">
-              <tr>
-                <th>Project ID</th>
-                <td class="show-and-edit-app" id="id"><input id="application_project_name" name="application[project_id]" size="30" type="text" value="'+data.project_id+'" /></td>
-              </tr>
-              <tr>
-                <th>Product name</th>
-                <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
-              </tr>
-              <tr>
-                <th>Bundle identifier</th>
-                <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
-              </tr>
-              <tr>
-                <th>Bundle version</th>
-                <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
-              </tr>
-              <tr>
-                <th>Relative path</th>
-                <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" /></td>
-              </tr>
-              <tr>
-                <th>Title</th>
-                <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
-              </tr>
-              <tr>
-                <th>Action</th>
-                <td>
-                  <input class="btn" name="commit" type="submit" value="Save" />
-                </td>
-              </tr>
-          </table>
-        </form>
-          ')
-        
-        
-        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-          $('.index-content').empty()
-          $('.index-content').append(append_html(data))
-          $('.notice-app').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Application was success update!</span>')    
-          $('.notice-app').mousemove ->
-            $(this).empty()
+        $('.index-content').append(append_html(data))
+        $('.notice-app').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Application was success update!</span>')    
+        $('.notice-app').mousemove ->
+          $(this).empty()
 
-        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-          $('.notice-project').empty()
-          errors = $.parseJSON(data.responseText)
-          if typeof(errors.title) isnt 'undefined'
-            $('#application_title').val(errors.title).addClass('error_proj')
-          if typeof(errors.product_name) isnt 'undefined'  
-            $('#application_product_name').val(errors.product_name).addClass('error_proj')
-            
-        $('.notice-app').empty()    
+      $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+        $('.notice-project').empty()
+        errors = $.parseJSON(data.responseText)
+        if typeof(errors.title) isnt 'undefined'
+          $('#application_title').val(errors.title).addClass('error_proj')
+        if typeof(errors.product_name) isnt 'undefined'  
+          $('#application_product_name').val(errors.product_name).addClass('error_proj')
+          
+      $('.notice-app').empty()
+      
+      $.get '/admin/projects.json', (proj) =>
+        $('#application_project_name').empty()
+        count = Object.keys(proj).length
+        i = 0
+        while i<count
+          $('#application_project_name').append(
+            '<option id="'+proj[i].id+'" value="'+proj[i].id+'">'+proj[i].name+'</option>'
+          )
+          i++
+        $('#application_project_name #'+data.project_id).attr('selected':'selected')
 
 
         
@@ -247,16 +319,7 @@ $ ->
   
   $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
           
-    $('.notice-project').empty()
-    $('.notice-project').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
-    $('.append-applications').empty()     
-    count = Object.keys(data).length
-    i = 0
-    while i < count
-      $('.append-applications').append("<a id='"+data[i].id+"' class='prev-app'>"+data[i].product_name+"</a>")
-      if i+1 isnt count
-        $('.append-applications').append(", ")
-      i += 1
+    document.location.reload(true)
       
       
   $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
@@ -273,7 +336,54 @@ $ ->
   $('.error_proj').click ->
     $(this).val('')
     $(this).removeClass('error_proj')
+   
+   
+   
+  $('#save-new-app').live 'click': ->
+
+    $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+            
+      $('.notice-admin').empty()
+      $('.notice-admin').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Handle was success create!</span>')    
+          
+        
+    $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+      $('.notice-admin').empty()
+      errors = $.parseJSON(data.responseText)
+      par = $(this).parent().children()
+      if typeof(errors.title) isnt 'undefined'
+        par.find('#application_title').val(errors.title).addClass('error_proj')
+      if typeof(errors.product_name) isnt 'undefined'  
+        par.find('#application_product_name').val(errors.product_name).addClass('error_proj') 
+   
+   
+  $('.add_new').live 'click': ->
+    $('.notice-admin').empty()
+    $('.relative-variant').empty()
+    id = $(this).attr('id')
+    parent_el = $(this).parent().parent().parent().parent()
     
+    if parent_el.children().eq(1).length isnt 0
+      parent_el.children().eq(1).remove()
+
+    else
+      
+      
+      $.get '/admin/projects?p='+id, (data) =>
+        $('#relative_store').text(data.handle) 
+      
+            
+      
+      parent_el.append(
+        '<table style="margin: 0 auto; width:100%;" class="table table-bordered open-new-app">
+          <tr>
+            <td id="append_'+id+'">
+            </td>
+          </tr>
+        </table>'            
+      )
+      
+      $('#append_'+id).append($('#proj_'+id).html()) 
     
     
   $('#project_name').bind 'input': ->
@@ -392,6 +502,13 @@ $ ->
    
   
   
+  $('#tr_delete_').live 'click': ->
+    $(this).parent().parent().parent().remove()
+  
+  $('#duplicate').live 'click': ->
+    $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+      document.location.reload(true)
+  
   
   
   $('.add-on').click ->
@@ -428,21 +545,104 @@ $ ->
   
   
   
-  $('#application_product_name').bind 'input': ->
+  $('#application_product_name').live 'input': ->
+
 
     $('.relative-variant').empty()
-    client = $('#proj-client-h').text().toLowerCase().replace(/\s+/g,'')
-    project = $('#proj-name').text().toLowerCase().replace(/\s+/g,'')
-    
-    name = $(this).val().toLowerCase().replace(/\s+/g,'')
-    clidot = $('#proj-client-h').text().toLowerCase().replace(/\s+/g,'.')
-    namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
-    $('.relative-variant').append(
-      '<p><span id="handle"><span>'+client+'.'+project+'.<span class="rel_name">'+name+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span>'+client+'_'+project+'_<span class="rel_name">'+name+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span>'+project+'_'+client+'_<span class="rel_name">'+name+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
+    name = $(this).val().toLowerCase()
+    res = name.split(" ")
+    j = 1
+    i = 0
+    variant = 4
+    count = 0
+    while count < variant
+      $('.relative-variant').append("<div class='variant"+count+"'></div>")
+      count++
+    while i < res.length
+      k = 0
+      $('.variant0').append('<div id="relative'+i+'"></div>')
+      $('.variant1').append('<div id="relative'+i+'"></div>')
+      $('.variant2').append('<div id="relative'+i+'"></div>')
+      $('.variant3').append('<div id="relative'+i+'"></div>')
+      while k < j
 
-    )
+        $('.variant0 #relative'+i).append(res[k])
+        $('.app').remove()
+        $('.variant0 #relative'+i).mousemove ->
+          $('.app').remove()
+          $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+
+          
+        if k+1 < j
+          $('.variant1 #relative'+i).append(res[k]+".")
+          
+          
+          
+          $('.app').remove()
+          $('.variant1 #relative'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+          
+          
+        else if k>0
+          $('.variant1 #relative'+i).append(res[k])
+        
+        
+        
+        if k+1 < j
+          $('.variant2 #relative'+i).append(res[k]+"-")
+                      
+          $('.app').remove()
+          $('.variant2 #relative'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+            
+        else if k>0
+          $('.variant2 #relative'+i).append(res[k])
+          
+          
+          
+        if k+1 < j
+          $('.variant3 #relative'+i).append(res[k]+"_")
+          $('.app').remove()
+          $('.variant3 #relative'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+        else if k>0
+          $('.variant3 #relative'+i).append(res[k])
+        k++    
+      j++
+      i++
+    $('div[id*="relative"]').mousemove ->
+      $(this).css('cursor':'pointer', 'text-decoration':'underline')
+    $('div[id*="relative"]').mouseleave ->
+      $(this).css('text-decoration':'none')
+      
+    $('div[id*="relative"]').click ->
+      
+      relative =  $('input[id="application_relative_path"]').val().replace(/\s+/g,'')
+      
+
+      name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
+      store_project = $('#handle_store').text().toLowerCase().replace(/\s+/g,'')
+
+      $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -471,32 +671,31 @@ $ ->
   
   $('#autocomplete-client').val($('#project_client_id option[selected="selected"]').text())
     
-    
   $('#autocomplete-client').bind 'input': ->
     client_name = $(this).val()
     $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
   
+  path = window.location.pathname;
+  if(/edit/).test(path) or (/new/).test(path)
+    id = $('#project_manager_id option:selected').val()
+    $.get '/admin/developers?m='+id, (data) =>
+      count = Object.keys(data).length
   
-  
-  id = $('#project_manager_id option:selected').val()
-  $.get '/admin/developers?m='+id, (data) =>
-    count = Object.keys(data).length
-
-    i = 0
-    while i < count
-      $('.select_box_developers').append(
-        '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-          <span>'+data[i].name+'</span>
-          <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
-        </span>'
-        )  
-      i++
-    $('.select_box_developers input[type="checkbox"]').click ->
-      val_dev = $(this).val()
-      unless $(this).attr('checked')
-        $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
-      else
-        $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+      i = 0
+      while i < count
+        $('.select_box_developers').append(
+          '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+            <span>'+data[i].name+'</span>
+            <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
+          </span>'
+          )  
+        i++
+      $('.select_box_developers input[type="checkbox"]').click ->
+        val_dev = $(this).val()
+        unless $(this).attr('checked')
+          $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
+        else
+          $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
         
         
   $('#project_manager_id option').click ->

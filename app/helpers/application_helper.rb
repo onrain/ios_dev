@@ -5,7 +5,7 @@ module ApplicationHelper
     if name.nil?
       name = "<div style='color:gray; font-size:13px;'>empty</div>" 
     else
-      name = "<a href=/admin/"+path[:path]+"/"+id+">"+name+"</a>"
+      name = "<a href='/admin/#{path[:path]}/#{id}'>"+name+"</a>"
     end
     name
   end

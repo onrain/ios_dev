@@ -20,6 +20,8 @@ class ManagersController < ApplicationController
 
   def show
     @manager = Manager.find(params[:id])
+    manager_id = params[:id]
+    @projects = Project.where('manager_id = ?', manager_id)
     respond_with(@manager)
   end
 

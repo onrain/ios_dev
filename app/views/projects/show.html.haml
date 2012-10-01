@@ -20,25 +20,55 @@
       %th Name:
       %td{id:"proj-name"}= proj.name
     %tr
-      %th Svn:
-      %td= check_f proj.svn
-    %tr
       %th Handle:
-      %td= check_f proj.handle
+      %td{id:"handle_store"}= check_f proj.handle
     %tr
-      %th Applications
-      %td
+      %td{colspan:"2"}
+        %table{width:"100%", class:"table_no_border-left"}           
+          %tr
+            %th{style:"width:20%"} Application name
+            %th{style:"width:5%"} ID
+            %th{style:"width:20%"} Title
+            %th{style:"width:5%"} Bundle version
+            %th{style:"width:15%"} Bundle identifier
+            %th Relative path
+            %th{style:"width:40px"} Actions
         .append-applications
-          - i = 0
-          - unless @application.empty? 
-            - for app in @application
-              = link_to app.product_name, '#', id:app.id, class:"prev-app"
-              = ','  unless i+1 == @application.size
-              - i += 1
+          - unless @application.empty?
+            -if @application.size>0
+              - for app in @application
+                %table{class:"table-bordered", style:"width:100%;"}
+                  %tr
+                    %td{id:"app-name-td_#{app.id}", width:"20%"}
+                      %a{id:"#{app.id}", class:"prev-app"}
+                        = app.product_name                  
+                    %td{width:"5%"}
+                      = app.id
+                    %td{width:"20%"}
+                      = app.title                              
+                    %td{width:"5%"}
+                      = app.bundle_version                 
+                    %td{width:"15%"}
+                      = app.bundle_identifier
+                    %td
+                      =app.relative_path                
+                    %td{width:"40"}
+                      %div{class:"app-panel pull-right"}
+                        %a{id:"#{app.id}", class:"icon-pencil edit-link", href:"#", style:"color:black;"}
+
+                        %a{rel:"nofollow", style:"color:black;", class:"icon-trash", :"data-method"=>:"delete", :"data-remote"=>:"true", :"data-confirm"=>:"Are you sure?", id:"tr_delete_", href:"/admin/applications/#{app.id}?proj=#{app.project_id}"}
+
+                        %a{class:"icon-retweet", style:"color:black;", href:"/admin/applications?meth=clone&id=#{app.id}", id:"duplicate", :"data-remote"=>:"true", title:"Make duplicate", :"data-confirm"=>"Are you sure?"}
+            - else
+              = "Doesn't have any application"
           - else
             Empty
         %hr
-        = link_to "Add new application", '#', class:"btn btn-success btn-small", id:"show-btn"
+        %table{width:"100%", class:"table_no_border-left show-btn"}
+          %tr
+            %td{colspan:"5", style:"background-color: rgba(204,204,204, 0.3);"}
+              %a{class:"icon-plus pull-right add_new", id:"show-btn", style:"margin-right:5px;"}
+
     %tr{id:'new-application'}
       %td{colspan:'2'}
         .notice-project

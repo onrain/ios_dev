@@ -18,6 +18,8 @@ class ProjectsController < ApplicationController
       end
     end
 
+    @new_app = Application.new
+
     respond_with(@projects)
   end
 

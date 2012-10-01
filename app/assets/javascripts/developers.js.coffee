@@ -1,4 +1,12 @@
 $ ->
+
+  if $('#developer_manager_id option').length > 1
+    $('#developer_manager_id').children().eq(1).attr('selected', 'selected')
+
+
+
+
+
 	$('.sort').css('color':'black')
 	$('.sort').mousemove ->
 		$(this).css('text-decoration':'none')
@@ -18,4 +26,7 @@ $ ->
 			$('#'+sort).parent().addClass('select-th')
 		when 'desc' 
 			$('#'+sort).addClass('icon-chevron-down')
-			$('#'+sort).parent().addClass('select-th')  
+			$('#'+sort).parent().addClass('select-th')
+
+  
+

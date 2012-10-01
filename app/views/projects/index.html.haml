@@ -13,28 +13,59 @@
 
 %table{class:"table table-striped table-bordered", style:"width:1000px; margin: 0 auto;"}
   %tr
+    %th{style:"width:10px !important; background-color: rgba(204,204,204,0.7);"}
     %th=sortable "id", "ID"
     %th=sortable "client", "Client"
     %th=sortable "manager", "Manager"
     %th=sortable "name", "Name"
-    %th=sortable "svn", "Svn"
     %th=sortable "handle", "Handle"
-    %th Applications
 
     %th Actions
 
 
   - @projects.each do |project|
-    %tr
+    %tr{id:"parent_#{project.id}"}
+      %td
+        %div{class:"icon-play get-list-applications", id:"#{project.id}"}
       %td= link_to(project.id, project)
       %td= check_path(project.client_name, project.client_id, path:"clients").html_safe
       %td= check_path(project.manager_name, project.manager_id, path:"managers").html_safe
       %td= project.name
-      %td= check_f(project.svn)
-      %td= check_f(project.handle)
-      %th
-        =app_link("Show applications", "applications", project.id)
-        %div{class:"append-projects"}
+      %td{id:"handle_store"}= check_f(project.handle)
+      %td{class:"new_app_form", id:"proj_#{project.id}", style:"display:none;"}
+        .notice-admin
+        = form_for(@new_app, remote:true) do |f|
+          %table{class:"table table-bordered"}
+            -if @new_app.errors.any?
+              %div{class:"alert alert-error"}
+                %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+                  &times;
+                %h3= "#{pluralize(@new_app.errors.count, "error")} prohibited this post from being saved:"
+                %ul
+                  - @new_app.errors.full_messages.each do |msg|
+                    %li= msg
+            %div{class:"store", style:"display:none;"}
+            = f.hidden_field :project_id, value:project.id
+            %tr
+              %td= f.label :product_name
+              %td= f.text_field :product_name
+            %tr
+              %td= f.label :bundle_identifier
+              %td= f.text_field :bundle_identifier
+            %tr
+              %td= f.label :bundle_version
+              %td= f.text_field :bundle_version
+            %tr
+              %td= f.label :relative_path
+              %td
+                = f.text_field :relative_path, class:"input-xlarge" 
+                .relative-variant
+                %div{id:"relative_store", style:"display:none;"}
+            %tr
+              %td= f.label :title
+              %td= f.text_field :title
+            %tr
+              %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
 
       %td
         %div{class:"btn-group"}
