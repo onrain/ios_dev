@@ -7,11 +7,11 @@ class AdminController < ApplicationController
     lim = params[:lim]
     lim = project_size if params[:lim].eql? 'all'
     @projects = Project
-    .select('clients.name as client_name, managers.name as manager_name, applications.id as product_id,
+    .select('clients.name as client_name, managers.name as manager_name,
     projects.*')
-    .joins('left join applications on applications.project_id = projects.id
-    left join clients on clients.id = projects.client_id
-    left join managers on managers.id = projects.manager_id group by projects.id, clients.name')
+    .joins('left join clients on clients.id = projects.client_id
+    left join managers on managers.id = projects.manager_id')
+    .group('projects.id, clients.name, managers.name')
     .limit(lim).page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     @new_app = Application.new
     respond_with(@projects)
