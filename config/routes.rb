@@ -7,7 +7,7 @@ IOSmanager::Application.routes.draw do
   delete '/admin/remove/:id' => "clients#remove"
   post '/admin/remote_update/:id' => "applications#remote_update", as:"remote_app"
   post '/admin/client_remote_update/:id' => "clients#remote_update", as:"remote_cl"
-  resources :admin
+  
   scope "/admin" do
     resources :clients
     resources :companies
