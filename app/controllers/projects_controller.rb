@@ -27,6 +27,8 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.get_proj_list_where_id(params[:id])
     @application = Application.find_all_by_project_id(params[:id])
+    project = Project.find(params[:id])
+    @developers = project.developers.all
     @new_app = Application.new
     respond_with(@project)
   end

@@ -1,5 +1,6 @@
 = render 'modal_for_app'
 
+
 -if notice
   %div{class:"alert alert-success"}
     %button{:class=>"close", :"data-dismiss"=>:"alert"}
@@ -22,6 +23,14 @@
     %tr
       %th Handle:
       %td{id:"handle_store"}= check_f proj.handle
+    %tr
+      %th Developers
+      %td
+        - i = 0
+        - for dev in @developers
+          =link_to dev.name, developer_path(dev)
+          = ',' unless i+1 == @developers.size
+          - i +=1
     %tr
       %td{colspan:"2"}
         %table{width:"100%", class:"table_no_border-left"}           
