@@ -26,7 +26,11 @@ $ ->
 
     $.get '/admin/applications?ch=true&val='+$(this).val(), (data) =>
       count = Object.keys(data).length
-      #$('#wait').remove()
+      
+      if $(this).val().length is 0
+        $('#res').remove()
+        $(this).after('<div id="res" style="color:red">Can\'t be blank!</div>')
+        return false
       $('#res').remove()
       if count is 0
         $(this).after('<span id="res" style="color:green">&nbsp;&nbsp;<i class="icon-ok-sign"></i></span>')
