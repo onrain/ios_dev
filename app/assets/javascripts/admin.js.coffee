@@ -190,6 +190,7 @@ $ ->
                 
                 <td width="50">
                   <div class="app-panel pull-right">
+                    <div id="'+id+'" style="display:none;"></div>
                     <a id="'+data[i].id+'"class="icon-pencil edit-link" href="#" style="color:black;"></a>&nbsp;
                     <a rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_" href="/admin/applications/'+data[i].id+'?proj='+data[i].project_id+'"></a>&nbsp
                     <a class="icon-retweet" style="color:black;" href="/admin/applications?meth=clone&id='+data[i].id+'" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"></a>
@@ -207,6 +208,7 @@ $ ->
   $('.edit-link').live 'click': ->
     id = $(this).attr('id')
     $('#app-list').modal('show':true)
+    h_id = $(this).parent().children().eq(0).attr('id') 
     $.get '/admin/applications?get=app&id='+id, (data) =>
                          
       $('#app-title').empty()
@@ -227,7 +229,10 @@ $ ->
             </tr>
             <tr>
               <th>Product name</th>
-              <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
+              <td class="show-and-edit-app" id="product_name">
+                <input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" />
+                <div id="handle_id_store" style="display:none;"></div>  
+              </td>
             </tr>
             <tr>
               <th>Bundle identifier</th>
@@ -243,6 +248,7 @@ $ ->
                 <input id="application_relative_path"  class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
                 <div class="relative-variant"></div>
                 <div id="relative_store" style="display:none;"></div>
+                <div id="handle_store_edit" style="display:none;"></div>
               </td>
             </tr>
             <tr>
@@ -258,7 +264,8 @@ $ ->
         </table>
       </form>
         ')
-      
+     
+      $('#handle_store_edit').text($('input[id="application_relative_path"]').val())    
       
       
       $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
@@ -329,10 +336,14 @@ $ ->
       
       
   $('#application_product_name').live 'input': ->
-    
+
     $('.relative-variant').empty()
     name = $(this).val().toLowerCase()
     res = name.split(" ")
+    proj_id = $(this).next().text().replace(/\s+/g, '')
+    if typeof(proj_id) is ''
+      proj_id = 'new'
+    
     j = 1
     i = 0
     variant = 4
@@ -342,10 +353,10 @@ $ ->
       count++
     while i < res.length
       k = 0
-      $('.variant0').append('<div id="relative'+i+'"></div>')
-      $('.variant1').append('<div id="relative'+i+'"></div>')
-      $('.variant2').append('<div id="relative'+i+'"></div>')
-      $('.variant3').append('<div id="relative'+i+'"></div>')
+      $('.variant0').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      $('.variant1').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      $('.variant2').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      $('.variant3').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
       while k < j
 
         $('.variant0 #relative'+i).append(res[k])
@@ -402,22 +413,26 @@ $ ->
       
     $('div[id*="relative"]').click ->
       
-      relative =  $('input[id="application_relative_path"]').val().replace(/\s+/g,'')
       
-      if relative.split('/').length > 2
-        name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
+      name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
+      store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
+      
+      if $(this).attr('class') isnt ''
+        idh = $(this).attr('class')
+        store_project = $('#project_handle_'+idh).text().toLowerCase().replace(/\s+/g,'')
+      $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+
+      
+  $('#application_project_name option').live 'click': ->
+    id = $(this).val()
+    store_project = $('#project_handle_'+id).text().toLowerCase().replace(/\s+/g,'')
+
+    relative = $('#handle_store_edit').text().replace(/\s+/g,'')
   
-        num_slash = relative.lastIndexOf('/')
-        store_project = relative.substring(0, num_slash)
-
-        $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
-      else
-
-        name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
-        store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
-  
-        $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
-
+    num_slash = relative.lastIndexOf('/')
+    
+    name_app = relative.substring(num_slash+1, relative.length)
+    $('#application_relative_path').val(store_project+"/"+name_app)
 
 
 
