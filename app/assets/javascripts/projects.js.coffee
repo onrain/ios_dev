@@ -22,17 +22,16 @@ $ ->
 
   
   
-  $('#application_bundle_identifier').bind 'input': ->
-    $('#wait').remove()
-    #$(this).after('<span id="wait">&nbsp;&nbsp;<img src="/assets/load.gif"></span>');
+  $('#application_bundle_identifier').live 'input': ->
+
     $.get '/admin/applications?ch=true&val='+$(this).val(), (data) =>
       count = Object.keys(data).length
       #$('#wait').remove()
       $('#res').remove()
       if count is 0
-        $(this).after('<span id="res" style="color:green"><i class="icon-ok-sign"></i></span>')
+        $(this).after('<span id="res" style="color:green">&nbsp;&nbsp;<i class="icon-ok-sign"></i></span>')
       else
-        $(this).after('&nbsp;&nbsp;<span id="res" style="color:red">This value already taken!</span>')
+        $(this).after('<div id="res" style="color:red">This value already taken!</div>')
   
   
   
@@ -248,7 +247,7 @@ $ ->
             </tr>
             <tr>
               <th>Relative path</th>
-              <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
+              <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
                 <div class="relative-variant"></div>
               </td>
             </tr>

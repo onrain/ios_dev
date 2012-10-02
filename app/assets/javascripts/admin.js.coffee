@@ -48,7 +48,16 @@ $ ->
         '
   
   
-  
+  $('#application_bundle_identifier').live 'input': ->
+
+    $.get '/admin/applications?ch=true&val='+$(this).val(), (data) =>
+      count = Object.keys(data).length
+
+      $('#res').remove()
+      if count is 0
+        $(this).after('<span id="res" style="color:green">&nbsp;&nbsp;<i class="icon-ok-sign"></i></span>')
+      else
+        $(this).after('<div id="res" style="color:red">This value already taken!</div>')
   
   
   $('.prev-app').live 'click': ->
