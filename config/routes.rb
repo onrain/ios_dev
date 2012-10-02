@@ -18,5 +18,5 @@ IOSmanager::Application.routes.draw do
   end
   #match "*path", :to => "application#routing_error"
 
-  # root :to => 'welcome#index'
+   root :to => 'admin#index'
 end

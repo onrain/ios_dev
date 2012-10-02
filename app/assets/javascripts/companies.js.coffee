@@ -19,10 +19,10 @@ $ ->
     $('#client_handle').val('')
     $('.companies-notice').empty()
     $('#add-new-client').show()
-    $('#add-client-btn').hide()
+    $('.show-btn').hide()
   $('#hide_btn').click ->
     $('#add-new-client').hide()
-    $('#add-client-btn').show()
+    $('.show-btn').show()
     
 
   $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
@@ -74,31 +74,6 @@ $ ->
     when 'desc' 
       $('#'+sort).addClass('icon-chevron-down')
       $('#'+sort).parent().addClass('select-th')    
-
-
-  $('#client_name').bind 'input': ->
-    $('.handle-variant').empty()
-    company = $('#comp_name').text().toLowerCase().replace(/\s+/g,'')
-    name = $(this).val().toLowerCase().replace(/\s+/g,'')
-    comdot = $('#comp_name').text().toLowerCase().replace(/\s+/g,'.')
-    namedot = $(this).val().toLowerCase().replace(/\s+/g,'.')
-    $('.handle-variant').append(
-      '<p><span id="handle"><span>'+name+'.<span class="comp_name">'+company+'</span></span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="comp_name">'+company+'</span>.'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="comp_name">'+company+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="comp_name">'+comdot+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="comp_name">'+company+'</span>_'+namedot+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-      '<p><span id="handle"><span class="comp_name">'+company+'</span>_'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span>'
-      '<p><span id="handle"><span class="comp_name">'+company.substring(0,3)+'</span>'+name+'</span>&nbsp;&nbsp;<span class="icon-ok"></span></p>'
-    )
-    
-    
-  $('.icon-ok').live 'click': ->
-    value_h = $(this).parent().children().eq(0).text()
-    $('#client_handle').val(value_h)
-
-
-
 
 
   append_html = (data) ->
@@ -167,7 +142,9 @@ $ ->
               </tr>
               <tr>
                 <th>Handle name</th>
-                <td class="show-and-edit-client" id="handle"> <input id="client_handle" name="client[handle]" size="30" type="text" value="'+data.handle+'" /></td>
+                <td class="show-and-edit-client" id="handle"> <input id="client_handle" name="client[handle]" size="30" type="text" value="'+data.handle+'" />
+                <div class="handle-variant"></div>
+                </td>
               </tr>
               <tr>
                 <th>Action</th>
@@ -180,24 +157,103 @@ $ ->
           ')
         
         
-        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-          $('.clients-content').empty()
-          $('.clients-content').append(append_html(data))
-          $('.notice-client').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Cleint was success update!</span>')    
-          $('.notice-client').mousemove ->
-            $(this).empty()
+      $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+        $('.clients-content').empty()
+        $('.clients-content').append(append_html(data))
+        $('.notice-client').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Cleint was success update!</span>')    
+        $('.notice-client').mousemove ->
+          $(this).empty()
 
-        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-          $('.notice-client').empty()
-          errors = $.parseJSON(data.responseText)
-          if typeof(errors.name) isnt 'undefined'
-            $('#client_name input').val(errors.name).addClass('error_proj')
-          if typeof(errors.email) isnt 'undefined'  
-            $('#client_email').val(errors.email).addClass('error_proj')
-          if typeof(errors.handle) isnt 'undefined'  
-            $('#client_handle').val(errors.handle).addClass('error_proj')
+      $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+        $('.notice-client').empty()
+        errors = $.parseJSON(data.responseText)
+        if typeof(errors.name) isnt 'undefined'
+          $('#client_name input').val(errors.name).addClass('error_proj')
+        if typeof(errors.email) isnt 'undefined'  
+          $('#client_email').val(errors.email).addClass('error_proj')
+        if typeof(errors.handle) isnt 'undefined'  
+          $('#client_handle').val(errors.handle).addClass('error_proj')
+          
+      $('.notice-client').empty()
+
+
+  $('#client_name').live 'input': ->
+
+
+    name = $(this).val().toLowerCase()
+    name = name.trim()
+    if typeof(name[0]) isnt 'undefined'
+      $('.handle-variant').empty()
+    res = name.split(" ")
+
+    j = 1
+    i = 0
+    variant = 4
+    count = 0
+    while count < variant
+
+      $('.handle-variant').append("<div class='variant"+count+"'></div>")
+      count++
+    while i < res.length
+      k = 0
+
+      $('.variant0').append('<div id="handle'+i+'"></div>')
+      $('.variant1').append('<div id="handle'+i+'"></div>')
+      $('.variant2').append('<div id="handle'+i+'"></div>')
+      $('.variant3').append('<div id="handle'+i+'"></div>')
+      while k < j
+        $('.variant0 #handle'+i).append(res[k])
+        $('.app').remove()
+        $('.variant0 #handle'+i).mousemove ->
+          $('.app').remove()
+          $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+        
+        if k+1 < j
+          $('.variant1 #handle'+i).append(res[k]+".")
+           
+          $('.app').remove()
+          $('.variant1 #handle'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+                  
+        else if k>0
+          $('.variant1 #handle'+i).append(res[k])        
+        
+        if k+1 < j
+          $('.variant2 #handle'+i).append(res[k]+"-")
+                      
+          $('.app').remove()
+          $('.variant2 #handle'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
             
-        $('.notice-client').empty()  
+        else if k>0
+          $('.variant2 #handle'+i).append(res[k])
+             
+        if k+1 < j
+          $('.variant3 #handle'+i).append(res[k]+"_")
+          $('.app').remove()
+          $('.variant3 #handle'+i).mousemove ->
+            $('.app').remove()
+            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
+        else if k>0
+          $('.variant3 #handle'+i).append(res[k])
+        k++    
+      j++
+      i++
+    $('div[id*="handle"]').mousemove ->
+      $(this).css('cursor':'pointer', 'text-decoration':'underline')
+    $('div[id*="handle"]').mouseleave ->
+      $(this).css('text-decoration':'none')
+      
+
+      
+      
+    $('div[id*="handle"]').live 'click': ->
+      
+      company = $('#company_name').text().toLowerCase().replace(/\s+/g,'')
+        
+      $('#client_handle').val(company+'/'+$(this).text().replace(/\s+/g,''))
 
 
 

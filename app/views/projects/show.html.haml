@@ -35,7 +35,7 @@
             %th{style:"width:40px"} Actions
         .append-applications
           - unless @application.empty?
-            -if @application.size>0
+            -if @application.size > 0
               - for app in @application
                 %table{class:"table-bordered", style:"width:100%;"}
                   %tr

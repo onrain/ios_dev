@@ -90,7 +90,7 @@ $ ->
               </tr>
               
             </table>
-            <table width="100%">
+            <table width="100%" class="table_no_border-left">
               <tr>
                 <td colspan="7" style="background-color: rgba(204,204,204, 0.3);">
                   <a class="icon-plus pull-right add_new" id="'+id+'" style="margin-right:5px;"></a>

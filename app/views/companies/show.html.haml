@@ -12,7 +12,7 @@
     %td= @company_show.id
   %tr
     %th Name:
-    %td= @company_show.name
+    %td{id:"company_name"}= @company_show.name
   %tr
     %th Website:
     %td= check_f @company_show.website
@@ -30,9 +30,10 @@
           empty.
   %tr
     %td{colspan:"2"}
-
-      %div{class:"btn btn-success", id:"add-client-btn"}
-        Add new Client
+      %table{width:"100%", class:"table_no_border-left show-btn"}
+        %tr
+          %td{colspan:"5", style:"background-color: rgba(204,204,204, 0.3);"}
+            %a{class:"icon-plus pull-right add_new", id:"add-client-btn", style:"margin-right:5px;"}
       #add-new-client
         .companies-notice
         %div{class:"well well-small", style:"width:30px;", id:"hide_btn"}
@@ -40,14 +41,12 @@
           Hide
         = form_for @client, remote:true do |f|
           %table{class:"table table-bordered", style:"margin: 0 auto;"}
-            
-            %tr
-              %td  
-                = f.hidden_field :company_id, value:"#{params[:id]}"
+
             %tr
               %td
                 = f.label :name
               %td
+                = f.hidden_field :company_id, value:"#{params[:id]}"
                 = f.text_field :name
             %tr
               %td
@@ -60,9 +59,6 @@
               %td
                 = f.text_field :handle
                 .handle-variant
-                - comp = Company.find(params[:id])
-                %di{id:"comp_name", style:"display:none"}
-                  =comp.name
             %tr
               %td{colspan:"2"}
                 = f.submit 'Save', class:"btn"

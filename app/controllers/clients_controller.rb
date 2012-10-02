@@ -42,24 +42,6 @@ class ClientsController < ApplicationController
     respond_with(@client)
   end
 
-  
-  def handle
-
-
-    @client = Client.find(params[:id])
-    @handle = @client.handles.create(params[:handle])
-         
-       
-       respond_with(@handle) do |format|
-         if @handle.save
-           format.json { render json: Handle.find_all_by_client_id(params[:id]), status: :created, location: @client }
-         else
-           #format.html { render action: "new" }
-           format.json { render json: @handle.errors, status: :unprocessable_entity }
-         end
-       end
-
-  end
 
   def remove
     @handle = Handle.find(params[:id])
