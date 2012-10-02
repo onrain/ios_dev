@@ -700,20 +700,21 @@ $ ->
   $('#project_manager_id option').click ->
     id = $(this).val()
     if id is ''
-      return false
-    $.get '/admin/developers?m='+id, (data) =>
-      count = Object.keys(data).length
-      i = 0
-      if count > 0
-        $('.select_box_developers').empty()
-        while i < count
-          $('.select_box_developers').append(
-            '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-              <span>'+data[i].name+'</span>
-              <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
-            </span>'
-            )  
-          i++
+      $('.select_box_developers').empty()
+    else
+      $.get '/admin/developers?m='+id, (data) =>
+        count = Object.keys(data).length
+        i = 0
+        if count > 0
+          $('.select_box_developers').empty()
+          while i < count
+            $('.select_box_developers').append(
+              '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+                <span>'+data[i].name+'</span>
+                <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
+              </span>'
+              )  
+            i++
   $('.select_box_developers input[type="checkbox"]').click ->
     val_dev = $(this).val()
     unless $(this).attr('checked')

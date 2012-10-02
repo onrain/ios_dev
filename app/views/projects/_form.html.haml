@@ -33,7 +33,7 @@
 
     %tr
       %th= f.label :manager_id
-      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'Please, select manager'})
     %tr
       %th= f.label :name
       %td= f.text_field :name
