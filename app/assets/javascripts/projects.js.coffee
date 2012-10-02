@@ -43,7 +43,7 @@ $ ->
   $('#new-application').hide()
   
   
-  $('#show-btn').click ->
+  $('.show-btn').click ->
     $('.notice-project').empty()
     $('#new-application').show()
     $('.show-btn').hide()
