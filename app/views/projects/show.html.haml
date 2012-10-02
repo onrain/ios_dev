@@ -26,6 +26,8 @@
     %tr
       %th Developers
       %td
+        - if @developers.size.eql? 0
+          = "Empty."
         - i = 0
         - for dev in @developers
           =link_to dev.name, developer_path(dev)
