@@ -57,6 +57,30 @@ $ ->
   
   
   
+  
+  
+  $('#autocomplete-client').blur ->
+    client_name = $(this).val()
+    client_name = ltrim(client_name)
+    client_name = rtrim(client_name)
+    id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
+    $.get '/admin/clients?handle='+id, (data) =>
+      $('#client-handle').text(data.handle.replace(/\s/g,''))        
+
+      ph_slash_len = $('#project_handle').val().split('/')
+      if ph_slash_len.length > 1
+        proj_h = $('#project_handle').val().replace(/\s/g,'')
+        pos_proj_h = proj_h.lastIndexOf('/')
+        substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
+        store = $('#client-handle').text().replace(/\s+/g,'')
+        store = store+'/'+substr_proj_h
+        $('#project_handle').val(store)
+  
+  
+  
+  
+  
+  
   click = 0
   $(".get-list-applications").click ->
     if $(this).attr('class').match(/icon-chevron-down/)
