@@ -42,7 +42,7 @@ class ManagersController < ApplicationController
 
     respond_with(@manager) do |format|
       if @manager.save
-        format.html { redirect_to managers_path+'?n=craeted' }
+        format.html { redirect_to managers_path+'?n=created' }
         format.json { render json: @manager, status: :created, location: @manager }
       else
         format.html { render action: "new" }

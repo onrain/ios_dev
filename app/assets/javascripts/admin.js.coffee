@@ -208,6 +208,9 @@ $ ->
   $('.edit-link').live 'click': ->
     id = $(this).attr('id')
     $('#app-list').modal('show':true)
+    $.get '/admin/projects?p='+id, (data) =>
+      $('#relative_store').text(data.handle) 
+      
     h_id = $(this).parent().children().eq(0).attr('id') 
     $.get '/admin/applications?get=app&id='+id, (data) =>
                          
@@ -415,7 +418,13 @@ $ ->
       
       
       name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
-      store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
+
+      relative = $('#handle_store_edit').text().replace(/\s+/g,'')
+  
+      num_slash = relative.lastIndexOf('/')
+    
+      store_project = relative.substring(0, num_slash)
+      
       
       if $(this).attr('class') isnt ''
         idh = $(this).attr('class')

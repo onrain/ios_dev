@@ -277,6 +277,7 @@ $ ->
               <th>Relative path</th>
               <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
                 <div class="relative-variant"></div>
+                <div id="handle_store_edit" style="display:none;"></div>
               </td>
             </tr>
             <tr>
@@ -293,6 +294,7 @@ $ ->
       </form>
         ')
       
+      $('#handle_store_edit').text($('input[id="application_relative_path"]').val())
       
       $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
         $('.index-content').empty()
@@ -644,20 +646,32 @@ $ ->
       $(this).css('cursor':'pointer', 'text-decoration':'underline')
     $('div[id*="relative"]').mouseleave ->
       $(this).css('text-decoration':'none')
-      
-    $('div[id*="relative"]').click ->
-      
-      relative =  $('input[id="application_relative_path"]').val().replace(/\s+/g,'')
-      
+  $('#application_project_name option').live 'click': ->
+    id = $(this).val()
+    store_project = $('#project_handle_'+id).text().toLowerCase().replace(/\s+/g,'')
 
-      name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
-      store_project = $('#handle_store').text().toLowerCase().replace(/\s+/g,'')
+    relative = $('#handle_store_edit').text().replace(/\s+/g,'')
+  
+    num_slash = relative.lastIndexOf('/')
+    
+    name_app = relative.substring(num_slash+1, relative.length)
+    $('#application_relative_path').val(store_project+"/"+name_app)
+    
+    
+      
+  $('div[id*="relative"]').live 'click': ->
+    
+    name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
 
-      $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+    relative = $('#handle_store_edit').text().replace(/\s+/g,'')
+
+    num_slash = relative.lastIndexOf('/')
+  
+    store_project = relative.substring(0, num_slash)
+
+    $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
     
-    
-    
-    
+  
     
     
     
