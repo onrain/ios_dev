@@ -1,7 +1,7 @@
 %div{style:"margin-top:13%;"}
   %div{style:"margin: 0 auto; display:table;"}
     - flash.each do |name, msg|
-      %div{class:"alert alert-error", style:"width:215px; margin: 0 auto;"}
+      %div{class:"alert alert-error", style:"width:250px; margin: 0 auto;"}
         %button{:class=>"close", :"data-dismiss"=>:"alert"}
           x
   
@@ -29,6 +29,9 @@
         = f.label :remember_me
         %br/
         = f.submit "Sign in", class:"btn"
+        %p
+          %i
+            email: admin@admin.com password: 111222
     %br/
     = render "devise/shared/links"
 
