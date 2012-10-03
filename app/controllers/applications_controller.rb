@@ -113,7 +113,7 @@ private
   def duplicate(id)
     app = Application.find(id)
     max_id = Application.find(:first, :select => 'max(id) as max').max
-    max_id += '1'
+    max_id += 1
     app.id = max_id
     app.title += " copy"
     app.product_name += " copy"
