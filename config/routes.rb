@@ -1,5 +1,7 @@
 IOSmanager::Application.routes.draw do
 
+  devise_for :admins
+
   get 'admin' => "admin#index"
 
   get '/admin/handle/:id' => "clients#handle", as:"handle"

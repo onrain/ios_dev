@@ -11,17 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001101551) do
+ActiveRecord::Schema.define(:version => 20121003074705) do
+
+  create_table "admins", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "authentication_token"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "admins", ["authentication_token"], :name => "index_admins_on_authentication_token", :unique => true
+  add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
+  add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
 
   create_table "applications", :force => true do |t|
     t.integer  "project_id"
     t.string   "product_name"
     t.string   "bundle_identifier"
-    t.float    "bundle_version",    :default => 1.0
+    t.string   "bundle_version",    :default => "1.0"
     t.string   "relative_path"
     t.string   "title"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "clients", :force => true do |t|
@@ -56,13 +76,6 @@ ActiveRecord::Schema.define(:version => 20121001101551) do
 
   add_index "developers_projects", ["developer_id", "project_id"], :name => "index_developers_projects_on_developer_id_and_project_id"
   add_index "developers_projects", ["project_id", "developer_id"], :name => "index_developers_projects_on_project_id_and_developer_id"
-
-  create_table "handles", :force => true do |t|
-    t.integer  "client_id"
-    t.string   "handle_name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
 
   create_table "managers", :force => true do |t|
     t.string   "name"

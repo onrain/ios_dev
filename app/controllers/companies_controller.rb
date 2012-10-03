@@ -1,6 +1,8 @@
 class CompaniesController < ApplicationController
   respond_to :json, :html, :xml
   helper_method :sort_column, :sort_direction
+  before_filter :authenticate_admin!
+
   
   def index
 
@@ -49,7 +51,7 @@ class CompaniesController < ApplicationController
     respond_with(@company) do |format|
       if @company.save
         @last = Company.last
-        format.html { redirect_to @company, companies_path+'?n=created' }
+        format.html { redirect_to companies_path+'?n=created' }
         format.json { render json: @last }
       else
         format.html { render action: "new" }

@@ -1,6 +1,8 @@
 class DevelopersController < ApplicationController
   respond_to :json, :html, :xml
   helper_method :sort_column, :sort_direction
+  before_filter :authenticate_admin!
+
   
   def index
     @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)

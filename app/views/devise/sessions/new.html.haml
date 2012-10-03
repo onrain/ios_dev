@@ -1,0 +1,34 @@
+%div{style:"margin-top:13%;"}
+  %div{style:"margin: 0 auto; display:table;"}
+    - flash.each do |name, msg|
+      %div{class:"alert alert-error", style:"width:215px; margin: 0 auto;"}
+        %button{:class=>"close", :"data-dismiss"=>:"alert"}
+          x
+  
+        - if msg.class == Array
+          - msg.each do |message|
+            = content_tag :div, message, :id => "flash_#{name}"
+      
+        - else
+      
+          = content_tag :div, msg, :id => "flash_#{name}"
+  
+  
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name),  html:{class:"well", style:"margin:auto; display:table;"}) do |f|
+  
+    = f.label :email
+  
+    = f.email_field :email, :autofocus => true
+  
+    = f.label :password
+  
+    = f.password_field :password
+    - if devise_mapping.rememberable?
+      %div 
+        = f.check_box :remember_me, style:"float:right; position:relative; left:-100px;"
+        = f.label :remember_me
+        %br/
+        = f.submit "Sign in", class:"btn"
+    %br/
+    = render "devise/shared/links"
+

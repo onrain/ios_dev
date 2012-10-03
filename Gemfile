@@ -46,3 +46,5 @@ gem 'capistrano-deploy', :group => :development, :require => false
 gem 'capistrano'
 
 gem 'json'
+
+gem 'devise'

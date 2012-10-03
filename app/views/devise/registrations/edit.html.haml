@@ -1,0 +1,36 @@
+%table{class:"table table-bordered", style:"margin: 0 auto; width:800px;"}
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    = devise_error_messages!
+    %tr
+      %td{colspan:"2"}
+        %h2
+          Edit #{resource_name.to_s.humanize}
+  
+    %tr
+      %td= f.label :email
+      %td= f.email_field :email
+    %tr
+      %td
+        = f.label :password
+        %i (leave blank if you don't want to change it)
+      %td= f.password_field :password, :autocomplete => "off"
+    %tr
+      %td= f.label :password_confirmation
+      %td= f.password_field :password_confirmation
+    %tr
+      %td
+        = f.label :current_password
+        %i (we need your current password to confirm your changes)
+      %td
+        = f.password_field :current_password
+    %tr
+      %td{colspan:"2"}
+        =f.submit "Update", class:"btn"
+    %tr
+      %td{colspan:"2"}
+        %h3 Cancel my account
+        %p
+          Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete}.
+    %tr
+      %td{colspan:"2"}
+        = link_to "Back", :back, class:"btn"

@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   respond_to :json, :html, :xml
   helper_method :sort_column, :sort_direction
+  before_filter :authenticate_admin!
+
 
   def index
 

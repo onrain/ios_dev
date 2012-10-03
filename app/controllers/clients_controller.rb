@@ -1,6 +1,8 @@
 class ClientsController < ApplicationController
   respond_to :json, :html, :xml
   helper_method :sort_column, :sort_direction
+  before_filter :authenticate_admin!
+
 
   def index
     flash[:notice] = nil
@@ -23,8 +25,6 @@ class ClientsController < ApplicationController
     end
     
     @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    @handle = Handle.new
-    
     
     respond_with(@clients)
   end
@@ -52,7 +52,7 @@ class ClientsController < ApplicationController
   
   def edit
     @company = Company.new
-    @handle = Handle.new
+
     @client = Client.find(params[:id])
   end
 
@@ -63,7 +63,7 @@ class ClientsController < ApplicationController
    
     respond_with(@client) do |format|
       if @client.save
-        format.html { redirect_to clients_path, notice:'Developer was successfully create.' }
+        format.html { redirect_to clients_path+'?n=created' }
         format.json { render json: Client.where(company_id:params[:client][:company_id]) }
       else
         format.html { render action: "new" }
@@ -90,7 +90,7 @@ class ClientsController < ApplicationController
     @par = params[:id]
     respond_with(@client) do |format|
       if @client.update_attributes(params[:client])
-        format.html { redirect_to clients_path, notice:"Developer was successfully updated." }
+        format.html { redirect_to clients_path+'?n=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

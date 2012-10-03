@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
   respond_to :json, :xml, :html
   helper_method :sort_column, :sort_direction
+  before_filter :authenticate_admin!
 
   def index  
     project_size = Project.all.size

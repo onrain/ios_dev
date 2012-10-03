@@ -1,10 +1,21 @@
 class ApplicationsController < ApplicationController
   respond_to :json, :html, :xml
   helper_method :sort_column, :sort_direction
+  before_filter :authenticate_admin!
 
   
   def index
     
+    flash[:notice] = nil
+
+    unless params[:n].blank?
+      case(params[:n])
+        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
+        when 'created' then flash[:notice] = 'Developer was successfully create.'
+        else return nil 
+      end
+    end
+   
     unless params[:get].blank?
       @get_app_in_admin_index = Application.find_all_by_project_id(params[:id])
       @get_app_in_admin_index = Application.find(params[:id]) if params[:get].eql? 'app'
@@ -65,7 +76,7 @@ class ApplicationsController < ApplicationController
     respond_with(@application) do |format|
       if @application.save
         proj_id = params[:application][:project_id]
-        format.html { redirect_to @application, notice: 'Application was successfully created.' }
+        format.html { redirect_to applications_path+'?n=created' }
         format.json { render json: Application.where(project_id:proj_id), status: :created, location: @application }
       else
         format.html { render action: "new" }
@@ -80,7 +91,7 @@ class ApplicationsController < ApplicationController
 
     respond_with(@application) do |format|
       if @application.update_attributes(params[:application])
-        format.html { redirect_to @application, notice: 'Application was successfully updated.' }
+        format.html { redirect_to applications_path+'?n=updated'  }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

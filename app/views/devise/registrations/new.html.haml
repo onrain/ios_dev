@@ -1,0 +1,23 @@
+%table{class:"table table-bordered", style:"margin: 0 auto; width:800px;"}
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    - unless resource.errors.empty?
+      %div{class:"alert alert-error", style:"width:745px; margin: 0 auto;"}
+        %button{:class=>"close", :"data-dismiss"=>:"alert"}
+          x
+        = devise_error_messages!
+    %tr
+      %td{colspan:"2"}
+        %h2 Sign up
+    %tr
+      %td= f.label :email
+      %td= f.email_field :email
+    %tr
+      %td= f.label :password
+      %td= f.password_field :password
+    %tr  
+      %td= f.label :password_confirmation
+      %td= f.password_field :password_confirmation
+    %tr
+      %td{colspan:"2"}= f.submit "Sign up"
+    %tr
+      %td{colspan:"2"}= render "devise/shared/links"
