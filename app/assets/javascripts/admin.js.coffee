@@ -234,7 +234,6 @@ $ ->
               <th>Product name</th>
               <td class="show-and-edit-app" id="product_name">
                 <input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" />
-                <div id="handle_id_store" style="display:none;"></div>  
               </td>
             </tr>
             <tr>
@@ -312,9 +311,7 @@ $ ->
     $('.notice-admin').empty()
     $('.relative-variant').empty()
     id = $(this).attr('id')
-    
-    $('#handle_id_store').attr('class',id)
-    
+   
     
     parent_el = $(this).parent().parent().parent().parent()
     
@@ -343,7 +340,7 @@ $ ->
       
       
   $('#application_product_name').live 'input': ->
-
+    place = $(this).parent().parent().parent()
     $('.relative-variant').empty()
     name = $(this).val().toLowerCase()
     res = name.split(" ")
@@ -357,60 +354,61 @@ $ ->
     variant = 4
     count = 0
     while count < variant
-      $('.relative-variant').append("<div class='variant"+count+"'></div>")
+      place.find('.relative-variant').append("<div class='variant"+count+"'></div>")
       count++
     while i < res.length
       k = 0
-      $('.variant0').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      $('.variant1').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      $('.variant2').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      $('.variant3').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      place.find('.variant0').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      place.find('.variant1').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      place.find('.variant2').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
+      place.find('.variant3').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
       while k < j
 
-        $('.variant0 #relative'+i).append(res[k])
-        $('.app').remove()
-        $('.variant0 #relative'+i).mousemove ->
+        place.find('.variant0 #relative'+i).append(res[k])
+        place.find('.app').remove()
+        place.find('.variant0 #relative'+i).mousemove ->
           $('.app').remove()
           $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
 
           
         if k+1 < j
-          $('.variant1 #relative'+i).append(res[k]+".")
+          place.find('.variant1 #relative'+i).append(res[k]+".")
           
           
           
           $('.app').remove()
-          $('.variant1 #relative'+i).mousemove ->
+          place.find('.variant1 #relative'+i).mousemove ->
             $('.app').remove()
             $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
           
           
         else if k>0
-          $('.variant1 #relative'+i).append(res[k])
+          place.find('.variant1 #relative'+i).append(res[k])
         
         
         
         if k+1 < j
-          $('.variant2 #relative'+i).append(res[k]+"-")
+            
+          place.find('.variant2 #relative'+i).append(res[k]+"-")
                       
           $('.app').remove()
-          $('.variant2 #relative'+i).mousemove ->
+          place.find('.variant2 #relative'+i).mousemove ->
             $('.app').remove()
             $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
             
         else if k>0
-          $('.variant2 #relative'+i).append(res[k])
+          place.find('.variant2 #relative'+i).append(res[k])
           
           
           
         if k+1 < j
-          $('.variant3 #relative'+i).append(res[k]+"_")
+          place.find('.variant3 #relative'+i).append(res[k]+"_")
           $('.app').remove()
-          $('.variant3 #relative'+i).mousemove ->
+          place.find('.variant3 #relative'+i).mousemove ->
             $('.app').remove()
             $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
         else if k>0
-          $('.variant3 #relative'+i).append(res[k])
+          place.find('.variant3 #relative'+i).append(res[k])
         k++    
       j++
       i++
@@ -420,7 +418,7 @@ $ ->
       $(this).css('text-decoration':'none')
       
     $('div[id*="relative"]').click ->
-      
+      place = $(this).parent().parent().parent()
       
       name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
 
@@ -434,7 +432,8 @@ $ ->
       if $(this).attr('class') isnt ''
         idh = $(this).attr('class')
         store_project = $('#project_handle_'+idh).text().toLowerCase().replace(/\s+/g,'')
-      $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+      
+      place.find('input[id="application_relative_path"]').val(store_project+"/"+name_app)
 
       
   $('#application_project_name option').live 'click': ->

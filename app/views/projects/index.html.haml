@@ -50,7 +50,7 @@
               %td= f.label :product_name
               %td
                 = f.text_field :product_name
-                %div{id:"handle_id_store", style:"display:none;"}  
+                %div{id:"handle_id_store", style:"display:none;", class:"#{project.id}"}  
             %tr
               %td= f.label :bundle_identifier
               %td= f.text_field :bundle_identifier

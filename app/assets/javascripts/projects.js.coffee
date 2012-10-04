@@ -585,73 +585,76 @@ $ ->
   
   
   $('#application_product_name').live 'input': ->
-
-
+    place = $(this).parent().parent().parent()
     $('.relative-variant').empty()
     name = $(this).val().toLowerCase()
     res = name.split(" ")
     j = 1
     i = 0
     variant = 4
-    if $('#handle_store_edit').text().replace(/\s+/g,'').length is 0
+    
+    try
+      cl = $(this).next().attr('class').replace(/\s+/g, '')
+    catch e
       cl = ''
-    else cl = 'true'
+      
+      
     count = 0
     while count < variant
-      $('.relative-variant').append("<div class='variant"+count+"'></div>")
+      place.find('.relative-variant').append("<div class='variant"+count+"'></div>")
       count++
     while i < res.length
       k = 0
-      $('.variant0').append('<div id="relative'+i+'" class="'+cl+'"></div>')
-      $('.variant1').append('<div id="relative'+i+'" class="'+cl+'"></div>')
-      $('.variant2').append('<div id="relative'+i+'" class="'+cl+'"></div>')
-      $('.variant3').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      place.find('.variant0').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      place.find('.variant1').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      place.find('.variant2').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      place.find('.variant3').append('<div id="relative'+i+'" class="'+cl+'"></div>')
       while k < j
 
-        $('.variant0 #relative'+i).append(res[k])
+        place.find('.variant0 #relative'+i).append(res[k])
         $('.app').remove()
-        $('.variant0 #relative'+i).mousemove ->
+        place.find('.variant0 #relative'+i).mousemove ->
           $('.app').remove()
           $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
 
           
         if k+1 < j
-          $('.variant1 #relative'+i).append(res[k]+".")
+          place.find('.variant1 #relative'+i).append(res[k]+".")
           
           
           
           $('.app').remove()
-          $('.variant1 #relative'+i).mousemove ->
-            $('.app').remove()
+          place.find('.variant1 #relative'+i).mousemove ->
+            place.find('.app').remove()
             $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
           
           
         else if k>0
-          $('.variant1 #relative'+i).append(res[k])
+          place.find('.variant1 #relative'+i).append(res[k])
         
         
         
         if k+1 < j
-          $('.variant2 #relative'+i).append(res[k]+"-")
+          place.find('.variant2 #relative'+i).append(res[k]+"-")
                       
           $('.app').remove()
-          $('.variant2 #relative'+i).mousemove ->
+          place.find('.variant2 #relative'+i).mousemove ->
             $('.app').remove()
             $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
             
         else if k>0
-          $('.variant2 #relative'+i).append(res[k])
+          place.find('.variant2 #relative'+i).append(res[k])
           
           
           
         if k+1 < j
-          $('.variant3 #relative'+i).append(res[k]+"_")
+          place.find('.variant3 #relative'+i).append(res[k]+"_")
           $('.app').remove()
-          $('.variant3 #relative'+i).mousemove ->
+          place.find('.variant3 #relative'+i).mousemove ->
             $('.app').remove()
             $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
         else if k>0
-          $('.variant3 #relative'+i).append(res[k])
+          place.find('.variant3 #relative'+i).append(res[k])
         k++    
       j++
       i++
@@ -674,7 +677,7 @@ $ ->
     
       
   $('div[id*="relative"]').live 'click': ->
-    
+    place = $(this).parent().parent().parent()
     name_app = $(this).text().toLowerCase().replace(/\s+/g,'')
 
     relative = $('#handle_store_edit').text().replace(/\s+/g,'')
@@ -683,15 +686,11 @@ $ ->
   
     store_project = relative.substring(0, num_slash)
     
-    if $(this).attr('class') is ''
-    
-      store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
-    
-    
-    
-    
+    if $(this).attr('class') isnt ''
+      idh = $(this).attr('class')
+      store_project = $('#project_handle_'+idh).text().toLowerCase().replace(/\s+/g,'')
 
-    $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
+    place.find('input[id="application_relative_path"]').val(store_project+"/"+name_app)
     
   
     
