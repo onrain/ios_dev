@@ -689,7 +689,13 @@ $ ->
     if $(this).attr('class') isnt ''
       idh = $(this).attr('class')
       store_project = $('#project_handle_'+idh).text().toLowerCase().replace(/\s+/g,'')
-
+    
+    path = window.location.pathname
+    
+    if (/projects\/\d/).test(path)
+      store_project = $('#handle_store_content').text().toLowerCase().replace(/\s+/g,'')
+      
+      
     place.find('input[id="application_relative_path"]').val(store_project+"/"+name_app)
     
   

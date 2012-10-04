@@ -23,7 +23,8 @@
     %tr
       %th Handle:
       %td
-        = check_f proj.handle
+        %div{id:"handle_store_content"}
+          = check_f proj.handle
         %div{id:"project_handle_store", style:"display:none;"} 
     %tr
       %th Developers
