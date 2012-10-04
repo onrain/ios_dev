@@ -60,11 +60,12 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(params[:client])
     @company = Company.new
-   
+    company_client = params[:client][:company_id]
     respond_with(@client) do |format|
       if @client.save
         format.html { redirect_to clients_path+'?n=created' }
-        format.json { render json: Client.where(company_id:params[:client][:company_id]) }
+        
+        format.json { render json: Client.where("company_id = ?",company_client) }
       else
         format.html { render action: "new" }
         format.json { render json: @client.errors, status: :unprocessable_entity }

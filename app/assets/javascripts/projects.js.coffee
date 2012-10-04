@@ -317,12 +317,20 @@ $ ->
         $('#application_project_name').empty()
         count = Object.keys(proj).length
         i = 0
+        j = 0
         while i<count
           $('#application_project_name').append(
             '<option id="'+proj[i].id+'" value="'+proj[i].id+'">'+proj[i].name+'</option>'
           )
           i++
         $('#application_project_name #'+data.project_id).attr('selected':'selected')
+       
+        while j<count
+          $('#project_handle_store').append('<span id="project_handle_'+proj[j].id+'">'+proj[j].handle+'</span>')
+          j++
+        
+        
+        
 
 
         
@@ -646,6 +654,7 @@ $ ->
       $(this).css('cursor':'pointer', 'text-decoration':'underline')
     $('div[id*="relative"]').mouseleave ->
       $(this).css('text-decoration':'none')
+  
   $('#application_project_name option').live 'click': ->
     id = $(this).val()
     store_project = $('#project_handle_'+id).text().toLowerCase().replace(/\s+/g,'')

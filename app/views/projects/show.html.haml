@@ -22,8 +22,9 @@
       %td{id:"proj-name"}= proj.name
     %tr
       %th Handle:
-      %td{id:"project_handle_#{proj.id}"}
+      %td
         = check_f proj.handle
+        %div{id:"project_handle_store", style:"display:none;"} 
     %tr
       %th Developers
       %td
