@@ -44,7 +44,9 @@
             %th{style:"width:20%"} Title
             %th{style:"width:5%"} Bundle version
             %th{style:"width:15%"} Bundle identifier
-            %th Relative path
+            %th
+              Relative path
+              %div{id:"relative_store", style:"display:none;"}
             %th{style:"width:40px"} Actions
         .append-applications
           - unless @application.empty?

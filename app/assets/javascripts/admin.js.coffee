@@ -312,6 +312,10 @@ $ ->
     $('.notice-admin').empty()
     $('.relative-variant').empty()
     id = $(this).attr('id')
+    
+    $('#handle_id_store').attr('class',id)
+    
+    
     parent_el = $(this).parent().parent().parent().parent()
     
     if parent_el.children().eq(1).length isnt 0
@@ -343,9 +347,10 @@ $ ->
     $('.relative-variant').empty()
     name = $(this).val().toLowerCase()
     res = name.split(" ")
-    proj_id = $(this).next().text().replace(/\s+/g, '')
-    if typeof(proj_id) is ''
-      proj_id = 'new'
+    try
+      proj_id = $(this).next().attr('class').replace(/\s+/g, '')
+    catch e
+      proj_id = ''
     
     j = 1
     i = 0

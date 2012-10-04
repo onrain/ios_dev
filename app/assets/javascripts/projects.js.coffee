@@ -294,7 +294,7 @@ $ ->
       </form>
         ')
       
-      $('#handle_store_edit').text($('input[id="application_relative_path"]').val())
+      $('#handle_store_edit').text($('#application_relative_path').val())
       
       $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
         $('.index-content').empty()
@@ -398,6 +398,8 @@ $ ->
     $('.notice-admin').empty()
     $('.relative-variant').empty()
     id = $(this).attr('id')
+    $('input[id="application_relative_path"]').val('')
+    $('input[id="application_product_name"]').val('')
     parent_el = $(this).parent().parent().parent().parent()
     
     if parent_el.children().eq(1).length isnt 0
@@ -591,16 +593,19 @@ $ ->
     j = 1
     i = 0
     variant = 4
+    if $('#handle_store_edit').text().replace(/\s+/g,'').length is 0
+      cl = ''
+    else cl = 'true'
     count = 0
     while count < variant
       $('.relative-variant').append("<div class='variant"+count+"'></div>")
       count++
     while i < res.length
       k = 0
-      $('.variant0').append('<div id="relative'+i+'"></div>')
-      $('.variant1').append('<div id="relative'+i+'"></div>')
-      $('.variant2').append('<div id="relative'+i+'"></div>')
-      $('.variant3').append('<div id="relative'+i+'"></div>')
+      $('.variant0').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      $('.variant1').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      $('.variant2').append('<div id="relative'+i+'" class="'+cl+'"></div>')
+      $('.variant3').append('<div id="relative'+i+'" class="'+cl+'"></div>')
       while k < j
 
         $('.variant0 #relative'+i).append(res[k])
@@ -677,6 +682,14 @@ $ ->
     num_slash = relative.lastIndexOf('/')
   
     store_project = relative.substring(0, num_slash)
+    
+    if $(this).attr('class') is ''
+    
+      store_project = $('#relative_store').text().toLowerCase().replace(/\s+/g,'')
+    
+    
+    
+    
 
     $('input[id="application_relative_path"]').val(store_project+"/"+name_app)
     
