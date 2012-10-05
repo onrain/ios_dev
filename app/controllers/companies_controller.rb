@@ -1,43 +1,34 @@
 class CompaniesController < ApplicationController
   respond_to :json, :html, :xml
+  include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
 
   
   def index
 
-    flash[:notice] = nil
-    unless params[:n].blank?
-      case(params[:n])
-        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
-        when 'created' then flash[:notice] = 'Developer was successfully create.'
-        else return nil 
-      end
-    end
+    get_notice(params[:notice], 'Company was successfully create.', 'Company was successfully updated.')
 
     @companies = Company.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    @res = Company.last
     respond_with(@companies) do |format|
-      format.json{render json: @res}
+      format.json{render json: Company.last}
     end
   end
 
 
   def show
     @client = Client.new
-    @company = Company.new
+
     @clients = Client.where(company_id:params[:id])
 
     @company_show = Company.find(params[:id])
 
-    respond_with @company
+    respond_with  @company = Company.new
   end
 
 
   def new
-    @company = Company.new
-
-    respond_with @company
+    respond_with  @company = Company.new
   end
 
   def edit
@@ -51,7 +42,7 @@ class CompaniesController < ApplicationController
     respond_with(@company) do |format|
       if @company.save
         @last = Company.last
-        format.html { redirect_to companies_path+'?n=created' }
+        format.html { redirect_to companies_path+'?notice=created' }
         format.json { render json: @last }
       else
         format.html { render action: "new" }
@@ -66,7 +57,7 @@ class CompaniesController < ApplicationController
 
     respond_with(@company) do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to companies_path+'?n=updated' }
+        format.html { redirect_to companies_path+'?notice=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -79,18 +70,7 @@ class CompaniesController < ApplicationController
   def destroy
     @company = Company.find(params[:id])
     @company.destroy
-
-    respond_with(@company)
-  end
-
-private
-  def sort_column
-    Company.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-  
+    redirect_to companies_path
+  end 
 
 end

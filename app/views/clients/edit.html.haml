@@ -1,11 +1,10 @@
-
-%div{class:"well well-small", style:"width:1000px; margin: 0 auto;"}
+.well.well-small{style:"width:1000px; margin: 0 auto;"}
   %h1 Editing client
 
 = render 'form'
 
 
-%div{class:"well well-small", style:"width:1000px; margin: 0 auto;"}  
-  %div{class:"btn-group pull-right"}
+.well.well-small{style:"width:1000px; margin: 0 auto;"}  
+  .btn-group.pull-right
     = link_to 'Show', @client, class:"btn"
     = link_to "Back", :back, class:"btn"

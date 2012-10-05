@@ -208,7 +208,7 @@ $ ->
   $('.edit-link').live 'click': ->
     id = $(this).attr('id')
     $('#app-list').modal('show':true)
-    $.get '/admin/projects?p='+id, (data) =>
+    $.get '/admin/projects?project_id='+id, (data) =>
       $('#relative_store').text(data.handle) 
       
     h_id = $(this).parent().children().eq(0).attr('id') 
@@ -321,7 +321,7 @@ $ ->
     else
       
       
-      $.get '/admin/projects?p='+id, (data) =>
+      $.get '/admin/projects?project_id='+id, (data) =>
         $('#relative_store').text(data.handle) 
       
             

@@ -1,8 +1,3 @@
--if notice
-  %div{class:"alert alert-success"}
-    %button{:class=>"close", :"data-dismiss"=>:"alert"}
-      x
-    =notice
 -for dev in @developer
   %table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
     %tr
@@ -20,7 +15,7 @@
     %tr
       %th Personal email:
       %td= check_f dev.personal_email
-%div{class:"well well-small", style:"width:980px; margin: 0 auto;"}  
-  %div{class:"btn-group pull-right"}
+.well.well-small{style:"width:980px; margin: 0 auto;"}  
+  .btn-group.pull-right
     = link_to 'Edit', edit_developer_path(dev), class:"btn"        
     = link_to "Back", :back, class:"btn"

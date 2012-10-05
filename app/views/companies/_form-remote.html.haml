@@ -1,10 +1,5 @@
 = form_for @company, remote:true, method:"post", id:"form-new-company", validate: true do |f|
-  -if @company.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@company.errors.count, "error")} prohibited this company from being saved:"
-      %ul
-        - @company.errors.full_messages.each do |msg|
-          %li= msg
+  = error_field(@company, 700)
 
   .field
     = f.label :name

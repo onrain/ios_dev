@@ -1,35 +1,25 @@
 class ManagersController < ApplicationController
   respond_to :html, :json, :xml
+  include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
 
   
   def index
     @managers = Manager.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    flash[:notice] = nil
-
-    unless params[:n].blank?
-      case(params[:n])
-        when 'updated' then flash[:notice] = 'Manager was successfully updated.'
-        when 'created' then flash[:notice] = 'Manager was successfully create.'
-        else return nil 
-      end
-    end
-
+    get_notice(params[:notice], 'Manager was successfully create.', 'Manager was successfully updated.')
     respond_with(@managers)
   end
 
 
   def show
-    @manager = Manager.find(params[:id])
     manager_id = params[:id]
     @projects = Project.where('manager_id = ?', manager_id)
-    respond_with(@manager)
+    respond_with @manager = Manager.find(manager_id)
   end
 
   def new
-    @manager = Manager.new
-    respond_with(@manager)
+    respond_with @manager = Manager.new
   end
   
   def edit
@@ -42,7 +32,7 @@ class ManagersController < ApplicationController
 
     respond_with(@manager) do |format|
       if @manager.save
-        format.html { redirect_to managers_path+'?n=created' }
+        format.html { redirect_to managers_path+'?notice=created' }
         format.json { render json: @manager, status: :created, location: @manager }
       else
         format.html { render action: "new" }
@@ -57,7 +47,7 @@ class ManagersController < ApplicationController
 
     respond_with(@manager) do |format|
       if @manager.update_attributes(params[:manager])
-        format.html { redirect_to managers_path+'?n=updated' }
+        format.html { redirect_to managers_path+'?notice=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -70,25 +60,7 @@ class ManagersController < ApplicationController
   def destroy
     @manager = Manager.find(params[:id])
     @manager.destroy
-
-    respond_with(@manager) do |format|
-      format.html { redirect_to managers_url }
-      format.json { head :no_content }
-    end
+    redirect_to managers_url
   end
-
-
-private
-  def sort_column
-    Manager.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-  
-
-
-
 
 end

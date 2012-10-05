@@ -3,26 +3,19 @@
   .add{color:green;}
   .add:hover{color:red;}
   #hh{letter-spacing:0.5px;}
-%div{class:"modal hide fade", id:"new-company"}
+.modal.hide.fade#new-company
   .modal-header
     .form-notice
     %button{class:"close", :"data-dismiss"=>:"modal"}
       ×
     %h3 Add new company.
 
-  %div{class:"modal-body"}
+  .modal-body
     = render 'companies/form-remote'
 
 %table{class:"table", style:"width:1000px; margin: 0 auto;"}
   = form_for @client do |f|
-    -if @client.errors.any?
-      %div{class:"alert alert-error", style:"width:950px; margin: 0 auto;"}
-        %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
-          &times;
-        %h3= "#{pluralize(@client.errors.count, "error")} prohibited this post from being saved:"
-        %ul
-          - @client.errors.full_messages.each do |msg|
-            %li= msg
+    = error_field(@client, 950)
     
     %tr
       %td

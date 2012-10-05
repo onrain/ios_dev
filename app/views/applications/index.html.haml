@@ -1,21 +1,15 @@
-%div{class:"modal hide fade", id:"app-list"}
+.modal.hide.fade#app-list
   .modal-header
     %button{class:"close", :"data-dismiss"=>:"modal"}
       ×
 
-    %div{class:"modal-body"}
+    .modal-body
       .index-content
 
 
+= print_notice(notice)
 
-
-
--if notice
-  %div{class:"alert alert-success"}
-    %button{:class=>"close", :"data-dismiss"=>:"alert"}
-      x
-    =notice
-%div{class:"well well-small", align:"center"}
+.well.well-small{align:"center"}
   %h4 Listing applications
   = link_to 'New Application', new_application_path, class:"btn"
 

@@ -1,11 +1,5 @@
 = render 'modal_for_app'
 
-
--if notice
-  %div{class:"alert alert-success"}
-    %button{:class=>"close", :"data-dismiss"=>:"alert"}
-      x
-    =notice
 - for proj in @project 
   %table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
     %tr

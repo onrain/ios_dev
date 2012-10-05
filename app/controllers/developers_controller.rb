@@ -1,50 +1,27 @@
 class DevelopersController < ApplicationController
   respond_to :json, :html, :xml
+  include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
 
   
   def index
     @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    flash[:notice] = nil
+    
+    get_notice(params[:notice], 'Developer was successfully create.', 'Developer was successfully updated.')
 
-    unless params[:n].blank?
-      case(params[:n])
-        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
-        when 'created' then flash[:notice] = 'Developer was successfully create.'
-        else return nil 
-      end
-    end
-
-
-    unless params[:developer_name].nil?
-      unless params[:developer_name].blank?
-        @developer = Developer.create(name:params[:developer_name])
-        return render json: Developer.last
-      else
-        return render json: [error:'Can`t be blank!']
-      end
-    end
-
-
-    unless params[:m].blank?
-      id = params[:m]
-      return render json: Developer.where("manager_id = ?",id)
-    end
-
+    id = params[:manager_id]
+    return(render json: Developer.where("manager_id = ?",id)) unless params[:manager_id].blank?
     respond_with(@developers)
   end
 
 
   def show
-    @developer = Developer.get_dev_list_where_id(params[:id])
-    respond_with(@developer)
+    respond_with @developer = Developer.get_dev_list_where_id(params[:id])
   end
 
   def new
-    @developer = Developer.new
-
-    respond_with(@developer)
+    respond_with @developer = Developer.new
   end
 
 
@@ -56,13 +33,10 @@ class DevelopersController < ApplicationController
   def create
     
     @developer = Developer.new(params[:developer])
- 
-
     respond_with(@developer) do |format|
       if @developer.save
-        format.html { redirect_to developers_path+'?n=created' }
+        format.html { redirect_to developers_path+'?notice=created' }
       else
-
         format.json { render json: @developer.errors, status: :unprocessable_entity }
       end
     end
@@ -74,7 +48,7 @@ class DevelopersController < ApplicationController
 
     respond_with(@developer) do |format|
       if @developer.update_attributes(params[:developer])
-        format.html { redirect_to developers_path+'?n=updated' }
+        format.html { redirect_to developers_path+'?notice=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -88,21 +62,6 @@ class DevelopersController < ApplicationController
     @developer = Developer.find(params[:id])
     @developer.destroy
 
-    respond_with(@destroy) do |format|
-      format.html { redirect_to developers_url }
-      format.json { head :no_content }
-    end
-  end
-
-
-private
-  def sort_column
-    Client.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-  
-
+    redirect_to developers_url
+  end 
 end

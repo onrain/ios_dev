@@ -1,55 +1,43 @@
 class ClientsController < ApplicationController
   respond_to :json, :html, :xml
+  include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
 
 
   def index
-    flash[:notice] = nil
 
-    unless params[:n].blank?
-      case(params[:n])
-        when 'updated' then flash[:notice] = 'Developer was successfully updated.'
-        when 'created' then flash[:notice] = 'Developer was successfully create.'
-        else return nil 
-      end
-    end
+    get_notice(params[:notice], 'Clients was successfully create.', 'Clients was successfully updated.')
 
-    unless params[:handle].blank?
-      @client_handle = Client.find(params[:handle])
-      return render json: @client_handle
-    end
-    unless params[:get].blank?
-      @all_clients_for_company = Client.find(params[:id])
-      return render json: @all_clients_for_company
-    end
-    
+    return (render json: Client.find(params[:handle])) unless params[:handle].blank?
+
+    return (render json: Client.find(params[:id])) unless params[:get].blank?
+
     @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
-    
+
     respond_with(@clients)
   end
 
 
   def show
-    @client = Client.get_clients_list_where_id(params[:id])
-    respond_with(@client)
+    respond_with  @client = Client.get_clients_list_where_id(params[:id])
   end
 
 
   def new
-    @client = Client.new
     @company = Company.new
-    respond_with(@client)
+
+    @client = Client.new
   end
 
 
   def remove
     @handle = Handle.find(params[:id])
-    if @handle.destroy
-      render json: [status:'deleted']
-    end
+
+    render json: [status:'deleted']  if @handle.destroy
   end
   
+
   def edit
     @company = Company.new
 
@@ -59,12 +47,14 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(params[:client])
+
     @company = Company.new
+
     company_client = params[:client][:company_id]
+
     respond_with(@client) do |format|
       if @client.save
-        format.html { redirect_to clients_path+'?n=created' }
-        
+        format.html { redirect_to clients_path+'?notice=created' }
         format.json { render json: Client.where("company_id = ?",company_client) }
       else
         format.html { render action: "new" }
@@ -88,10 +78,9 @@ class ClientsController < ApplicationController
 
   def update
     @client = Client.find(params[:id])
-    @par = params[:id]
     respond_with(@client) do |format|
       if @client.update_attributes(params[:client])
-        format.html { redirect_to clients_path+'?n=updated' }
+        format.html { redirect_to clients_path+'?notice=updated' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -104,19 +93,7 @@ class ClientsController < ApplicationController
   def destroy
     @client = Client.find(params[:id])
     @client.destroy
-    respond_with(@client)
+    redirect_to clients_path
   end
 
-
-private
-  def sort_column
-    Client.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-  
-
- 
 end

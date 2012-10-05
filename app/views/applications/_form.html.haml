@@ -1,13 +1,7 @@
 %table{class:"table", id:"form_app"}
   = form_for @application do |f|
     -if @application.errors.any?
-      %div{class:"alert alert-error"}
-        %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
-          &times;
-        %h3= "#{pluralize(@application.errors.count, "error")} prohibited this post from being saved:"
-        %ul
-          - @application.errors.full_messages.each do |msg|
-            %li= msg
+      = error_field(@application, 950)
     %div{class:"store", style:"display:none;"}
     %tr
       %td= f.label :project_id

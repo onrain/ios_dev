@@ -24,7 +24,7 @@ $ ->
   
   $('#application_bundle_identifier').live 'input': ->
 
-    $.get '/admin/applications?ch=true&val='+$(this).val(), (data) =>
+    $.get '/admin/applications?check=true&val='+$(this).val(), (data) =>
       count = Object.keys(data).length
       
       if $(this).val().length is 0
@@ -160,7 +160,7 @@ $ ->
                   <div class="app-panel pull-right">
                     <a id="'+data[i].id+'"class="icon-pencil edit-link" href="#" style="color:black;"></a>&nbsp;
                     <a rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_" href="/admin/applications/'+data[i].id+'?proj='+data[i].project_id+'"></a>&nbsp
-                    <a class="icon-retweet" style="color:black;" href="/admin/applications?meth=clone&id='+data[i].id+'" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"></a>
+                    <a class="icon-retweet" style="color:black;" href="/admin/applications?method=clone&id='+data[i].id+'" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"></a>
                    </div>
                 </td>
               </tr>
@@ -408,7 +408,7 @@ $ ->
     else
       
       
-      $.get '/admin/projects?p='+id, (data) =>
+      $.get '/admin/projects?project_id='+id, (data) =>
         $('#relative_store').text(data.handle) 
       
             
@@ -697,32 +697,12 @@ $ ->
       
       
     place.find('input[id="application_relative_path"]').val(store_project+"/"+name_app)
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
   $('.icon-ok').live 'click': ->
     value_rel = $(this).parent().children().eq(0).text()
     $('#application_relative_path').val(value_rel)
   
-  
-  
-  
-  #if $('#project_manager_id option').length > 1
-  #  $('#project_manager_id').children().eq(1).attr('selected', 'selected')
     
   
   $.get '/admin/clients.json', (data) =>
@@ -745,25 +725,28 @@ $ ->
   
   path = window.location.pathname;
   if(/edit/).test(path) or (/new/).test(path)
-    id = $('#project_manager_id option:selected').val()
-    $.get '/admin/developers?m='+id, (data) =>
-      count = Object.keys(data).length
-  
-      i = 0
-      while i < count
-        $('.select_box_developers').append(
-          '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-            <span>'+data[i].name+'</span>
-            <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
-          </span>'
-          )  
-        i++
-      $('.select_box_developers input[type="checkbox"]').click ->
-        val_dev = $(this).val()
-        unless $(this).attr('checked')
-          $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
-        else
-          $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+    get_all_dev = ->
+      id = $('#project_manager_id option:selected').val()
+      $.get '/admin/developers?manager_id='+id, (data) =>
+        count = Object.keys(data).length
+    
+        i = 0
+        while i < count
+          $('.select_box_developers').append(
+            '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+              <span>'+data[i].name+'</span>
+              <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
+            </span>'
+            )  
+          i++
+        $('.select_box_developers input[type="checkbox"]').click ->
+          val_dev = $(this).val()
+          unless $(this).attr('checked')
+            $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
+          else
+            $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+    
+    setTimeout get_all_dev, 300
         
         
   $('#project_manager_id option').click ->
@@ -771,7 +754,7 @@ $ ->
     if id is ''
       $('.select_box_developers').empty()
     else
-      $.get '/admin/developers?m='+id, (data) =>
+      $.get '/admin/developers?manager_id='+id, (data) =>
         count = Object.keys(data).length
         i = 0
         if count > 0

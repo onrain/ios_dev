@@ -167,7 +167,7 @@ $ ->
           if company_val is ''
             company = ''
             
-          $('#client_handle').val(company+'/'+$(this).text())
+          $('#client_handle').val(company+'/'+$(this).text().replace(/\s+/g,''))
           
           $('#client_company_id option').click ->
             company = $('#client_company_id option:selected').text().toLowerCase().replace(/\s+/g,'')

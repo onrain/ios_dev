@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   respond_to :json, :xml, :html
+  include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
 
@@ -17,15 +18,5 @@ class AdminController < ApplicationController
     @new_app = Application.new
     respond_with(@projects)
   end
-
-private
-  def sort_column
-    Client.column_names.include?(params[:sort]) ? params[:sort] : "name"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
 end
 
