@@ -21,8 +21,7 @@
       %td
         %div{class:"icon-play get-list-applications", id:"#{project.id}"}
       %td= link_to(project.id, project)
-      %td= check_path(project.client_name, project.client_id, path:"clients").html_safe
-      %td= check_path(project.manager_name, project.manager_id, path:"managers").html_safe
+
       %td= project.name
       %td{id:"project_handle_#{project.id}"}= check_f(project.handle)
       %td{class:"new_app_form", id:"proj_#{project.id}", style:"display:none;"}
