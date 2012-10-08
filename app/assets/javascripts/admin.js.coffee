@@ -50,7 +50,7 @@ $ ->
   
   $('#application_bundle_identifier').live 'input': ->
 
-    $.get '/admin/applications?ch=true&val='+$(this).val(), (data) =>
+    $.get '/admin/applications?check=true&val='+$(this).val(), (data) =>
       count = Object.keys(data).length
       if $(this).val().length is 0
         $('#res').remove()

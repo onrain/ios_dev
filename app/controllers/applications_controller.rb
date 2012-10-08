@@ -14,10 +14,12 @@ class ApplicationsController < ApplicationController
       @get_app_in_admin_index = Application.find(params[:id]) if params[:get].eql? 'app'
       return render json: @get_app_in_admin_index
     end
+    
 
+    return(render json: Application.find_all_by_bundle_identifier(params[:val])) unless params[:check].blank?
 
     duplicate(params[:id]); return render json: [nothink:true] unless params[:method].blank?
-    return(render json: Application.find_all_by_bundle_identifier(params[:val])) unless params[:check].blank?
+
 
 
     @applications = Application.get_app_list.page(params[:page]).per(10).order("#{sort_column} #{sort_direction}")
