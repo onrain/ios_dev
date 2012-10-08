@@ -32,7 +32,7 @@
               %td= f.label :product_name
               %td
                 = f.text_field :product_name
-                %div{id:"handle_id_store", style:"display:none;", class:"#{list.id}"}  
+                %div{id:"handle_id_store", style:"display:none;", class:"#{list.id}"}
             %tr
               %td= f.label :bundle_identifier
               %td= f.text_field :bundle_identifier
@@ -42,7 +42,7 @@
             %tr
               %td= f.label :relative_path
               %td
-                = f.text_field :relative_path, class:"input-xlarge" 
+                = f.text_field :relative_path, class:"input-xlarge"
                 .relative-variant
                 #relative_store{style:"display:none;"}
             %tr
@@ -50,4 +50,3 @@
               %td= f.text_field :title
             %tr
               %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
-

@@ -8,8 +8,8 @@ module ApplicationHelper
   end
   
   def check_f(param)
-      param ="<div style='color:gray; font-size:13px;'>empty</div>".html_safe  if param.nil? or param.empty?
-      param
+    param ="<div style='color:gray; font-size:13px;'>empty</div>".html_safe  if param.nil? or param.empty?
+    param
   end
 
 
