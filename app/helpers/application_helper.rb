@@ -2,8 +2,11 @@ module ApplicationHelper
 
   def check_path(name, id, path = Hash.new)
     id = id.to_s
-    name = "<a href='/admin/#{path[:path]}/#{id}'>"+name+"</a>"
-    name = "<div style='color:gray; font-size:13px;'>empty</div>" if name.nil?
+    if name.nil?
+      name = "<div style='color:gray; font-size:13px;'>empty</div>"
+    else
+      name = "<a href='/admin/#{path[:path]}/#{id}'>"+name+"</a>"
+    end
     name
   end
   
