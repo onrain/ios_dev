@@ -1,8 +1,8 @@
 class Project < ActiveRecord::Base
-  attr_accessible :client_id, :handle, :manager_id, :name, :svn, :developer_ids
+  attr_accessible :id, :client_id, :handle, :manager_id, :name, :svn, :developer_ids
   validates :name, presence:true
   has_and_belongs_to_many :developers
-  
+  has_many :applications, :dependent => :delete_all
   scope :get_proj_list,
     select:"projects.*, managers.name as manager_name, clients.name as client_name",
     joins:"left join managers on managers.id = projects.manager_id left join clients on clients.id = projects.client_id"

@@ -9,7 +9,7 @@
         = f.select("project_id", Project.all.collect{|e| [e.name, e.id]},{:include_blank => 'None'})
         %p{id:"create-priject-hanle"}
     %tr
-      %td= f.label :product_name
+      %td{style:"width:60%;"}= f.label :product_name
       %td= f.text_field :product_name
     %tr
       %td= f.label :bundle_identifier
@@ -24,4 +24,8 @@
       %td= f.label :title
       %td= f.text_field :title
     %tr
-      %td{colspan:"2"}= f.submit 'Save', class:"btn"
+      %td{colspan:"2"}
+        %div{class:"btn-group pull-right padd-right"}
+          = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-left"}
+          = link_to "Back", :back, class:"btn"

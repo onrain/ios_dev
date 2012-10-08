@@ -2,7 +2,7 @@
   = form_for @company do |f|
     = error_field(@company,970)
     %tr
-      %th 
+      %th{style:"width:60%;"}
         = f.label :name
       %td  
         = f.text_field :name
@@ -13,4 +13,7 @@
         = f.text_field :website
     %tr
       %td{colspan:"2"}
-        = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-right padd-right"}
+          = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-left"}
+          = link_to "Back", :back, class:"btn"

@@ -1,10 +1,10 @@
-= print_notice(notice, 550)
+= print_notice(notice, 750)
 
-.well.well-small{align:"center", align:"center", style:"width:580px; margin: 0 auto;"}
+.well.well-small{align:"center", align:"center", style:"width:780px; margin: 0 auto;"}
   %h4 Listing companies
   = link_to 'New Company', new_company_path, class:"btn"
 
-%table{class:"table table-striped table-bordered", style:"width:600px; margin:0 auto;"}
+%table{class:"table table-striped table-bordered", style:"width:800px; margin:0 auto;"}
   %tr{class:"all-sort"}
     %th=sortable "id", "ID"
     %th=sortable "name", "Name"
@@ -16,8 +16,8 @@
 
   - @companies.each do |company|
     %tr
-      %td= link_to company.id, company
-      %td= company.name
+      %td= company.id
+      %td= link_to company.name, company_path(company)
       %td= check_f(company.website).html_safe
       %td= set_time company.created_at
       %td= set_time company.updated_at

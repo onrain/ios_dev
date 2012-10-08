@@ -18,7 +18,7 @@
     = error_field(@client, 950)
     
     %tr
-      %td
+      %td{style:"width:60%;"}
         Select company
       %td  
         = f.select("company_id", Company.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'Please, select company!'})
@@ -43,4 +43,7 @@
 
     %tr
       %td{colspan:"2"}
-        = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-right padd-right"}
+          = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-left"}
+          = link_to "Back", :back, class:"btn"

@@ -1,7 +1,8 @@
 class Client < ActiveRecord::Base
+  
   attr_accessible :company_id, :email, :handle, :name
   belongs_to :company
-  
+  has_many :projects, :dependent => :delete_all
   validates :email, :presence => true, 
                     :length => {:minimum => 3, :maximum => 254},
                     :uniqueness => true,
@@ -17,5 +18,6 @@ class Client < ActiveRecord::Base
     .joins("LEFT JOIN companies ON companies.id = clients.company_id")
     .where("clients.id = ?",e)
   }
+
 
 end

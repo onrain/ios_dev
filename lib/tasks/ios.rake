@@ -49,4 +49,28 @@ namespace :go do
     puts "Destroying done!"
   end
   
+  
+  task :package => :environment do
+    @companies = {id:"1", name:"Hello amigos", website:"silver.com"}
+    @clients = {id:"1", name:"test", company_id:"1", email:"s@s.com", handle:"silver/test"}
+    @manager = {id:"1", name:"manager Test", personal_email:"sergey@teset.com", office_email:"test@test.com"}
+    @project = {id:"1", client_id:"1", manager_id:"1", name:"lol", handle:"test/test/test"}
+    @application = {id:"1", project_id:"1", product_name:"test", bundle_identifier:"test.test/test"}
+    
+    
+    Company.create(@companies)
+    Client.create(@clients)
+    Manager.create(@manager)
+    Project.create(@project)
+    Application.create(@application)
+    
+    
+    
+    puts 'create done!'
+    
+  end
+   
+  
+  
+  
 end

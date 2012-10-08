@@ -7,7 +7,8 @@
     = error_field(@project, 970)
 
     %tr
-      %th= f.label :client_id
+      %th{style:"width:60%;"}
+        = f.label :client_id
       %td
         %div{class:"select_client", style:"display:none;"}
           = f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
@@ -72,4 +73,9 @@
         %div{class:"proj-h-variants"}
           
     %tr
-      %td{colspan:"2"}= f.submit 'Save', class:"btn"
+      %td{colspan:"2"}
+        %div{class:"btn-group pull-right"}
+          = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-left"}
+          = link_to "Back", :back, class:"btn"
+

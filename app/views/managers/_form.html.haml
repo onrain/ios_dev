@@ -3,7 +3,7 @@
     = error_field(@manager,970)
   
     %tr
-      %th= f.label :name
+      %th{style:"width:60%;"}= f.label :name
       %td= f.text_field :name
     %tr
       %th= f.label :personal_email
@@ -13,4 +13,7 @@
       %td= f.text_field :office_email
     %tr
       %td{colspan:"2"}
-        = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-right padd-right"}
+          = f.submit 'Save', class:"btn"
+        %div{class:"btn-group pull-left"}
+          = link_to "Back", :back, class:"btn"

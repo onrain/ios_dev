@@ -68,6 +68,7 @@ $ ->
     client_name = ltrim(client_name)
     client_name = rtrim(client_name)
     id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
+    #alert client_name
     $.get '/admin/clients?handle='+id, (data) =>
       $('#client-handle').text(data.handle.replace(/\s/g,''))        
 
@@ -534,10 +535,10 @@ $ ->
   path_name = window.location.pathname
   if (/edit/).test(path_name)
     name = $('#autocomplete-client').val()
-
-    id = $('#project_client_id:contains("'+name+'")').val()
-    $.get '/admin/clients?handle='+id, (data) =>
-      $('#client-handle').text(data.handle.replace(/\s/g,'')) 
+    if name isnt ''
+      id = $('#project_client_id:contains("'+name+'")').val()
+      $.get '/admin/clients?handle='+id, (data) =>
+        $('#client-handle').text(data.handle.replace(/\s/g,'')) 
    
   
   
@@ -554,7 +555,7 @@ $ ->
 
     $('#append-clients').empty()
     $('#append-clients').append($('.client_list').html())
-    $('#append-clients').append('<li><a href="/admin/clients/new" target="blank" style="background-color:#cccccc;">Add new client</a></li>')
+    $('#append-clients').append('<li><a href="/admin/clients/new" target="_blank" style="background-color:#cccccc;">Add new client</a></li>')
      
     $('.client_name_class').click ->
       client_name = $(this).text()
@@ -724,12 +725,12 @@ $ ->
     $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
   
   path = window.location.pathname;
-  if(/edit/).test(path) or (/new/).test(path)
-    get_all_dev = ->
-      id = $('#project_manager_id option:selected').val()
+  get_all_dev = ->
+    id = $('#project_manager_id option:selected').val()
+    if typeof(id) isnt 'undefined'
+
       $.get '/admin/developers?manager_id='+id, (data) =>
         count = Object.keys(data).length
-    
         i = 0
         while i < count
           $('.select_box_developers').append(
@@ -745,8 +746,9 @@ $ ->
             $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
           else
             $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
-    
-    setTimeout get_all_dev, 300
+    else return true
+      
+  setTimeout get_all_dev, 300
         
         
   $('#project_manager_id option').click ->
@@ -776,7 +778,7 @@ $ ->
       
   path = window.location.pathname
 
-  if path is '/admin/projects/new'
-    if $('#project_manager_id option').length > 1
+  if path is '/admin/projects/new' or (/edit/).test(path)
+    if $('#project_manager_id option').length > 1 or $('#project_manager_id option:selected').val is ''
       $('#project_manager_id option').eq(1).attr('selected','selected')
       $('#project_manager_id option').children().eq(1).attr('selecte','selected')
