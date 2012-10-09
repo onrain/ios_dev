@@ -32,7 +32,7 @@
             %ul{class:"dropdown-menu"}
               %li= link_to 'Show', client
               %li= link_to 'Edit', edit_client_path(client)
-              %li= link_to 'Destroy', client, id:"#{client.id}", class:"btn-delete-client", :method => :delete
+              %li= link_to 'Destroy', client, id:"#{client.id}", class:"btn-delete-client", method: :delete
   %div{style:'display:table; margin:0 auto;'}
     %p
       = paginate @clients

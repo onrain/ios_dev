@@ -143,21 +143,39 @@ $ ->
   
         
   $('.btn-delete-client').click ->
+
     id = $(this).attr('id')
-
-    text = "Do your realy want do delete this?"
-
+  
     $.get '/admin/clients?type=relations&id='+id, (data) =>
       count = Object.keys(data).length
       if count > 0
         i = 0
         j = 0
-        while i<count
-          data_len = data[i].length
 
-          while j<data_len
-            alert data[i][j]+", "
-            j++
+        proj_len = data['project'].length
+        app_len = data['application'].length
+        text = "Do you really want delete this client? \n"
+        text += "Projects: "
+        while j<proj_len
+          text += data['project'][j]
+          if j+1 isnt proj_len
+            text+= ", "
+          else text +="\n"
+          j++
+        text += "Applications: "
+        
+        while i<app_len
+          text += data['application'][i]
+          if i+1 isnt app_len
+            text+= ", "
+          else text +="\n"
           i++
-      $(this).attr('data-confirm', text)
+        $(this).attr('data-confirm', text)  
+      else
+        text = 'Are you sure?'
+
+        $(this).attr('data-confirm', text)
+
+
+   
 
