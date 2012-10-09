@@ -93,10 +93,14 @@ class ClientsController < ApplicationController
   def destroy
     @client = Client.find(params[:id])
     project = Project.find_by_client_id(params[:id])
-    application = Application.find_all_by_project_id(project.id)
-    for app in application
-      app.destroy
+
+
+    unless project.nil?
+      application = project.applications
+      application.delete_all
     end
+
+
     @client.destroy
     redirect_to clients_path
   end

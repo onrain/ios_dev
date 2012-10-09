@@ -1,38 +1,43 @@
 = print_notice(notice)
-.well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
-  %h4 Listing managers
-  = link_to 'New Manager', new_manager_path, class:"btn"
-
-
-%table{class:"table table-striped table-bordered", style:"width:1000px; margin:0 auto;"}
-  %tr{class:"all-sort"}
-    %th=sortable "id", "ID"
-    %th=sortable "name", "Name"
-    %th=sortable "personal_email", "Personal email"
-    %th=sortable "office_email", "Office email"
-    %th=sortable "created_at", "Date create"
-    %th=sortable "updated_at", "Last update"
-    %th Actions
+-unless @managers.empty?
+  .well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
+    %h4 Listing managers
+    = link_to 'New Manager', new_manager_path, class:"btn"
   
-
-  - @managers.each do |manager|
-    %tr
-      %td= link_to manager.id, manager_path(manager.id)
-      %td= manager.name
-      %td= check_f(manager.personal_email).html_safe
-      %td= check_f(manager.office_email).html_safe
-      %td= set_time manager.created_at
-      %td= set_time manager.updated_at
-      %td
-        %div{class:"btn-group"}
-          =link_to "Show", manager, class:"btn"
-          %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
-            %span{class:"caret"}
-          %ul{class:"dropdown-menu"}
-            %li= link_to 'Show', manager
-            %li= link_to 'Edit', edit_manager_path(manager)
-            %li= link_to 'Destroy', manager, :confirm => 'Are you sure?', :method => :delete
-
-%div{style:'display:table; margin:0 auto;'}
-  %p
-    = paginate @managers
+  
+  %table{class:"table table-striped table-bordered", style:"width:1000px; margin:0 auto;"}
+    %tr{class:"all-sort"}
+      %th=sortable "id", "ID"
+      %th=sortable "name", "Name"
+      %th=sortable "personal_email", "Personal email"
+      %th=sortable "office_email", "Office email"
+      %th=sortable "created_at", "Date create"
+      %th=sortable "updated_at", "Last update"
+      %th Actions
+    
+  
+    - @managers.each do |manager|
+      %tr
+        %td= link_to manager.id, manager_path(manager.id)
+        %td= manager.name
+        %td= check_f(manager.personal_email).html_safe
+        %td= check_f(manager.office_email).html_safe
+        %td= set_time manager.created_at
+        %td= set_time manager.updated_at
+        %td
+          %div{class:"btn-group"}
+            =link_to "Show", manager, class:"btn"
+            %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
+              %span{class:"caret"}
+            %ul{class:"dropdown-menu"}
+              %li= link_to 'Show', manager
+              %li= link_to 'Edit', edit_manager_path(manager)
+              %li= link_to 'Destroy', manager, :confirm => 'Are you sure?', :method => :delete
+  
+  %div{style:'display:table; margin:0 auto;'}
+    %p
+      = paginate @managers
+- else
+  %div{style:"margin: 0 auto; display:table;"}
+    %h3= "Records not found"
+    %p= link_to 'New Manager', new_manager_path, style:"margin-left:60px;", class:"btn"

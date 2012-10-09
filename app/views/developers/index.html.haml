@@ -1,40 +1,45 @@
 = print_notice(notice)
-.well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
-  %h4 Listing developers
-  = link_to 'New Developer', new_developer_path, class:"btn"
-
-%table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
-  %tr
-    %th=sortable "id", "ID"
-    %th=sortable "name", "Name"
-    %th=sortable "manager", "Manager"
-    %th=sortable "email", "Email"
-    %th=sortable "personal_email", "Personal email"
-    %th=sortable "created_at", "Date create"
-    %th=sortable "updated_at", "Last update"
-    %th Actions
-
-
-  - @developers.each do |developer|
+- unless @developers.empty?
+  .well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
+    %h4 Listing developers
+    = link_to 'New Developer', new_developer_path, class:"btn"
+  
+  %table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
     %tr
-      %td= link_to developer.id, developer
-      %td= developer.name
-      %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
-      %td= check_f(developer.email)
-      %td= check_f(developer.personal_email)
-      %td= set_time developer.created_at
-      %td= set_time developer.updated_at
-      %td
-        %div{class:"btn-group"}
-          =link_to "Show", developer, class:"btn"
-          %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
-            %span{class:"caret"}
-          %ul{class:"dropdown-menu"}
-            %li= link_to 'Show', developer
-            %li= link_to 'Edit', edit_developer_path(developer)
-            %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
-      
-
-%div{style:'display:table; margin:0 auto;'}
-  %p
-    = paginate @developers
+      %th=sortable "id", "ID"
+      %th=sortable "name", "Name"
+      %th=sortable "manager", "Manager"
+      %th=sortable "email", "Email"
+      %th=sortable "personal_email", "Personal email"
+      %th=sortable "created_at", "Date create"
+      %th=sortable "updated_at", "Last update"
+      %th Actions
+  
+  
+    - @developers.each do |developer|
+      %tr
+        %td= link_to developer.id, developer
+        %td= developer.name
+        %td= check_path(developer.manager_name, developer.manager_id, path:"managers").html_safe
+        %td= check_f(developer.email)
+        %td= check_f(developer.personal_email)
+        %td= set_time developer.created_at
+        %td= set_time developer.updated_at
+        %td
+          %div{class:"btn-group"}
+            =link_to "Show", developer, class:"btn"
+            %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
+              %span{class:"caret"}
+            %ul{class:"dropdown-menu"}
+              %li= link_to 'Show', developer
+              %li= link_to 'Edit', edit_developer_path(developer)
+              %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
+        
+  
+  %div{style:'display:table; margin:0 auto;'}
+    %p
+      = paginate @developers
+- else
+  %div{style:"margin: 0 auto; display:table;"}
+    %h3= "Records not found"
+    %p= link_to 'New Developer', new_developer_path, style:"margin-left:60px;", class:"btn"

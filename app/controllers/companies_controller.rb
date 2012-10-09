@@ -69,29 +69,25 @@ class CompaniesController < ApplicationController
 
   def destroy
     @company = Company.find(params[:id])
-    
-    delete_relations(params[:id]) if @company.destroy
+    delete_relations(params[:id])
+    @company.destroy
     redirect_to companies_path
   end
 
 
 private
-  def delete_relations(company_id)
-    client = Client.find_all_by_company_id(company_id)
-    
+  def delete_relations(company_id)  
+    company = Company.find(company_id)
+    client = company.clients
     for c in client
-      project = Project.where('client_id = ?',c.id)
-      project.destroy
+      project = Project.find_all_by_client_id(c)
+      for p in project
+        application = Application.find_all_by_project_id(p)
+        for app in application
+          Application.delete(app.id)
+        end
+      end
     end
-
-    project = client.projects
-
-    for proj in project
-      application = Application.where('project_id = ?',proj.id)
-      application.delete
-    end
-
-
   end
 
 
