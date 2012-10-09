@@ -1,17 +1,18 @@
 %div{style:"margin-top:13%;"}
   %div{style:"margin: 0 auto; display:table;"}
     - flash.each do |name, msg|
-      %div{class:"alert alert-error", style:"width:250px; margin: 0 auto;"}
-        %button{:class=>"close", :"data-dismiss"=>:"alert"}
-          x
-  
-        - if msg.class == Array
-          - msg.each do |message|
-            = content_tag :div, message, :id => "flash_#{name}"
-      
-        - else
-      
-          = content_tag :div, msg, :id => "flash_#{name}"
+      - unless msg.eql? ''
+        %div{class:"alert alert-error", style:"width:250px; margin: 0 auto;"}
+          %button{:class=>"close", :"data-dismiss"=>:"alert"}
+            x
+    
+          - if msg.class == Array
+            - msg.each do |message|
+              = content_tag :div, message, :id => "flash_#{name}"
+        
+          - else
+        
+            = content_tag :div, msg, :id => "flash_#{name}"
   
   
   = form_for(resource, :as => resource_name, :url => session_path(resource_name),  html:{class:"well", style:"margin:auto; display:table;"}) do |f|
