@@ -2,7 +2,7 @@
   .dropdown-menu{position:absolute; margin: 0 auto; width:220px;}
   .icon-chevron-down:hover{cursor:pointer;}
 
-%table{class:"table", style:"width:1000px; margin: 0 auto;"}
+%table.table{style:"width:1000px; margin: 0 auto;"}
   = form_for @project do |f|
     = error_field(@project, 970)
 
@@ -10,32 +10,32 @@
       %th{style:"width:60%;"}
         = f.label :client_id
       %td
-        %div{class:"select_client", style:"display:none;"}
+        .select_clien{style:"display:none;"}
           = f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
-        %div{class:"client_list", style:"display:none;"}
+        .client_list{style:"display:none;"}
           -for cl in Client.all
             %li{id:"#{cl.id}"}
-              %a{href:"#", class:"client_name_class"}
+              %a.client_name_class{href:"#"}
                 = cl.name
         .input-prepend
-          = text_field_tag('autocomplete-client', nil, class:"clients", :"data-provide"=>:"typeahead", autocomplete:"off")
+          = text_field_tag('autocomplete-client', nil, class:"clients input-xlarge", :"data-provide"=>:"typeahead", autocomplete:"off")
           .add-on
             .dropdown
-              %i{class:"icon-chevron-down dropdown-toggle", :"data-toggle"=>:"dropdown"}
-              %ul{class:"dropdown-menu", role:"menu", style:"margin-left:-230px; margin-top:5px;"}
-                %li{id:"append-clients"}
+              %i.icon-chevron-down.dropdown-toggle{:"data-toggle"=>:"dropdown"}
+              %ul.dropdown-menu{role:"menu", style:"width:310px; margin-left:-289px; margin-top:5px;"}
+                %l#append-clients
 
     %tr
       %th= f.label :manager_id
-      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'Please, select manager'})
+      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'Please, select manager'}, style:"width:284px;")
     %tr
       %th= f.label :name
-      %td= f.text_field :name
+      %td= f.text_field :name, class:"input-xlarge"
     %tr
       %th=f.label "Developers"
       
       %td
-        %div{style:"display:none", class:"dev_point"}   
+        .dev_point{style:"display:none"}   
           - for dev in Developer.all
             = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
         .select_box_developers
@@ -69,13 +69,13 @@
       %th= f.label :handle
       %td
         = f.text_field :handle, class:"input-xlarge"
-        %div{id:"client-handle", style:"display:none;"}
-        %div{class:"proj-h-variants"}
+        #client-handle{style:"display:none;"}
+        .proj-h-variants
           
     %tr
       %td{colspan:"2"}
-        %div{class:"btn-group pull-right"}
+        .btn-group.pull-right
           = f.submit 'Save', class:"btn"
-        %div{class:"btn-group pull-left"}
+        .btn-group.pull-left
           = link_to "Back", :back, class:"btn"
 

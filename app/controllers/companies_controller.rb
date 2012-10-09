@@ -11,7 +11,8 @@ class CompaniesController < ApplicationController
 
     @companies = Company.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     respond_with(@companies) do |format|
-      format.json{render json: Company.last}
+      format.json{render json: Company.all}
+      #Company.last
     end
   end
 

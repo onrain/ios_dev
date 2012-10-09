@@ -25,8 +25,8 @@
     = f.password_field :password
     - if devise_mapping.rememberable?
       %div 
-        = f.check_box :remember_me, style:"float:right; position:relative; left:-100px;"
-        = f.label :remember_me
+        = f.check_box :remember_me, style:"float:left"
+        = f.label :remember_me, style:"position:relative; left:10px;"
         %br/
         = f.submit "Sign in", class:"btn"
         %p

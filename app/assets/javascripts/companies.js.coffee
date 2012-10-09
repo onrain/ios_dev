@@ -21,6 +21,7 @@ $ ->
     $('#add-new-client').show()
     $('.show-btn').hide()
   $('#hide_btn').click ->
+    $('input').removeClass('field_with_errors')
     $('#add-new-client').hide()
     $('.show-btn').show()
     
@@ -53,27 +54,6 @@ $ ->
   $('.error_proj').live 'click': ->
     $(this).val('')
     $(this).removeClass('error_proj')
-
-  $('.sort').css('color':'black')
-  $('.sort').mousemove ->
-    $(this).css('text-decoration':'none')
-  fullpath = document.location.href
-	
-  isa = fullpath.indexOf('=')
-  amp = fullpath.indexOf('&')
-  type = fullpath.substring(isa+1, amp)
-	
-	
-  sort = fullpath.lastIndexOf('=')
-  sort = fullpath.substring(sort+1, fullpath.length)
-	
-  switch type
-    when 'asc' 
-      $('#'+sort).addClass('icon-chevron-up')
-      $('#'+sort).parent().addClass('select-th')
-    when 'desc' 
-      $('#'+sort).addClass('icon-chevron-down')
-      $('#'+sort).parent().addClass('select-th')    
 
 
   append_html = (data) ->
@@ -130,7 +110,11 @@ $ ->
           <table class="table table-bordered table-app">
               <tr>
                 <th>Company ID</th>
-                <td class="show-and-edit-client" id="id"><input id="client_company_id" name="client[company_id]" size="30" type="text" value="'+data.company_id+'" /></td>
+                <td class="show-and-edit-client" id="id">
+                  <!--<input id="client_company_id" name="client[company_id]" size="30" type="text" value="'+data.company_id+'" /> -->
+                  <select id="client_company_id" name="client[company_id]">
+                  </select>
+                </td>
               </tr>
               <tr>
                 <th>Name</th>
@@ -149,32 +133,47 @@ $ ->
               <tr>
                 <th>Action</th>
                 <td>
-                  <input class="btn" name="commit" type="submit" value="Save" />
+                  <input class="btn save_btn" name="commit" type="submit" value="Save" />
                 </td>
               </tr>
           </table>
         </form>
           ')
         
-        
-      $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
-        $('.clients-content').empty()
-        $('.clients-content').append(append_html(data))
-        $('.notice-client').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Cleint was success update!</span>')    
-        $('.notice-client').mousemove ->
-          $(this).empty()
+        $.get '/admin/companies.json', (company) =>
+          $('#client_company_id').empty()
+          count = Object.keys(company).length
 
-      $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
-        $('.notice-client').empty()
-        errors = $.parseJSON(data.responseText)
-        if typeof(errors.name) isnt 'undefined'
-          $('#client_name input').val(errors.name).addClass('error_proj')
-        if typeof(errors.email) isnt 'undefined'  
-          $('#client_email').val(errors.email).addClass('error_proj')
-        if typeof(errors.handle) isnt 'undefined'  
-          $('#client_handle').val(errors.handle).addClass('error_proj')
+          i = 0
+          while i<count
+            $('#client_company_id').append(
+              '<option id="'+company[i].id+'" value="'+company[i].id+'">'+company[i].name+'</option>'
+            )
+            i++
+          $('#client_company_id #'+data.company_id).attr('selected':'selected')
+
+
+        
+        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+          $('.clients-content').empty()
+          $('.clients-content').append(append_html(data))
+          $('.notice-client').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Cleint was success update!</span>')    
+          $('.notice-client').mousemove ->
+            $(this).empty()
+  
+        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+          $('.notice-client').empty()
+          errors = $.parseJSON(data.responseText)
+          if typeof(errors.name) isnt 'undefined'
+            $('#client_name input').val(errors.name).addClass('error_proj')
+          if typeof(errors.email) isnt 'undefined'  
+            $('#client_email').val(errors.email).addClass('error_proj')
+          if typeof(errors.handle) isnt 'undefined'  
+            $('#client_handle').val(errors.handle).addClass('error_proj')
           
       $('.notice-client').empty()
+
+        
 
 
   $('#client_name').live 'input': ->
