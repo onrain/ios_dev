@@ -732,20 +732,25 @@ $ ->
       $.get '/admin/developers?manager_id='+id, (data) =>
         count = Object.keys(data).length
         i = 0
-        while i < count
-          $('.select_box_developers').append(
-            '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-              <span>'+data[i].name+'</span>
-              <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
-            </span>'
-            )  
-          i++
-        $('.select_box_developers input[type="checkbox"]').click ->
-          val_dev = $(this).val()
-          unless $(this).attr('checked')
-            $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
-          else
-            $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+        if count > 0
+          while i < count
+            $('.select_box_developers').append(
+              '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
+                <span>'+data[i].name+'</span>
+                <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
+              </span>'
+              )  
+            i++
+          $('.select_box_developers input[type="checkbox"]').click ->
+            val_dev = $(this).val()
+            unless $(this).attr('checked')
+              $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
+            else
+              $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
+        else
+          $('.select_box_developers').empty()
+          $('.select_box_developers').append('Deverlopers not found!')
+          
     else return true
       
   setTimeout get_all_dev, 300
@@ -769,6 +774,9 @@ $ ->
               </span>'
               )  
             i++
+        else
+          $('.select_box_developers').empty()
+          $('.select_box_developers').append('Deverlopers not found!')
   $('.select_box_developers input[type="checkbox"]').click ->
     val_dev = $(this).val()
     unless $(this).attr('checked')
