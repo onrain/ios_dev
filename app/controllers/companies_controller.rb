@@ -76,7 +76,7 @@ class CompaniesController < ApplicationController
   end
 
 
-private
+  private
   def delete_relations(company_id)  
     company = Company.find(company_id)
     client = company.clients

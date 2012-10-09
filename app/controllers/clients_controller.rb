@@ -13,6 +13,21 @@ class ClientsController < ApplicationController
 
     return (render json: Client.find(params[:id])) unless params[:get].blank?
 
+    unless params[:type].blank?
+      project_application = Hash.new { |hash, key| hash[key] = [] }
+      project = Project.find_all_by_client_id(params[:id])
+
+      for proj in project;project_application['project'] << proj.name;end
+
+      for proj in project
+        application = Application.find_all_by_project_id(proj)
+        for app in application
+          project_application['application'] << app.product_name
+        end
+      end
+      return render json: project_application.to_json
+    end
+
     @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
 
     respond_with(@clients)
@@ -92,17 +107,21 @@ class ClientsController < ApplicationController
 
   def destroy
     @client = Client.find(params[:id])
-    project = Project.find_by_client_id(params[:id])
-
-
-    unless project.nil?
-      application = project.applications
-      application.delete_all
-    end
-
-
+    delete_relation(params[:id])
     @client.destroy
     redirect_to clients_path
   end
 
+
+
+  private
+  def delete_relation(client_id)
+    project = Project.find_all_by_client_id(client_id)
+    for p in project
+      application = Application.find_all_by_project_id(p.id)
+      for app in application
+        Application.delete(app.id)
+      end
+    end
+  end
 end

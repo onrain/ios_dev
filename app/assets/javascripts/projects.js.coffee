@@ -68,18 +68,18 @@ $ ->
     client_name = ltrim(client_name)
     client_name = rtrim(client_name)
     id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
-    #alert client_name
-    $.get '/admin/clients?handle='+id, (data) =>
-      $('#client-handle').text(data.handle.replace(/\s/g,''))        
-
-      ph_slash_len = $('#project_handle').val().split('/')
-      if ph_slash_len.length > 1
-        proj_h = $('#project_handle').val().replace(/\s/g,'')
-        pos_proj_h = proj_h.lastIndexOf('/')
-        substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
-        store = $('#client-handle').text().replace(/\s+/g,'')
-        store = store+'/'+substr_proj_h
-        $('#project_handle').val(store)
+    if typeof(id) isnt 'undefined'
+      $.get '/admin/clients?handle='+id, (data) =>
+        $('#client-handle').text(data.handle.replace(/\s/g,''))        
+  
+        ph_slash_len = $('#project_handle').val().split('/')
+        if ph_slash_len.length > 1
+          proj_h = $('#project_handle').val().replace(/\s/g,'')
+          pos_proj_h = proj_h.lastIndexOf('/')
+          substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
+          store = $('#client-handle').text().replace(/\s+/g,'')
+          store = store+'/'+substr_proj_h
+          $('#project_handle').val(store)
   
   
   
@@ -514,10 +514,10 @@ $ ->
     name = $('#autocomplete-client').val()
     if name isnt ''
       id = $('#project_client_id:contains("'+name+'")').val()
-      $.get '/admin/clients?handle='+id, (data) =>
-        $('#client-handle').text(data.handle.replace(/\s/g,'')) 
-   
-  
+      if typeof(id) isnt 'undefined'
+        $.get '/admin/clients?handle='+id, (data) =>
+          $('#client-handle').text(data.handle.replace(/\s/g,'')) 
+     
   
   $('#tr_delete_').live 'click': ->
     $(this).parent().parent().parent().remove()
@@ -541,21 +541,22 @@ $ ->
       $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
       $('#autocomplete-client').val(client_name)
       
-      id = $(this).parent().attr('id')  
-      $.get '/admin/clients?handle='+id, (data) =>
-        $('#client-handle').text(data.handle.replace(/\s/g,''))        
-
-        ph_slash_len = $('#project_handle').val().split('/')
-        if ph_slash_len.length > 1
-          proj_h = $('#project_handle').val().replace(/\s/g,'')
-          pos_proj_h = proj_h.lastIndexOf('/')
-          substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
-          store = $('#client-handle').text().replace(/\s+/g,'')
-          store = store+'/'+substr_proj_h
-          $('#project_handle').val(store)
-     
-    ######### end point
-    
+      id = $(this).parent().attr('id')
+      if typeof(id) isnt 'undefined'
+        $.get '/admin/clients?handle='+id, (data) =>
+          $('#client-handle').text(data.handle.replace(/\s/g,''))        
+  
+          ph_slash_len = $('#project_handle').val().split('/')
+          if ph_slash_len.length > 1
+            proj_h = $('#project_handle').val().replace(/\s/g,'')
+            pos_proj_h = proj_h.lastIndexOf('/')
+            substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
+            store = $('#client-handle').text().replace(/\s+/g,'')
+            store = store+'/'+substr_proj_h
+            $('#project_handle').val(store)
+       
+      ######### end point
+      
   
 
   
