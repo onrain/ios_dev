@@ -16,23 +16,10 @@ class CompaniesController < ApplicationController
 
 		unless params[:type].blank?
       company_details = Hash.new { |hash, key| hash[key] = [] }
-      clients = Client.where('company_id = ?',params[:id]).select('name, id')
+      clients = Client.where('company_id = ?',params[:id]).select('name')
       company_details['clients'] << clients
-      project_arr = []
-
-      for c in clients
-        project = Project.where('client_id = ?',c.id).select('name, id')
-
-        company_details['project'] << project unless project.empty?
-        for proj in project
-          application = Application.where('project_id = ?', proj).select('product_name')
-          company_details['application'] << application unless application.empty?
-        end
-      end
-
       return render(json: company_details)
     end
-
     respond_with(@companies) do |format|
       format.json{render json: Company.all}
       #Company.last

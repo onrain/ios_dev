@@ -22,14 +22,14 @@
         %td= set_time company.created_at
         %td= set_time company.updated_at
         %td
-          %div{class:"btn-group"}
+          .btn-group
             =link_to "Show", company, class:"btn"
             %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
               %span{class:"caret"}
             %ul{class:"dropdown-menu"}
               %li= link_to 'Show', company
               %li= link_to 'Edit', edit_company_path(company)
-              %li= link_to 'Destroy', company, :confirm => 'Are you sure?', :method => :delete
+              %li= link_to 'Destroy', '#', class:"btn-delete-company", id:"#{company.id}"
   
   %div{style:'display:table; margin:0 auto;'}
     %p

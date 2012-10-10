@@ -153,7 +153,7 @@ $ ->
         j = 0
 
         proj_len = data['project'].length
-        app_len = data['application'].length
+        app_len = data['application'].length if typeof(data['application']) isnt 'undefined'
         text = "Do you really want delete this client? \n"
         text += "Projects: "
         while j<proj_len
@@ -162,14 +162,15 @@ $ ->
             text+= ", "
           else text +="\n"
           j++
-        text += "Applications: "
-        
-        while i<app_len
-          text += data['application'][i]
-          if i+1 isnt app_len
-            text+= ", "
-          else text +="\n"
-          i++
+        if typeof(data['application']) isnt 'undefined'  
+          text += "Applications: "
+          
+          while i<app_len
+            text += data['application'][i]
+            if i+1 isnt app_len
+              text+= ", "
+            else text +="\n"
+            i++
         if(confirm(text))
           $.post "/admin/clients/" + id, {_method:'delete'}, (data) =>
             location.reload(true)

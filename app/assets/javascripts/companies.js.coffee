@@ -93,7 +93,7 @@ $ ->
     $('#client-title').empty()
     $('#client-list').modal('show':true)
     id = $(this).attr('id')
-    $.get '/admin/clients?get=cl&id='+id, (data) =>
+    $.get '/admin/clients?get=client&id='+id, (data) =>
       $('#client-title').append('Client: '+data.name)
       $('.clients-content').empty()
       $('.clients-content').append(append_html(data))
@@ -103,7 +103,7 @@ $ ->
 
     $('#edit_'+id).live 'click': ->
 
-      $.get '/admin/clients?get=cl&id='+id, (data) =>
+      $.get '/admin/clients?get=client&id='+id, (data) =>
         $('.clients-content').empty()
         $('.clients-content').append('
          <form accept-charset="UTF-8" action="/admin/client_remote_update/'+id+'" data-remote="true" class="edit_client" id="edit_client_'+id+'" method="post">
@@ -253,6 +253,49 @@ $ ->
       company = $('#company_name').text().toLowerCase().replace(/\s+/g,'')
         
       $('#client_handle').val(company+'/'+$(this).text().replace(/\s+/g,''))
+
+
+
+
+
+  $('.btn-delete-company').click ->
+    id = $(@).attr('id')
+
+    $.get '/admin/companies?type=relations&id='+id, (data) =>
+      client_length = data['clients'][0].length
+      project_length = data['project'][0].length if typeof(data['project']) isnt 'undefined'
+      application_length = data['application'].length if typeof(data['application']) isnt 'undefined'
+      i=0;j=0;k=0
+      if client_length > 0
+        text = "Do you really want delete this company? \n"
+        text += "Clients: "
+        while i<client_length
+          text += data['clients'][0][i].name
+          text += ", " if i+1 isnt client_length
+          i++
+        if typeof(data['project']) isnt 'undefined'
+          text += "\nProjects: "
+          while j < project_length
+            text += data['project'][0][j].name
+            text += ", " if j+1 isnt project_length
+            j++
+        if typeof(data['application']) isnt 'undefined'
+          text += "\nApplication: "
+          while k < application_length
+            text += data['application'][k][0].product_name
+            text += ", " if k+1 isnt application_length
+            k++
+
+        if confirm(text)
+          $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+            location.reload(true)
+      else
+        text = "Are you sure?"
+        if confirm(text)
+          $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+            location.reload(true)
+
+
 
 
 
