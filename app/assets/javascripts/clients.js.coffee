@@ -142,7 +142,7 @@ $ ->
   
   
         
-  $('.btn-delete-client').click ->
+  $('.btn-delete-client').live 'click': ->
 
     id = $(this).attr('id')
   
@@ -170,12 +170,16 @@ $ ->
             text+= ", "
           else text +="\n"
           i++
-        $(this).attr('data-confirm', text)  
+        if(confirm(text))
+          $.post "/admin/clients/" + id, {_method:'delete'}, (data) =>
+            location.reload(true)
       else
         text = 'Are you sure?'
+        if(confirm(text))
+          $.post "/admin/clients/" + id, {_method:'delete'}, (data) =>
+            location.reload(true)
 
-        $(this).attr('data-confirm', text)
-
+    return false
 
    
 
