@@ -185,10 +185,7 @@ $ ->
       $('.handle-variant').empty()
     res = name.split(" ")
 
-    j = 1
-    i = 0
-    variant = 4
-    count = 0
+    j = 1;i = 0;variant = 4;count = 0
     while count < variant
 
       $('.handle-variant').append("<div class='variant"+count+"'></div>")
