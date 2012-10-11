@@ -86,7 +86,7 @@ $ ->
             store = store+'/'+substr_proj_h
             $('#project_handle').val(store)
           return 'stop' 
-    ), 2000
+    ), 700
 
     if result_handle isnt 'stop'
       result_handle
