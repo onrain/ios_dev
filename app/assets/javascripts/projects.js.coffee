@@ -70,8 +70,6 @@ $ ->
       client_name = rtrim(client_name)
       id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
 
-
-      $('.add_client_from_typehead').css('opacity':'0')
       
       if typeof(id) isnt 'undefined'
         $.get '/admin/clients?handle='+id, (data) =>
@@ -85,17 +83,48 @@ $ ->
             store = $('#client-handle').text().replace(/\s+/g,'')
             store = store+'/'+substr_proj_h
             $('#project_handle').val(store)
+          $('.add_client_from_typehead').css('opacity':'0')
           return 'stop' 
     ), 700
 
     if result_handle isnt 'stop'
       result_handle
+      $('.add_client_from_typehead').css('opacity':'1')
       
   
   
   $('#autocomplete-client').bind 'input': ->
-    client_id()
 
+    client_id()
+  
+  
+  
+  
+  $('.add_client_from_project').click ->
+    if confirm('Do you really want to add this client to project handle?')
+      client_name = $('#autocomplete-client').val().toLowerCase().replace(/\s+/g,'.')
+
+      ph_slash_len = $('#project_handle').val().split('/')
+      if ph_slash_len.length > 1
+        proj_h = $('#project_handle').val().replace(/\s/g,'')
+        pos_proj_h = proj_h.lastIndexOf('/')
+        substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
+        store = client_name+'/'+substr_proj_h
+        $('#project_handle').val(store)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   click = 0
