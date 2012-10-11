@@ -11,12 +11,11 @@
         = f.label :client_id
       %td
         .select_clien{style:"display:none;"}
-          = f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'None'})
+          = f.select("client_id", Client.all.collect {|p| [ p.name, p.id ] }, {:include_blank => 'None'})
         .client_list{style:"display:none;"}
           -for cl in Client.all
             %li{id:"#{cl.id}"}
-              %a.client_name_class{href:"#"}
-                = cl.name
+              %a.client_name_class{href:"#"}= cl.name
         .input-prepend
           = text_field_tag('autocomplete-client', nil, class:"clients input-xlarge", :"data-provide"=>:"typeahead", autocomplete:"off")
           .add-on
@@ -25,9 +24,13 @@
               %ul.dropdown-menu{role:"menu", style:"width:310px; margin-left:-289px; margin-top:5px;"}
                 %l#append-clients
 
+        .add_client_from_typehead
+          .icon-plus.pull-right.add_client_from_project
+
+
     %tr
       %th= f.label :manager_id
-      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] },  {:include_blank => 'Please, select manager'}, style:"width:284px;")
+      %td= f.select("manager_id", Manager.all.collect {|p| [ p.name, p.id ] }, {:include_blank => 'Please, select manager'}, style:"width:284px;")
     %tr
       %th= f.label :name
       %td= f.text_field :name, class:"input-xlarge"
@@ -35,7 +38,7 @@
       %th=f.label "Developers"
       
       %td
-        .dev_point{style:"display:none"}   
+        .dev_point{style:"display:none"}
           - for dev in Developer.all
             = check_box_tag "project[developer_ids][]", dev.id, @project.developers.include?(dev)
         .select_box_developers
@@ -54,13 +57,13 @@
                 var developer = #{res};
                 for(var i = 0; i<developer.length; i++)
                 {
-                  $('#check_'+developer[i]).attr('checked', true); 
+                  $('#check_'+developer[i]).attr('checked', true);
                 }
               }, 400);
               }
               _delay();
               $('#project_manager_id option').click(function(){
-               if($(this).val()  == '')
+               if($(this).val() == '')
                {return false;}
               _delay();
               });
@@ -78,4 +81,3 @@
           = f.submit 'Save', class:"btn"
         .btn-group.pull-left
           = link_to "Back", :back, class:"btn"
-

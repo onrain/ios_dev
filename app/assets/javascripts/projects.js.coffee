@@ -63,46 +63,62 @@ $ ->
   
   
   
-  $('#autocomplete-client').blur ->
-    client_name = $(this).val()
-    client_name = ltrim(client_name)
-    client_name = rtrim(client_name)
-    id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
-    if typeof(id) isnt 'undefined'
-      $.get '/admin/clients?handle='+id, (data) =>
-        $('#client-handle').text(data.handle.replace(/\s/g,''))        
+  client_id =->
+    result_handle = setTimeout ( ->
+      client_name = $('#autocomplete-client').val()
+      client_name = ltrim(client_name)
+      client_name = rtrim(client_name)
+      id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
+
+
+      $('.add_client_from_typehead').css('opacity':'0')
+      
+      if typeof(id) isnt 'undefined'
+        $.get '/admin/clients?handle='+id, (data) =>
+          $('#client-handle').text(data.handle.replace(/\s/g,''))        
+    
+          ph_slash_len = $('#project_handle').val().split('/')
+          if ph_slash_len.length > 1
+            proj_h = $('#project_handle').val().replace(/\s/g,'')
+            pos_proj_h = proj_h.lastIndexOf('/')
+            substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
+            store = $('#client-handle').text().replace(/\s+/g,'')
+            store = store+'/'+substr_proj_h
+            $('#project_handle').val(store)
+          return 'stop' 
+    ), 2000
+    
+    if result_handle() isnt 'stop'
+      result_handle()
+    
   
-        ph_slash_len = $('#project_handle').val().split('/')
-        if ph_slash_len.length > 1
-          proj_h = $('#project_handle').val().replace(/\s/g,'')
-          pos_proj_h = proj_h.lastIndexOf('/')
-          substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
-          store = $('#client-handle').text().replace(/\s+/g,'')
-          store = store+'/'+substr_proj_h
-          $('#project_handle').val(store)
   
-  
-  
+  $('#autocomplete-client').bind 'input': ->
+    client_id()
+    
+    
+
+
   
   
   
   click = 0
   $(".get-list-applications").click ->
-    if $(this).attr('class').match(/icon-chevron-down/)
-      parent_id = $(this).parent().parent().attr('id')
+    if $(@).attr('class').match(/icon-chevron-down/)
+      parent_id = $(@).parent().parent().attr('id')
       _pos = parent_id.indexOf('_')
       parent = parent_id.substring(_pos+1, parent_id.length)
       $('.tr_'+parent).remove()
-      $(this).toggleClass('icon-chevron-down')
+      $(@).toggleClass('icon-chevron-down')
     else  
-      $(this).toggleClass('icon-chevron-down')
+      $(@).toggleClass('icon-chevron-down')
   
-      id = $(this).attr('id')
+      id = $(@).attr('id')
       if id isnt ''
         $.get '/admin/applications?get=product&id='+id, (data) =>
           count = Object.keys(data).length
           i = 0
-          $(this).parent().parent().eq(0).after('
+          $(@).parent().parent().eq(0).after('
           <tr class="tr_'+id+'">
             <td colspan="7">
             <table width="100%" class="table_no_border-left table_'+id+'">
@@ -414,18 +430,36 @@ $ ->
       
             
       
-      parent_el.append(
-        '<table style="margin: 0 auto; width:100%;" class="table table-bordered open-new-app">
-          <tr>
-            <td id="append_'+id+'">
-            </td>
-          </tr>
-        </table>'            
-      )
+      parent_el.append('<table style="margin: 0 auto; width:100%;" class="table table-bordered open-new-app"><tr><td id="append_'+id+'"></td></tr></table>')
       
       $('#append_'+id).append($('#proj_'+id).html()) 
-    
-    
+  
+  $('.add_client_from_typehead').css('opacity':'0')
+  
+  $('#autocomplete-client').bind 'input': ->
+    attr_style = $('.typeahead').attr('style')
+
+    if (/none/).test(attr_style) or typeof(attr_style) is 'undefined'
+      
+      $('.add_client_from_project').click ->
+        auto_client = $('#autocomplete-client').val().replace(/\s+/g,'')
+        
+        
+        
+        
+        
+        
+      
+      
+      
+
+      $('.add_client_from_typehead').animate('opacity':'1',500)
+    else $('.add_client_from_typehead').css('opacity':'0')
+      
+      
+      
+      
+      
   $('#project_name').bind 'input': ->
     $('.proj-h-variants').empty()
     client = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'')
@@ -434,10 +468,7 @@ $ ->
         
     res = name.split(" ")
 
-    j = 1
-    i = 0
-    variant = 4
-    count = 0
+    j = 1;i = 0;variant = 4;count = 0
     while count < variant
       $('.proj-h-variants').append("<div class='variant"+count+"'></div>")
       count++

@@ -4,7 +4,7 @@
 a[disabled="disabled"]{color:#ccc;}
 ul.limit li {float: left; list-style: none; font-size: 16x; padding-left:5px;}
 .icon-plus{color:black;}
-.icon-plus:hover{cursor:pointer; text-decoration:none;}
+.icon-plus:hover{color:green; cursor:pointer; text-decoration:none;}
 .icon-edit{position:absolute !important; margin-left:75px;}
 .icon-edit:hover{cursor:pointer; color:#cccccc; }
 .icon-ok-sign{color:green;}
@@ -42,3 +42,5 @@ ul.admin-index-action{ margin-left: -30px; }
 
 
 .typeahead{width:310px !important;  margin-top:2px !important;}
+
+.add_client_from_typehead{ position: relative; top:-30px; left: -50px;}
