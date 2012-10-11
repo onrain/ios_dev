@@ -87,19 +87,15 @@ $ ->
             $('#project_handle').val(store)
           return 'stop' 
     ), 2000
-    
-    if result_handle() isnt 'stop'
-      result_handle()
-    
+
+    if result_handle isnt 'stop'
+      result_handle
+      
   
   
   $('#autocomplete-client').bind 'input': ->
     client_id()
-    
-    
 
-
-  
   
   
   click = 0
