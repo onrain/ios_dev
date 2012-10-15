@@ -3,7 +3,6 @@ class ApplicationsController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-
   
   def index
     

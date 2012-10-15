@@ -6,8 +6,7 @@ class ProjectsController < ApplicationController
 
 
   def index
-
-   
+  
     return(render json: Project.find(params[:project_id])) unless params[:project_id].blank?
 
     @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)

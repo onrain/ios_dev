@@ -191,7 +191,7 @@ $ ->
       $tr([$th('Relative path'), $td(data.relative_path)], 'class="show-and-edit-app" id="relative_path"')
       $tr([$th('Title'), $td(data.title)], 'class="show-and-edit-app" id="title"')
       $tr([$th('Action'), $td([$link_to('Edit', '#', 'id="'+data.id+'" class="edit-link btn btn-small"'), $link_to('Destroy', '/admin/applications/'+data.id+'?proj='+data.project_id, 'rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'"')])])   
-    ],'class="table table-bordered table-app">')
+    ],'class="table table-bordered table-app"')
   
   
   

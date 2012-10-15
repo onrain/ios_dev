@@ -9,6 +9,8 @@ $ ->
  
   
   
+  $('.close').text('×')
+  
   append_html = (data) ->
     $('.index-content').empty()
     insert_text = $table([
