@@ -3,7 +3,7 @@ class ManagersController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-  caches_action :index, :layout => false, :gzip => :best_speed
+
   
   def index
     @managers = Manager.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
