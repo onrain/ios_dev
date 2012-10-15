@@ -64,3 +64,32 @@
   .btn-group.pull-right
     = link_to 'Edit', edit_company_path(@company_show), class:"btn"
     = link_to "Back", :back, class:"btn"
+
+
+
+
+.form_edit_company{style:"display:none;"}
+  %form.edit_client{"accept-charset" => "UTF-8", "data-remote" => "true", :method => "post"}
+    %table.table.table-bordered.table-app
+      %tr
+        %th Company ID
+        %td#id.show-and-edit-client
+          %select#client_company_id{:name => "client[company_id]"}
+      %tr
+        %th Name
+        %td#client_name.show-and-edit-client
+          %input#client_name{:name => "client[name]", :size => "30", :type => "text"}
+      %tr
+        %th Email
+        %td#email.show-and-edit-client
+          %input#client_email{:name => "client[email]", :size => "30", :type => "text"}
+      %tr
+        %th Handle name
+        %td#handle.show-and-edit-client
+          %input#client_handle{:name => "client[handle]", :size => "30", :type => "text"}
+          .handle-variant
+      %tr
+        %th Action
+        %td
+          %input.btn.save_btn{:name => "commit", :type => "submit", :value => "Save"}
+    

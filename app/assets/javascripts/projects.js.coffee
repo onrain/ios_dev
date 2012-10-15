@@ -62,18 +62,17 @@ $ ->
   
   
   
-  
   client_id =->
     result_handle = setTimeout ( ->
       client_name = $('#autocomplete-client').val()
       client_name = ltrim(client_name)
       client_name = rtrim(client_name)
-      id =  $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
+      id = $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
 
       
       if typeof(id) isnt 'undefined'
         $.get '/admin/clients?handle='+id, (data) =>
-          $('#client-handle').text(data.handle.replace(/\s/g,''))        
+          $('#client-handle').text(data.handle.replace(/\s/g,''))
     
           ph_slash_len = $('#project_handle').val().split('/')
           if ph_slash_len.length > 1
@@ -84,7 +83,7 @@ $ ->
             store = store+'/'+substr_proj_h
             $('#project_handle').val(store)
           $('.add_client_from_typehead').css('opacity':'0')
-          return 'stop' 
+          return 'stop'
     ), 700
 
     if result_handle isnt 'stop'
@@ -111,20 +110,7 @@ $ ->
         substr_proj_h = proj_h.substring(pos_proj_h+1, proj_h.length)
         store = client_name+'/'+substr_proj_h
         $('#project_handle').val(store)
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   
   
   click = 0
@@ -143,80 +129,45 @@ $ ->
         $.get '/admin/applications?get=product&id='+id, (data) =>
           count = Object.keys(data).length
           i = 0
-          $(@).parent().parent().eq(0).after('
-          <tr class="tr_'+id+'">
-            <td colspan="7">
-            <table width="100%" class="table_no_border-left table_'+id+'">
+          
+          append_content = getChildren('.hidden-views-applications')
+          
+          buffer = []
             
-              <tr class="tr_'+id+'">
-                <th>Application name</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Bundle version</th>
-                <th>Bundle identifier</th>
-                <th>Relative path</th>
-                <th>Actions</th>    
-              </tr>
-              
-            </table>
-            <table width="100%" class="table_no_border-left">
-              <tr>
-                <td colspan="7" style="background-color: rgba(204,204,204, 0.3);">
-                  <a class="icon-plus pull-right add_new" id="'+id+'" style="margin-right:5px;"></a>
-                </td>
-              </tr>
-            </table>
-            </td>
-          </tr>
-            ')
+          buffer.push(append_content)
 
-          while i < count 
-            $('.table_'+id+' tbody').append('
-              <tr>
+          buffer[0] = buffer[0].replace('tr_waiting_id', 'tr_'+id)
+          buffer[0] = buffer[0].replace('add_id', id)
+          buffer[0] = buffer[0].replace('current-table', 'table_'+id)
+          $(@).parent().parent().eq(0).after(buffer[0])
 
-                <td id="app-name-td_'+data[i].id+'">
-                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a>
-                </td>
-                
-                <td>
-                  '+data[i].id+'
-                </td>
-                
-                <td>
-                  '+data[i].title+'
-                </td>
-                
-                <td>
-                   '+data[i].bundle_version+'
-                </td>
-                
-                <td>
-                   '+data[i].bundle_identifier+'
-                </td>
-                
-                <td>
-                   '+data[i].relative_path+'
-                </td>
-                
-                <td width="50">
-                  <div class="app-panel pull-right">
-                    <a id="'+data[i].id+'"class="icon-pencil edit-link" href="#" style="color:black;"></a>&nbsp;
-                    <a rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_" href="/admin/applications/'+data[i].id+'?proj='+data[i].project_id+'"></a>&nbsp
-                    <a class="icon-retweet" style="color:black;" href="/admin/applications?method=clone&id='+data[i].id+'" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"></a>
-                   </div>
-                </td>
-              </tr>
+   
+          while i < count
+            link = []
+            link[0] = $link_to('', '#', 'id="'+data[i].id+'" class="icon-pencil edit-link" style="color:black;"')
+            link[1] = $link_to('', '/admin/applications/'+data[i].id, 'rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_"')
+            link[2] = $link_to('', '/admin/applications?method=clone&id='+data[i].id, 'class="icon-retweet" style="color:black;" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"')
+            link = link.join(' ')
+            
+            content = []
+            content[i] = '<tr id="tr_'+id+'">'  
+            content[i] += $td($link_to(data[i].product_name, '#', 'id="'+data[i].id+'" class="prev-app"'))
+            content[i] += $td(data[i].id)
+            content[i] += $td(data[i].title)
+            content[i] += $td(data[i].bundle_version)
+            content[i] += $td(data[i].bundle_identifier)
+            content[i] += $td(data[i].relative_path)
+            content[i] += $td($div(link,'class="app-panel pull-right"'), "width='50'")
+            content[i] += "</tr>"
 
-              ')
+            $('.table_'+id+' tbody').append(content[i])          
+
  
             
             if i+1 isnt count
               $(this).next().append(", ")
             i+=1
-  
-  
-  
-  
+
   
   $('#app-list').modal(
           "backdrop" : "static",
@@ -229,45 +180,18 @@ $ ->
   
   append_html = (data) ->
     $('.index-content').empty()
-    insert_text = '
-        <table class="table table-bordered table-app">
-        <div class="notice-app"></div>
-          <tr>
-            <th>ID</th>
-            <td>'+data.id+'</td>
-          </tr>
-          <tr>
-            <th>Product name</th>
-            <td class="show-and-edit-app" id="product_name">'+data.product_name+'</td>
-          </tr>
-          <tr>
-            <th>Bundle identifier</th>
-            <td class="show-and-edit-app" id="bundle_identifier">'+data.bundle_identifier+'</td>
-          </tr>
-          <tr>
-            <th>Bundle version</th>
-            <td class="show-and-edit-app" id="bundle_version">'+data.bundle_version+'</td>
-          </tr>
-          <tr>
-            <th>Relative path</th>
-            <td class="show-and-edit-app" id="relative_path">'+data.relative_path+'</td>
-          </tr>
-          <tr>
-            <th>Title</th>
-            <td class="show-and-edit-app" id="title">'+data.title+'</td>
-          </tr>
-          <tr>
-            <th>Action</th>
-            <td>
-              <a id="'+data.id+'" class="edit-link btn btn-small">Edit</a>
-              &nbsp;
-              <a rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'" href="/admin/applications/'+data.id+'?proj='+data.project_id+'">Destroy</a>
-            </td>
-          </tr>
-        </table>
-        '
-  
-  
+
+    insert_text = '<table class="table table-bordered table-app">'
+    insert_text += $div('', "class='notice-app'")
+    insert_text += $tr([$th('ID'), $td(data.id)])
+    insert_text += $tr([$th('Product name'), $td(data.product_name)], 'class="show-and-edit-app" id="product_name"')
+    insert_text += $tr([$th('Bundle identifier'), $td(data.bundle_identifier)], 'class="show-and-edit-app" id="bundle_identifier"')
+    insert_text += $tr([$th('Bundle version'), $td(data.bundle_version)], 'class="show-and-edit-app" id="bundle_version"')
+    insert_text += $tr([$th('Relative path'), $td(data.relative_path)], 'class="show-and-edit-app" id="relative_path"')
+    insert_text += $tr([$th('Title'), $td(data.title)], 'class="show-and-edit-app" id="title"')
+    insert_text += $tr([$th('Action'), $td([$link_to('Edit', null, 'id="'+data.id+'" class="edit-link btn btn-small"'), $link_to('Destroy', '/admin/applications/'+data.id+'?proj='+data.project_id, 'rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'"')])])
+    insert_text += '</table>'      
+
   
   
   
@@ -280,6 +204,7 @@ $ ->
     $.get '/admin/applications?get=app&id='+id, (data) =>
       $('#app-title').append('Application: '+data.product_name)
       $('.index-content').empty()
+
       $('.index-content').append(append_html(data))
 
 
@@ -294,47 +219,18 @@ $ ->
 
     $.get '/admin/applications?get=app&id='+id, (data) =>
       $('.index-content').empty()
-      $('.index-content').append('
-       <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
-        <table class="table table-bordered table-app">
-            <tr>
-            <th>Project</th>
-            <td class="show-and-edit-app" id="id">
-              <select name="application[project_id]" id="application_project_name"></select>
-            </td>
-          </tr>
-            <tr>
-              <th>Product name</th>
-              <td class="show-and-edit-app" id="product_name"><input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" /></td>
-            </tr>
-            <tr>
-              <th>Bundle identifier</th>
-              <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
-            </tr>
-            <tr>
-              <th>Bundle version</th>
-              <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
-            </tr>
-            <tr>
-              <th>Relative path</th>
-              <td class="show-and-edit-app" id="relative_path"> <input id="application_relative_path" class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
-                <div class="relative-variant"></div>
-                <div id="handle_store_edit" style="display:none;"></div>
-              </td>
-            </tr>
-            <tr>
-              <th>Title</th>
-              <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
-            </tr>
-            <tr>
-              <th>Action</th>
-              <td>
-                <input class="btn" name="commit" type="submit" value="Save" />
-              </td>
-            </tr>
-        </table>
-      </form>
-        ')
+      edit_form = $('.edit_form').html()
+      $('.index-content').append(edit_form)
+      
+      #inialize params
+      $('.edit_application').attr('action','/admin/remote_update/'+id)
+      $('.edit_application').attr('id', 'edit_application_'+id)
+      $('#application_product_name').val(data.product_name)
+      $('#application_bundle_identifier').val(data.bundle_identifier)
+      $('#application_bundle_version').val(data.bundle_version)
+      $('#application_relative_path').val(data.relative_path)
+      $('#application_title').val(data.title)
+      #end
       
       $('#handle_store_edit').text($('#application_relative_path').val())
       
@@ -468,23 +364,11 @@ $ ->
       
       $('.add_client_from_project').click ->
         auto_client = $('#autocomplete-client').val().replace(/\s+/g,'')
-        
-        
-        
-        
-        
-        
-      
-      
-      
 
       $('.add_client_from_typehead').animate('opacity':'1',500)
     else $('.add_client_from_typehead').css('opacity':'0')
       
-      
-      
-      
-      
+   
   $('#project_name').bind 'input': ->
     $('.proj-h-variants').empty()
     client = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'')
@@ -768,12 +652,7 @@ $ ->
         i = 0
         if count > 0
           while i < count
-            $('.select_box_developers').append(
-              '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-                <span>'+data[i].name+'</span>
-                <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
-              </span>'
-              )  
+            $('.select_box_developers').append('<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;"><span>'+data[i].name+'</span><input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'"></span>')  
             i++
           $('.select_box_developers input[type="checkbox"]').click ->
             val_dev = $(this).val()
@@ -801,12 +680,7 @@ $ ->
         if count > 0
           $('.select_box_developers').empty()
           while i < count
-            $('.select_box_developers').append(
-              '<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-                <span>'+data[i].name+'</span>
-                <input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'">
-              </span>'
-              )  
+            $('.select_box_developers').append('<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;"><span>'+data[i].name+'</span><input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'"></span>')  
             i++
         else
           $('.select_box_developers').empty()

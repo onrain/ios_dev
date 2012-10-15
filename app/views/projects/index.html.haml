@@ -1,11 +1,11 @@
 = render 'modal_for_app'
 =print_notice(notice)
 -unless @projects.empty?
-  %div{class:"well well-small", align:"center", style:"width:980px; margin: 0 auto;"}
+  %div.well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
     %h4 Listing projects
     = link_to 'New Project', new_project_path, class:"btn"
   
-  %table{class:"table table-striped table-bordered", style:"width:1000px; margin: 0 auto;"}
+  %table.table.table-striped.table-bordered{style:"width:1000px; margin: 0 auto;"}
     %tr
       %th{style:"width:10px !important; background-color: rgba(204,204,204,0.7);"}
       %th=sortable "id", "ID"
@@ -20,7 +20,7 @@
     - @projects.each do |project|
       %tr{id:"parent_#{project.id}"}
         %td
-          %div{class:"icon-play get-list-applications", id:"#{project.id}"}
+          %div.icon-play.get-list-applications{id:"#{project.id}"}
         %td= link_to(project.id, project)
         %td= check_path(project.client_name, project.client_id, path:"clients").html_safe
         %td= check_path(project.manager_name, project.manager_id, path:"managers").html_safe
@@ -31,14 +31,14 @@
           = form_for(@new_app, remote:true) do |f|
             %table{class:"table table-bordered"}
               -if @new_app.errors.any?
-                %div{class:"alert alert-error"}
-                  %a{class:"close", :"data-dismiss"=>:"alert", href:"#"}
+                %div.alert.alert-error
+                  %a.close{:"data-dismiss"=>:"alert", href:"#"}
                     &times;
                   %h3= "#{pluralize(@new_app.errors.count, "error")} prohibited this post from being saved:"
                   %ul
                     - @new_app.errors.full_messages.each do |msg|
                       %li= msg
-              %div{class:"store", style:"display:none;"}
+              %div.store{style:"display:none;"}
               = f.hidden_field :project_id, value:project.id
               %tr
                 %td= f.label :product_name
@@ -64,11 +64,11 @@
                 %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
   
         %td
-          %div{class:"btn-group"}
+          %div.btn-group
             =link_to "Show", project, class:"btn"
-            %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
-              %span{class:"caret"}
-            %ul{class:"dropdown-menu"}
+            %button.btn.dropdown-toggle{:"data-toggle"=>:"dropdown"}
+              %span.caret
+            %ul.dropdown-menu
               %li= link_to 'Show', project
               %li= link_to 'Edit', edit_project_path(project)
               %li= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
@@ -80,3 +80,63 @@
   %div{style:"margin: 0 auto; display:table;"}
     %h3= "Records not found"
     %p= link_to 'New Project', new_project_path, style:"margin-left:60px;", class:"btn"
+
+
+
+
+
+%table
+  %thead.hidden-views-applications{style:"display:none"}
+    %tr.tr_waiting_id
+      %td{colspan:"7"}
+        %table.table_no_border-left.current-table{width:"100%"}
+    
+          %tr.tr_waiting_id
+            %th Application name
+            %th ID
+            %th Title
+            %th Bundle version
+            %th Bundle identifier
+            %th Relative path
+            %th Actions  
+          
+  
+        %table.table_no_border-left{width:"100%"}
+          %tr
+            %td{colspan:"7", style:"background-color: rgba(204,204,204, 0.3);"}
+              %a.icon-plus.pull-right.add_new{id:"add_id",style:"margin-right:5px;"}
+
+
+.edit_form{style:"display:none;"}
+  %form.edit_application{"accept-charset" => "UTF-8", "data-remote" => "true", :method => "post"}
+    %table.table.table-bordered.table-app
+      %tr
+        %th Project
+        %td#id.show-and-edit-app
+          %select#application_project_name{:name => "application[project_id]"}
+      %tr
+        %th Product name
+        %td#product_name.show-and-edit-app
+          %input#application_product_name{:name => "application[product_name]", :size => "30", :type => "text"}
+      %tr
+        %th Bundle identifier
+        %td#bundle_identifier.show-and-edit-app
+          %input#application_bundle_identifier{:name => "application[bundle_identifier]", :size => "30", :type => "text"}
+      %tr
+        %th Bundle version
+        %td#bundle_version.show-and-edit-app
+          %input#application_bundle_version{:name => "application[bundle_version]", :size => "30", :type => "text"}
+      %tr
+        %th Relative path
+        %td#relative_path.show-and-edit-app
+          %input#application_relative_path.input-xlarge{:name => "application[relative_path]", :size => "30", :type => "text"}
+          .relative-variant
+          #handle_store_edit{:style => "display:none;"}
+      %tr
+        %th Title
+        %td#title.show-and-edit-app
+          %input#application_title{:name => "application[title]", :size => "30", :type => "text"}
+      %tr
+        %th Action
+        %td
+          %input.btn{:name => "commit", :type => "submit", :value => "Save"}

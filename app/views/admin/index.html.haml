@@ -55,3 +55,42 @@
     %ul{class:"admin-index-action"}
       %li= link_to "[Create new [project]", new_project_path
       %li= link_to "[Manage client list]", clients_path
+
+
+
+
+
+.form_for_index{style:"display:none;"}
+  %form.edit_application{"accept-charset" => "UTF-8", :action => "/admin/remote_update/'+id+'", "data-remote" => "true", :id => "edit_application_'+id+'", :method => "post"}
+    %table.table.table-bordered.table-app
+      %tr
+        %th Project
+        %td#id.show-and-edit-app
+          %select#application_project_name{:name => "application[project_id]"}
+      %tr
+        %th Product name
+        %td#product_name.show-and-edit-app
+          %input#application_product_name{:name => "application[product_name]", :size => "30", :type => "text", :value => "'+data.product_name+'"}
+      %tr
+        %th Bundle identifier
+        %td#bundle_identifier.show-and-edit-app
+          %input#application_bundle_identifier{:name => "application[bundle_identifier]", :size => "30", :type => "text", :value => "'+data.bundle_identifier+'"}
+      %tr
+        %th Bundle version
+        %td#bundle_version.show-and-edit-app
+          %input#application_bundle_version{:name => "application[bundle_version]", :size => "30", :type => "text", :value => "'+data.bundle_version+'"}
+      %tr
+        %th Relative path
+        %td#relative_path.show-and-edit-app
+          %input#application_relative_path.input-xlarge{:name => "application[relative_path]", :size => "30", :type => "text", :value => "'+data.relative_path+'"}
+          .relative-variant
+          #relative_store{:style => "display:none;"}
+          #handle_store_edit{:style => "display:none;"}
+      %tr
+        %th Title
+        %td#title.show-and-edit-app
+          %input#application_title{:name => "application[title]", :size => "30", :type => "text", :value => "'+data.title+'"}
+      %tr
+        %th Action
+        %td
+          %input.btn{:name => "commit", :type => "submit", :value => "Save"}

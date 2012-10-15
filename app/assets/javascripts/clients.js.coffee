@@ -6,9 +6,7 @@ $ ->
       "keyboard" : true,
       'show' : false
       )
-  
-    
-    
+ 
   $('#get-new-company').click ->
     $('#new-company').modal(show:true)
     $('#cname').val('')
@@ -132,15 +130,6 @@ $ ->
         handle_name = handle_val.substring(pos_slesh+1, handle_val.length)
 
         $('#client_handle').val(company+'/'+handle_name)
-        
-  
-  
-  
-  
-  
-  
-  
-  
         
   $('.btn-delete-client').live 'click': ->
 

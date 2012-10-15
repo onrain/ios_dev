@@ -11,41 +11,17 @@ $ ->
   
   append_html = (data) ->
     $('.index-content').empty()
-    insert_text = '
-      <table class="table table_no_bordered">
-        <div class="notice-app"></div>
-          <tr>
-            <th>ID</th>
-            <td>'+data.id+'</td>
-          </tr>
-          <tr>
-            <th>Product name</th>
-            <td class="show-and-edit-app" id="product_name">'+data.product_name+'</td>
-          </tr>
-          <tr>
-            <th>Bundle identifier</th>
-            <td class="show-and-edit-app" id="bundle_identifier">'+data.bundle_identifier+'</td>
-          </tr>
-          <tr>
-            <th>Bundle version</th>
-            <td class="show-and-edit-app" id="bundle_version">'+data.bundle_version+'</td>
-          </tr>
-          <tr>
-            <th>Relative path</th>
-            <td class="show-and-edit-app" id="relative_path">'+data.relative_path+'</td>
-          </tr>
-          <tr>
-            <th>Title</th>
-            <td class="show-and-edit-app" id="title">'+data.title+'</td>
-          </tr>
-          <tr>
-            <th>Action</th>
-            <td>
-              <a class="edit-link btn btn-small" id="'+data.id+'">Edit</a>
-            </td>
-          </tr>
-        </table>
-        '
+
+    insert_text = '<table class="table table-bordered table-app">'
+    insert_text += $div('', "class='notice-app'")
+    insert_text += $tr([$th('ID'), $td(data.id)])
+    insert_text += $tr([$th('Product name'), $td(data.product_name)], 'class="show-and-edit-app" id="product_name"')
+    insert_text += $tr([$th('Bundle identifier'), $td(data.bundle_identifier)], 'class="show-and-edit-app" id="bundle_identifier"')
+    insert_text += $tr([$th('Bundle version'), $td(data.bundle_version)], 'class="show-and-edit-app" id="bundle_version"')
+    insert_text += $tr([$th('Relative path'), $td(data.relative_path)], 'class="show-and-edit-app" id="relative_path"')
+    insert_text += $tr([$th('Title'), $td(data.title)], 'class="show-and-edit-app" id="title"')
+    insert_text += $tr([$th('Action'), $td([$link_to('Edit', null, 'id="'+data.id+'" class="edit-link btn btn-small"'), $link_to('Destroy', '/admin/applications/'+data.id+'?proj='+data.project_id, 'rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'"')])])
+    insert_text += '</table>'
   
   
   $('#application_bundle_identifier').live 'input': ->
@@ -107,72 +83,51 @@ $ ->
         $.get '/admin/applications?get=product&id='+id, (data) =>
           count = Object.keys(data).length
           i = 0
-          $(this).parent().parent().eq(0).after('
-          <tr class="tr_'+id+'">
-            <td colspan="5">
-            <table width="100%" class="table_no_border-left table_'+id+'">
+          content =
+            $tr([
+                $td([
+                  $table([
+                    $tr([
+                        $th('Application name')
+                        $th('ID')
+                        $th('Title')
+                        $th('Bundle version')
+                        $th('Bundle identifier')
+                        $th('Relative path')
+                        $th('Actions')
+                      ],'class="tr_'+id+'"')
+                    ],'width="100%" class="table_no_border-left table_'+id+'"')
+                  $table([
+                    $tr([
+                      $td([
+                        $link_to('','#','class="icon-plus pull-right add_new" id="'+id+'" style="margin-right:5px;"')
+                        ],'colspan="5" style="background-color: rgba(204,204,204, 0.3);"')
+                      ])
+                    ],'width="100%"')
+                  ], 'colspan="5"')
+              ], 'class="tr_'+id+'"')
             
-              <tr class="tr_'+id+'">
-                <th>Application name</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Bundle version</th>
-                <th>Bundle identifier</th>
-                <th>Relative path</th>
-                <th>Actions</th>    
-              </tr>
-              
-            </table>
-            <table width="100%">
-              <tr>
-                <td colspan="5" style="background-color: rgba(204,204,204, 0.3);">
-                  <a class="icon-plus pull-right add_new" id="'+id+'" style="margin-right:5px;"></a>
-                </td>
-              </tr>
-            </table>
-            </td>
-          </tr>
-            ')
+          $(this).parent().parent().eq(0).after(content)
 
-          while i < count 
-            $('.table_'+id+' tbody').append('
-              <tr>
-
-                <td id="app-name-td_'+data[i].id+'">
-                  <a id="'+data[i].id+'" class="prev-app">'+data[i].product_name+'</a>
-                </td>
-                
-                <td>
-                  '+data[i].id+'
-                </td>
-                
-                <td>
-                  '+data[i].title+'
-                </td>
-                
-                <td>
-                   '+data[i].bundle_version+'
-                </td>
-                
-                <td>
-                   '+data[i].bundle_identifier+'
-                </td>
-                
-                <td>
-                   '+data[i].relative_path+'
-                </td>
-                
-                <td width="50">
-                  <div class="app-panel pull-right">
-                    <div id="'+id+'" style="display:none;"></div>
-                    <a id="'+data[i].id+'"class="icon-pencil edit-link" href="#" style="color:black;"></a>&nbsp;
-                    <a rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_" href="/admin/applications/'+data[i].id+'?proj='+data[i].project_id+'"></a>&nbsp
-                    <a class="icon-retweet" style="color:black;" href="/admin/applications?meth=clone&id='+data[i].id+'" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"></a>
-                   </div>
-                </td>
-              </tr>
-
-              ')
+          while i < count
+            link = []
+            link[0] = $link_to('', '#', 'id="'+data[i].id+'" class="icon-pencil edit-link" style="color:black;"')
+            link[1] = $link_to('', '/admin/applications/'+data[i].id, 'rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_"')
+            link[2] = $link_to('', '/admin/applications?method=clone&id='+data[i].id, 'class="icon-retweet" style="color:black;" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"')
+            link = link.join(' ')
+            
+            content = []
+            content[i] = '<tr>'  
+            content[i] += $td($link_to(data[i].product_name, '#', 'id="'+data[i].id+'" class="prev-app"'))
+            content[i] += $td(data[i].id)
+            content[i] += $td(data[i].title)
+            content[i] += $td(data[i].bundle_version)
+            content[i] += $td(data[i].bundle_identifier)
+            content[i] += $td(data[i].relative_path)
+            content[i] += $td($div(link,'class="app-panel pull-right"'), "width='50'")
+            content[i] += "</tr>"
+            
+            $('.table_'+id+' tbody').append(content[i])
  
             
             if i+1 isnt count
@@ -191,55 +146,19 @@ $ ->
       $('#app-title').empty()
       $('#app-title').append('Application: '+data.product_name)
       $('.index-content').empty()
-      $('.index-content').append('
-       <form accept-charset="UTF-8" action="/admin/remote_update/'+id+'" data-remote="true" class="edit_application" id="edit_application_'+id+'" method="post">
-        <table class="table table-bordered table-app">
-            <tr>
-              <th>Project</th>
-              <td class="show-and-edit-app" id="id">
-                <select name="application[project_id]" id="application_project_name">
-                  
-                </select>
-             
-              
-              </td>
-            </tr>
-            <tr>
-              <th>Product name</th>
-              <td class="show-and-edit-app" id="product_name">
-                <input id="application_product_name" name="application[product_name]" size="30" type="text" value="'+data.product_name+'" />
-              </td>
-            </tr>
-            <tr>
-              <th>Bundle identifier</th>
-              <td class="show-and-edit-app" id="bundle_identifier"> <input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" value="'+data.bundle_identifier+'" /></td>
-            </tr>
-            <tr>
-              <th>Bundle version</th>
-              <td class="show-and-edit-app" id="bundle_version"> <input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="'+data.bundle_version+'" /></td>
-            </tr>
-            <tr>
-              <th>Relative path</th>
-              <td class="show-and-edit-app" id="relative_path">
-                <input id="application_relative_path"  class="input-xlarge" name="application[relative_path]" size="30" type="text" value="'+data.relative_path+'" />
-                <div class="relative-variant"></div>
-                <div id="relative_store" style="display:none;"></div>
-                <div id="handle_store_edit" style="display:none;"></div>
-              </td>
-            </tr>
-            <tr>
-              <th>Title</th>
-              <td class="show-and-edit-app" id="title"><input id="application_title" name="application[title]" size="30" type="text" value="'+data.title+'" /></td>
-            </tr>
-            <tr>
-              <th>Action</th>
-              <td>
-                <input class="btn" name="commit" type="submit" value="Save" />
-              </td>
-            </tr>
-        </table>
-      </form>
-        ')
+      $('.index-content').append(getChildren('.form_for_index'))
+      #inialize params
+      $('.edit_application').attr('action','/admin/remote_update/'+id)
+      $('.edit_application').attr('id', 'edit_application_'+id)
+      $('#application_product_name').val(data.product_name)
+      $('#application_bundle_identifier').val(data.bundle_identifier)
+      $('#application_bundle_version').val(data.bundle_version)
+      $('#application_relative_path').val(data.relative_path)
+      $('#application_title').val(data.title)
+      #end
+      
+      
+      
      
       $('#handle_store_edit').text($('input[id="application_relative_path"]').val())    
       
@@ -301,13 +220,7 @@ $ ->
             
       
       parent_el.append(
-        '<table style="margin: 0 auto; width:100%;" class="table table-bordered open-new-app">
-          <tr>
-            <td id="append_'+id+'">
-            </td>
-          </tr>
-        </table>'            
-      )
+        '<table style="margin: 0 auto; width:100%;" class="table table-bordered open-new-app"><tr><td id="append_'+id+'"></td></tr></table>')
       
       $('#append_'+id).append($('#proj_'+id).html())
       

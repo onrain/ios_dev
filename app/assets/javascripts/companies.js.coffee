@@ -58,34 +58,35 @@ $ ->
 
   append_html = (data) ->
     $('.clients-content').empty()
-    insert_text = '
-      <table class="table table-bordered table-app">
-        <div class="notice-client"></div>
-        <tr>
-          <th>ID</th>
-          <td>'+data.id+'</td>
-        </tr>     
-        <tr>
-          <th>Client name</th>
-          <td class="show-and-edit-app" id="client_name">'+data.name+'</td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td class="show-and-edit-app" id="client_email">'+data.email+'</td>
-        </tr>
-        <tr>
-          <th>Handle</th>
-          <td class="show-and-edit-app" id="client_handle">'+data.handle+'</td>
-        </tr>
-        <tr>
-          <th>Action</th>
-          <td>
-            <a id="edit_'+data.id+'"class="btn btn-small">Edit</a>
-            &nbsp;
-            <a rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'" href="/admin/clients/'+data.id+'">Destroy</a>
-          </td>
-        </tr>
-      </table>'
+    $table([
+      $div([
+        $tr([
+          $th('ID')
+          $td(data.id)
+        ])
+        $tr([
+          $th('Client name')
+          $td(data.name)
+        ], 'class="show-and-edit-app" id="client_name"')
+        $tr([
+          $th('Email')
+          $td(data.email)
+        ], 'class="show-and-edit-app" id="client_email"')
+        $tr([
+          $th('Handle')
+          $td(data.handle)
+        ], 'class="show-and-edit-app" id="client_handle"')
+        $tr([
+          $th('Action')
+          $td([
+            $link_to('Edit','#', 'id="edit_'+data.id+'" class="btn btn-small"')
+            $link_to('Destroy','/admin/clients/'+data.id,'rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'"')
+          ])
+        ])
+
+      ], 'class="notice-client"')
+    
+    ], 'class="table table-bordered table-app"')
 
   $('.prev-client').live 'click': ->
     $('.notice-app').empty()
@@ -105,40 +106,12 @@ $ ->
 
       $.get '/admin/clients?get=client&id='+id, (data) =>
         $('.clients-content').empty()
-        $('.clients-content').append('
-         <form accept-charset="UTF-8" action="/admin/client_remote_update/'+id+'" data-remote="true" class="edit_client" id="edit_client_'+id+'" method="post">
-          <table class="table table-bordered table-app">
-              <tr>
-                <th>Company ID</th>
-                <td class="show-and-edit-client" id="id">
-                  <!--<input id="client_company_id" name="client[company_id]" size="30" type="text" value="'+data.company_id+'" /> -->
-                  <select id="client_company_id" name="client[company_id]">
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <td class="show-and-edit-client" id="client_name"><input id="client_name" name="client[name]" size="30" type="text" value="'+data.name+'" /></td>
-              </tr>
-              <tr>
-                <th>Email</th>
-                <td class="show-and-edit-client" id="email"> <input id="client_email" name="client[email]" size="30" type="text" value="'+data.email+'" /></td>
-              </tr>
-              <tr>
-                <th>Handle name</th>
-                <td class="show-and-edit-client" id="handle"> <input id="client_handle" name="client[handle]" size="30" type="text" value="'+data.handle+'" />
-                <div class="handle-variant"></div>
-                </td>
-              </tr>
-              <tr>
-                <th>Action</th>
-                <td>
-                  <input class="btn save_btn" name="commit" type="submit" value="Save" />
-                </td>
-              </tr>
-          </table>
-        </form>
-          ')
+        $('.clients-content').append(getChildren('.form_edit_company'))
+        $('.edit_client').attr('action', '/admin/client_remote_update/'+id)
+        $('.edit_client').attr('id','edit_client_'+id)
+        $('input[id="client_name"]').val(data.name)
+        $('#client_email').val(data.email)
+        $('#client_handle').val(data.handle)
         
         $.get '/admin/companies.json', (company) =>
           $('#client_company_id').empty()
@@ -154,14 +127,14 @@ $ ->
 
 
         
-        $('form[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->
+        $('form[data-remote]').live "ajax:success", (evt, data, status, xhr) ->
           $('.clients-content').empty()
           $('.clients-content').append(append_html(data))
           $('.notice-client').append('<span class="icon-ok" style="color:green;"></span>&nbsp;<span style="color:green;" id="success-append">Cleint was success update!</span>')    
           $('.notice-client').mousemove ->
             $(this).empty()
   
-        $('form[data-remote]').bind "ajax:error", (event, data, status, xhr) ->
+        $('form[data-remote]').live "ajax:error", (event, data, status, xhr) ->
           $('.notice-client').empty()
           errors = $.parseJSON(data.responseText)
           if typeof(errors.name) isnt 'undefined'

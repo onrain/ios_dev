@@ -125,3 +125,38 @@
   .btn-group
     = link_to 'Edit', edit_project_path(proj), class:"btn"
     = link_to "Back", :back, class:"btn"
+
+    
+.edit_form{style:"display:none;"}
+  %form.edit_application{"accept-charset" => "UTF-8", "data-remote" => "true", :method => "post"}
+    %table.table.table-bordered.table-app
+      %tr
+        %th Project
+        %td#id.show-and-edit-app
+          %select#application_project_name{:name => "application[project_id]"}
+      %tr
+        %th Product name
+        %td#product_name.show-and-edit-app
+          %input#application_product_name{:name => "application[product_name]", :size => "30", :type => "text"}
+      %tr
+        %th Bundle identifier
+        %td#bundle_identifier.show-and-edit-app
+          %input#application_bundle_identifier{:name => "application[bundle_identifier]", :size => "30", :type => "text"}
+      %tr
+        %th Bundle version
+        %td#bundle_version.show-and-edit-app
+          %input#application_bundle_version{:name => "application[bundle_version]", :size => "30", :type => "text"}
+      %tr
+        %th Relative path
+        %td#relative_path.show-and-edit-app
+          %input#application_relative_path.input-xlarge{:name => "application[relative_path]", :size => "30", :type => "text"}
+          .relative-variant
+          #handle_store_edit{:style => "display:none;"}
+      %tr
+        %th Title
+        %td#title.show-and-edit-app
+          %input#application_title{:name => "application[title]", :size => "30", :type => "text"}
+      %tr
+        %th Action
+        %td
+          %input.btn{:name => "commit", :type => "submit", :value => "Save"}
