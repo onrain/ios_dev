@@ -3,6 +3,7 @@ class AdminController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
+  caches_page :index, :gzip => :best_speed
 
   def index  
     project_size = Project.all.size

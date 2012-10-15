@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>iOSmanager</title>
+    <!-- = stylesheet_link_tag "application", :media => "all" -->
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="NwmDicgE6yn/NRUobTt0SEu/oHVkKxs4DqmYITOj66c=" name="csrf-token" />
+    <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+    <script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-transition.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-alert.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-modal.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-dropdown.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-scrollspy.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-tab.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-tooltip.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-popover.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-button.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-collapse.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-carousel.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-typeahead.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-affix.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap.js?body=1" type="text/javascript"></script>
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
+    <link href="/assets/bootstrap_and_overrides.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+    
+  </head>
+  <body>
+    <link href="/assets/scaffolds.css?body=1" media="all" rel="stylesheet" type="text/css" />
+    <link href="/assets/admin.css?body=1" media="all" rel="stylesheet" type="text/css" />
+    <div class='navbar'>
+      <div class='navbar-inner'>
+        <a href="/admin" class="brand">Home</a>
+        <ul class='nav'>
+          <li id='clients-nav'>
+            <a href="/admin/clients">Clients</a>
+          </li>
+          <li id='company-nav'>
+            <a href="/admin/companies">Companies</a>
+          </li>
+          <li id='manager-nav'>
+            <a href="/admin/managers">Managers</a>
+          </li>
+          <li id='developers-nav'>
+            <a href="/admin/developers">Developers</a>
+          </li>
+          <li id='projects-nav'>
+            <a href="/admin/projects">Projects</a>
+          </li>
+          <li><a href="/admins/sign_out" data-method="delete" id="sign_out" rel="nofollow">Logout</a></li>
+        </ul>
+        <div class='pull-right' style='color:#9C9C9C; margin-top:10px; text-shadow: white 0.5px 1px 0.5px'>
+          Signed in as:
+          admin@admin.com
+          <a href="/admins/edit">edit account</a>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/admin.js?body=1" type="text/javascript"></script>
+    <div class='modal hide fade' id='app-list'>
+      <div class='modal-header'>
+        <button class='close' data-dismiss='modal'>
+          ×
+        </button>
+        <h4 id='app-title'></h4>
+      </div>
+      <div class='modal-body'>
+        <div class='index-content'></div>
+      </div>
+    </div>
+    <table class='table table-bordered' style='width:800px; margin: 0 auto;'>
+      <tr>
+        <th style='width:10px !important; background-color: rgba(204,204,204,0.7);'></th>
+        <th><a href="/admin?direction=asc&amp;sort=id" class="sort" id="id">ID</a></th>
+        <th><a href="/admin?direction=asc&amp;sort=name" class="sort" id="name">Project name</a></th>
+        <th><a href="/admin?direction=asc&amp;sort=client_name" class="sort" id="client_name">Client name</a></th>
+        <th>Handle name</th>
+      </tr>
+      <tr id='parent_2'>
+        <td>
+          <div class='icon-play get-list-applications' id='2'></div>
+        </td>
+        <td><a href="/admin/projects/2">2</a></td>
+        <td><a href="/admin/projects/2">sunrise</a></td>
+        <td><a href='/admin/clients/97'>Sergey Slavin</a></td>
+        <td id='project_handle_2'>heavyrainltd/sergey.slavin/sunrise</td>
+        <td class='new_app_form' id='proj_2' style='display:none;'>
+          <div class='notice-admin'></div>
+          <form accept-charset="UTF-8" action="/admin/applications" class="new_application" data-remote="true" id="new_application" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="NwmDicgE6yn/NRUobTt0SEu/oHVkKxs4DqmYITOj66c=" /></div>
+                <table class='table table-bordered'>
+                  <div class='store' style='display:none;'></div>
+                  <input id="application_project_id" name="application[project_id]" type="hidden" value="2" />
+                  <tr>
+                    <td><label for="application_product_name">Product name</label></td>
+                    <td>
+                      <input id="application_product_name" name="application[product_name]" size="30" type="text" />
+                      <div class='2' id='handle_id_store' style='display:none;'></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_bundle_identifier">Bundle identifier</label></td>
+                    <td><input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_bundle_version">Bundle version</label></td>
+                    <td><input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="1.0" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_relative_path">Relative path</label></td>
+                    <td>
+                      <input class="input-xlarge" id="application_relative_path" name="application[relative_path]" size="30" type="text" />
+                      <div class='relative-variant'></div>
+                      <div id='relative_store' style='display:none;'></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_title">Title</label></td>
+                    <td><input id="application_title" name="application[title]" size="30" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td colspan='2'><input class="btn" id="save-new-app" name="commit" type="submit" value="Save" /></td>
+                  </tr>
+                </table>
+          </form>
+        </td>
+      </tr>
+      <tr id='parent_1'>
+        <td>
+          <div class='icon-play get-list-applications' id='1'></div>
+        </td>
+        <td><a href="/admin/projects/1">1</a></td>
+        <td><a href="/admin/projects/1">test</a></td>
+        <td><a href='/admin/clients/97'>Sergey Slavin</a></td>
+        <td id='project_handle_1'>heavyrainltd/sergey.slavin/test</td>
+        <td class='new_app_form' id='proj_1' style='display:none;'>
+          <div class='notice-admin'></div>
+          <form accept-charset="UTF-8" action="/admin/applications" class="new_application" data-remote="true" id="new_application" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="NwmDicgE6yn/NRUobTt0SEu/oHVkKxs4DqmYITOj66c=" /></div>
+                <table class='table table-bordered'>
+                  <div class='store' style='display:none;'></div>
+                  <input id="application_project_id" name="application[project_id]" type="hidden" value="1" />
+                  <tr>
+                    <td><label for="application_product_name">Product name</label></td>
+                    <td>
+                      <input id="application_product_name" name="application[product_name]" size="30" type="text" />
+                      <div class='1' id='handle_id_store' style='display:none;'></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_bundle_identifier">Bundle identifier</label></td>
+                    <td><input id="application_bundle_identifier" name="application[bundle_identifier]" size="30" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_bundle_version">Bundle version</label></td>
+                    <td><input id="application_bundle_version" name="application[bundle_version]" size="30" type="text" value="1.0" /></td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_relative_path">Relative path</label></td>
+                    <td>
+                      <input class="input-xlarge" id="application_relative_path" name="application[relative_path]" size="30" type="text" />
+                      <div class='relative-variant'></div>
+                      <div id='relative_store' style='display:none;'></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label for="application_title">Title</label></td>
+                    <td><input id="application_title" name="application[title]" size="30" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td colspan='2'><input class="btn" id="save-new-app" name="commit" type="submit" value="Save" /></td>
+                  </tr>
+                </table>
+          </form>
+        </td>
+      </tr>
+    </table>
+    <div class='form_for_index' style='display:none;'>
+      <form accept-charset='UTF-8' action="/admin/remote_update/'+id+'" class='edit_application' data-remote='true' id="edit_application_'+id+'" method='post'>
+        <table class='table table-bordered table-app'>
+          <tr>
+            <th>Project</th>
+            <td class='show-and-edit-app' id='id'>
+              <select id='application_project_name' name='application[project_id]'></select>
+            </td>
+          </tr>
+          <tr>
+            <th>Product name</th>
+            <td class='show-and-edit-app' id='product_name'>
+              <input id='application_product_name' name='application[product_name]' size='30' type='text' value="'+data.product_name+'">
+            </td>
+          </tr>
+          <tr>
+            <th>Bundle identifier</th>
+            <td class='show-and-edit-app' id='bundle_identifier'>
+              <input id='application_bundle_identifier' name='application[bundle_identifier]' size='30' type='text' value="'+data.bundle_identifier+'">
+            </td>
+          </tr>
+          <tr>
+            <th>Bundle version</th>
+            <td class='show-and-edit-app' id='bundle_version'>
+              <input id='application_bundle_version' name='application[bundle_version]' size='30' type='text' value="'+data.bundle_version+'">
+            </td>
+          </tr>
+          <tr>
+            <th>Relative path</th>
+            <td class='show-and-edit-app' id='relative_path'>
+              <input class='input-xlarge' id='application_relative_path' name='application[relative_path]' size='30' type='text' value="'+data.relative_path+'">
+              <div class='relative-variant'></div>
+              <div id='relative_store' style='display:none;'></div>
+              <div id='handle_store_edit' style='display:none;'></div>
+            </td>
+          </tr>
+          <tr>
+            <th>Title</th>
+            <td class='show-and-edit-app' id='title'>
+              <input id='application_title' name='application[title]' size='30' type='text' value="'+data.title+'">
+            </td>
+          </tr>
+          <tr>
+            <th>Action</th>
+            <td>
+              <input class='btn' name='commit' type='submit' value='Save'>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

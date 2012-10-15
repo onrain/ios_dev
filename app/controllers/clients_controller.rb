@@ -3,10 +3,9 @@ class ClientsController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-
+  caches_page :index, :gzip => :best_speed
 
   def index
-
     get_notice(params[:notice], 'Clients was successfully create.', 'Clients was successfully updated.')
 
     return (render json: Client.find(params[:handle])) unless params[:handle].blank?

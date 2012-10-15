@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>iOSmanager</title>
+    <!-- = stylesheet_link_tag "application", :media => "all" -->
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="NwmDicgE6yn/NRUobTt0SEu/oHVkKxs4DqmYITOj66c=" name="csrf-token" />
+    <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+    <script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-transition.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-alert.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-modal.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-dropdown.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-scrollspy.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-tab.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-tooltip.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-popover.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-button.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-collapse.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-carousel.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-typeahead.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap/bootstrap-affix.js?body=1" type="text/javascript"></script>
+    <script src="/assets/twitter/bootstrap.js?body=1" type="text/javascript"></script>
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
+    <link href="/assets/bootstrap_and_overrides.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/assets/developers.js?body=1" type="text/javascript"></script>
+  </head>
+  <body>
+    <link href="/assets/scaffolds.css?body=1" media="all" rel="stylesheet" type="text/css" />
+    <link href="/assets/admin.css?body=1" media="all" rel="stylesheet" type="text/css" />
+    <div class='navbar'>
+      <div class='navbar-inner'>
+        <a href="/admin" class="brand">Home</a>
+        <ul class='nav'>
+          <li id='clients-nav'>
+            <a href="/admin/clients">Clients</a>
+          </li>
+          <li id='company-nav'>
+            <a href="/admin/companies">Companies</a>
+          </li>
+          <li id='manager-nav'>
+            <a href="/admin/managers">Managers</a>
+          </li>
+          <li id='developers-nav'>
+            <a href="/admin/developers">Developers</a>
+          </li>
+          <li id='projects-nav'>
+            <a href="/admin/projects">Projects</a>
+          </li>
+          <li><a href="/admins/sign_out" data-method="delete" id="sign_out" rel="nofollow">Logout</a></li>
+        </ul>
+        <div class='pull-right' style='color:#9C9C9C; margin-top:10px; text-shadow: white 0.5px 1px 0.5px'>
+          Signed in as:
+          admin@admin.com
+          <a href="/admins/edit">edit account</a>
+        </div>
+      </div>
+    </div>
+    
+    <div align='center' class='well well-small' style='width:980px; margin: 0 auto;'>
+      <h4>Listing developers</h4>
+      <a href="/admin/developers/new" class="btn">New Developer</a>
+    </div>
+    <table class='table table-bordered' style='width:1000px; margin: 0 auto;'>
+      <tr>
+        <th><a href="/admin/developers?direction=asc&amp;sort=id" class="sort" id="id">ID</a></th>
+        <th><a href="/admin/developers?direction=asc&amp;sort=name" class="sort" id="name">Name</a></th>
+        <th><a href="/admin/developers?direction=asc&amp;sort=manager" class="sort" id="manager">Manager</a></th>
+        <th><a href="/admin/developers?direction=asc&amp;sort=email" class="sort" id="email">Email</a></th>
+        <th><a href="/admin/developers?direction=asc&amp;sort=personal_email" class="sort" id="personal_email">Personal email</a></th>
+        <th><a href="/admin/developers?direction=asc&amp;sort=created_at" class="sort" id="created_at">Date create</a></th>
+        <th><a href="/admin/developers?direction=asc&amp;sort=updated_at" class="sort" id="updated_at">Last update</a></th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td><a href="/admin/developers/1">1</a></td>
+        <td>Dmitriy Gavrilov</td>
+        <td><a href='/admin/managers/62'>Karpov Alexandr</a></td>
+        <td>dmitriy@gmail.com</td>
+        <td>dmitriy@gmail.com</td>
+        <td>October 09, 2012 at 13:13</td>
+        <td>October 09, 2012 at 13:13</td>
+        <td>
+          <div class='btn-group'>
+            <a href="/admin/developers/1" class="btn">Show</a>
+            <button class='btn dropdown-toggle' data-toggle='dropdown'>
+              <span class='caret'></span>
+            </button>
+            <ul class='dropdown-menu'>
+              <li><a href="/admin/developers/1">Show</a></li>
+              <li><a href="/admin/developers/1/edit">Edit</a></li>
+              <li><a href="/admin/developers/1" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Destroy</a></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div style='display:table; margin:0 auto;'>
+      <p>
+        
+      </p>
+    </div>
+  </body>
+</html>

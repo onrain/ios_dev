@@ -3,7 +3,7 @@ class DevelopersController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-
+  caches_page :index, :gzip => :best_speed
   
   def index
     @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
@@ -17,7 +17,7 @@ class DevelopersController < ApplicationController
 
 
   def show
-    respond_with @developer = Developer.find(params[:id]).manager.select('name as manager_name')
+    respond_with @developer = Developer.get_dev_list_where_id(params[:id])
   end
 
   def new
