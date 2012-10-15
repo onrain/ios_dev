@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-  caches_page :index, :gzip => :best_speed
+  caches_action :index, :layout => false, :gzip => :best_speed
 
   def index
     get_notice(params[:notice], 'Clients was successfully create.', 'Clients was successfully updated.')

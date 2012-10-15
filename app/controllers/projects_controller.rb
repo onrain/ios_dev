@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-  caches_page :index, :gzip => :best_speed
+  caches_action :show, :layout => false, :gzip => :best_speed
 
   def index
 
