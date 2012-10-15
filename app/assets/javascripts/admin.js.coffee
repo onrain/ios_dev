@@ -11,17 +11,16 @@ $ ->
   
   append_html = (data) ->
     $('.index-content').empty()
-
-    insert_text = '<table class="table table-bordered table-app">'
-    insert_text += $div('', "class='notice-app'")
-    insert_text += $tr([$th('ID'), $td(data.id)])
-    insert_text += $tr([$th('Product name'), $td(data.product_name)], 'class="show-and-edit-app" id="product_name"')
-    insert_text += $tr([$th('Bundle identifier'), $td(data.bundle_identifier)], 'class="show-and-edit-app" id="bundle_identifier"')
-    insert_text += $tr([$th('Bundle version'), $td(data.bundle_version)], 'class="show-and-edit-app" id="bundle_version"')
-    insert_text += $tr([$th('Relative path'), $td(data.relative_path)], 'class="show-and-edit-app" id="relative_path"')
-    insert_text += $tr([$th('Title'), $td(data.title)], 'class="show-and-edit-app" id="title"')
-    insert_text += $tr([$th('Action'), $td([$link_to('Edit', null, 'id="'+data.id+'" class="edit-link btn btn-small"'), $link_to('Destroy', '/admin/applications/'+data.id+'?proj='+data.project_id, 'rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'"')])])
-    insert_text += '</table>'
+    insert_text = $table([
+      $div('', "class='notice-app'")
+      $tr([$th('ID'), $td(data.id)])
+      $tr([$th('Product name'), $td(data.product_name)], 'class="show-and-edit-app" id="product_name"')
+      $tr([$th('Bundle identifier'), $td(data.bundle_identifier)], 'class="show-and-edit-app" id="bundle_identifier"')
+      $tr([$th('Bundle version'), $td(data.bundle_version)], 'class="show-and-edit-app" id="bundle_version"')
+      $tr([$th('Relative path'), $td(data.relative_path)], 'class="show-and-edit-app" id="relative_path"')
+      $tr([$th('Title'), $td(data.title)], 'class="show-and-edit-app" id="title"')
+      $tr([$th('Action'), $td([$link_to('Edit', null, 'id="'+data.id+'" class="edit-link btn btn-small"'), $link_to('Destroy', '/admin/applications/'+data.id+'?proj='+data.project_id, 'rel="nofollow" data-method="delete" data-remote="true" class="btn btn-small" data-confirm="Are you sure?" id="delete_'+data.id+'"')])])
+    ], 'class="table table-bordered table-app"')
   
   
   $('#application_bundle_identifier').live 'input': ->
