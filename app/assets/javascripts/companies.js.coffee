@@ -252,7 +252,7 @@ $ ->
         if typeof(data['application']) isnt 'undefined'
           text += "\nApplication: "
           while k < application_length
-            text += data['application'][k][0].product_name
+            text += data['application'][k]
             text += ", " if k+1 isnt application_length
             k++
 

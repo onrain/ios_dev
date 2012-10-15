@@ -26,7 +26,9 @@ class CompaniesController < ApplicationController
         company_details['project'] << project unless project.empty?
         for proj in project
           application = Application.where('project_id = ?', proj).select('product_name')
-          company_details['application'] << application unless application.empty?
+          for app in application
+            company_details['application'] << app.product_name
+          end
         end
       end
 

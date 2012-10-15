@@ -17,7 +17,7 @@ class DevelopersController < ApplicationController
 
 
   def show
-    respond_with @developer = Developer.get_dev_list_where_id(params[:id])
+    respond_with @developer = Developer.find(params[:id]).manager.select('name as manager_name')
   end
 
   def new

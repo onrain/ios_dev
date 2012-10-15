@@ -116,15 +116,15 @@ $ ->
             link = link.join(' ')
             
             content = []
-            content[i] = '<tr>'  
-            content[i] += $td($link_to(data[i].product_name, '#', 'id="'+data[i].id+'" class="prev-app"'))
-            content[i] += $td(data[i].id)
-            content[i] += $td(data[i].title)
-            content[i] += $td(data[i].bundle_version)
-            content[i] += $td(data[i].bundle_identifier)
-            content[i] += $td(data[i].relative_path)
-            content[i] += $td($div(link,'class="app-panel pull-right"'), "width='50'")
-            content[i] += "</tr>"
+            content[i] = $tr([ 
+              $td($link_to(data[i].product_name, '#', 'id="'+data[i].id+'" class="prev-app"'))
+              $td(data[i].id)
+              $td(data[i].title)
+              $td(data[i].bundle_version)
+              $td(data[i].bundle_identifier)
+              $td(data[i].relative_path)
+              $td($div(link,'class="app-panel pull-right"'), "width='50'")
+            ])
             
             $('.table_'+id+' tbody').append(content[i])
  
