@@ -4,7 +4,14 @@ class Developer < ActiveRecord::Base
   validates :manager, presence:true
   has_and_belongs_to_many :projects
   belongs_to :manager
-  
+  validates :personal_email, :presence => true, 
+                    :length => {:minimum => 3, :maximum => 254},
+                    :uniqueness => true,
+                    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
+  validates :email, :presence => true, 
+                    :length => {:minimum => 3, :maximum => 254},
+                    :uniqueness => true,
+                    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
 
   scope :get_dev_list,
      select:"managers.name as manager_name, developers.*",

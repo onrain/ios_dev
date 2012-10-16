@@ -468,7 +468,7 @@ $ ->
   
   
   
-  $('.add-on').live 'click': ->
+  $('.add-on').click ->
 
     $('#append-clients').empty()
     $('#append-clients').append($('.client_list').html())
