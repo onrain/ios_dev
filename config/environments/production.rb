@@ -16,7 +16,7 @@ IOSmanager::Application.configure do
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   
-  config.assets.initialize_on_precompile = false
+  #config.assets.initialize_on_precompile = false
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
