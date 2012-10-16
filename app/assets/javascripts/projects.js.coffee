@@ -651,7 +651,7 @@ $ ->
   
   path = window.location.pathname;
   get_all_dev = ->
-    alert 2
+
     id = $('#project_manager_id option:selected').val()
     if typeof(id) isnt 'undefined'
       $.get '/admin/developers?manager_id='+id, (data) =>
@@ -671,7 +671,7 @@ $ ->
           $('.select_box_developers').empty()
           $('.select_box_developers').append('Deverlopers not found!')
           
-    else return true
+    else return false
       
   setTimeout get_all_dev, 300
         
@@ -680,6 +680,7 @@ $ ->
     id = $(@).val()
     if id is ''
       $('.select_box_developers').empty()
+      $('.select_box_developers').append('Deverlopers not found!')
     else
       $.get '/admin/developers?manager_id='+id, (data) =>
         count = Object.keys(data).length
@@ -689,9 +690,11 @@ $ ->
           while i < count
             $('.select_box_developers').append('<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;"><span>'+data[i].name+'</span><input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'"></span>')  
             i++
-        else
-          $('.select_box_developers').empty()
-          $('.select_box_developers').append('Deverlopers not found!')
+        else return 0
+          
+          
+          
+          
   $('.select_box_developers input[type="checkbox"]').click ->
     val_dev = $(@).val()
     unless $(@).attr('checked')
