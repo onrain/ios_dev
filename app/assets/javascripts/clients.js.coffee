@@ -143,7 +143,7 @@ $ ->
 
         proj_len = data['project'].length
         app_len = data['application'].length if typeof(data['application']) isnt 'undefined'
-        text = "Do you really want delete this client? \n"
+        text = "With this client will be deleted: \n"
         text += "Projects: "
         while j<proj_len
           text += data['project'][j]

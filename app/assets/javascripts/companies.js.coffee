@@ -237,7 +237,7 @@ $ ->
       application_length = data['application'].length if typeof(data['application']) isnt 'undefined'
       i=0;j=0;k=0
       if client_length > 0
-        text = "Do you really want delete this company? \n"
+        text = "With this company will be deleted: \n"
         text += "Clients: "
         while i<client_length
           text += data['clients'][0][i].name

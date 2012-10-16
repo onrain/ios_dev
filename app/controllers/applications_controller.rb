@@ -58,6 +58,19 @@ class ApplicationsController < ApplicationController
 
     respond_with(@application) do |format|
       if @application.save
+        bundle_ident = params[:application][:bundle_identifier]
+        project_version = params[:application][:bundle_version]
+        
+        Dir.mkdir("#{Rails.public_path}/#{bundle_ident}", 0700) unless File.directory?("#{Rails.public_path}/#{bundle_ident}")
+        Dir.mkdir("#{Rails.public_path}/#{bundle_ident}/#{project_version}", 0700) unless File.directory?("#{Rails.public_path}/#{bundle_ident}/#{project_version}")
+
+        File.open("#{Rails.public_path}/#{bundle_ident}/#{project_version}/readme.txt", 'w')do |file|
+          file.write "Project mame: #{params[:product_name]} \n"
+          file.write "Bundle identifier: #{bundle_ident} \n"
+          file.write "Bundle version: #{project_version}"
+        end
+
+
         proj_id = params[:application][:project_id]
         format.html { redirect_to applications_path+'?n=created' }
         format.json { render json: Application.where(project_id:proj_id), status: :created, location: @application }
@@ -104,6 +117,16 @@ private
     app.title += " copy"
     app.product_name += " copy"
     app.relative_path += " copy"
+    version = app.bundle_version.to_i + 0.1
+    app.bundle_version = version.to_s
+    Dir.mkdir("#{Rails.public_path}/#{app.bundle_identifier}", 0700) unless File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
+    Dir.mkdir("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}", 0700) unless File.directory?("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
+
+    File.open("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}/readme.txt", 'w')do |file|
+      file.write "Project mame: #{app.product_name} \n"
+      file.write "Bundle identifier: #{app.bundle_identifier} \n"
+      file.write "Bundle version: #{app.bundle_version}"
+    end
     clone_app = Application.create(app.attributes)
   end
 
