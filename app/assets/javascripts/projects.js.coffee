@@ -445,12 +445,19 @@ $ ->
     $('div[id*="handle"]').click ->
       $('#project_handle').val('')
       store = $('#client-handle').text().replace(/\s+/g,'')
+      if store is ''
+        project_handle = $('#store_handle_without_client').text().toLowerCase().replace(/\s+/g,'')
+        pos_last_slash = project_handle.lastIndexOf('/')
+        store = project_handle.substring(0, pos_last_slash)
       store = store+'/'+$(this).text().toLowerCase().replace(/\s+/g,'')
       $('#project_handle').val(store)
   
   
   path_name = window.location.pathname
   if (/edit/).test(path_name)
+    $('#store_handle_without_client').text($('#project_handle').val().replace(/\s+/g,''))
+        
+    
     name = $('#autocomplete-client').val()
     if name isnt ''
       id = $('#project_client_id:contains("'+name+'")').val()
@@ -655,8 +662,8 @@ $ ->
             $('.select_box_developers').append('<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;"><span>'+data[i].name+'</span><input type="checkbox" id="check_'+data[i].id+'" value="'+data[i].id+'"></span>')  
             i++
           $('.select_box_developers input[type="checkbox"]').click ->
-            val_dev = $(this).val()
-            unless $(this).attr('checked')
+            val_dev = $(@).val()
+            unless $(@).attr('checked')
               $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
             else
               $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
@@ -670,7 +677,7 @@ $ ->
         
         
   $('#project_manager_id option').click ->
-    id = $(this).val()
+    id = $(@).val()
     if id is ''
       $('.select_box_developers').empty()
     else
@@ -686,8 +693,8 @@ $ ->
           $('.select_box_developers').empty()
           $('.select_box_developers').append('Deverlopers not found!')
   $('.select_box_developers input[type="checkbox"]').click ->
-    val_dev = $(this).val()
-    unless $(this).attr('checked')
+    val_dev = $(@).val()
+    unless $(@).attr('checked')
       $('.dev_point input[value="'+val_dev+'"]').attr('checked',false)
     else
       $('.dev_point input[value="'+val_dev+'"]').attr('checked',true)
