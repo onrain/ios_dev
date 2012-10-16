@@ -651,9 +651,9 @@ $ ->
   
   path = window.location.pathname;
   get_all_dev = ->
+    alert 2
     id = $('#project_manager_id option:selected').val()
     if typeof(id) isnt 'undefined'
-
       $.get '/admin/developers?manager_id='+id, (data) =>
         count = Object.keys(data).length
         i = 0
