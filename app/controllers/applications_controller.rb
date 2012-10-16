@@ -3,7 +3,7 @@ class ApplicationsController < ApplicationController
   include ApplicationHelper
   helper_method :sort_column, :sort_direction
   before_filter :authenticate_admin!
-  
+
   def index
     
     get_notice(params[:notice], 'Applications was successfully create.', 'Applications was successfully updated.')
@@ -65,7 +65,7 @@ class ApplicationsController < ApplicationController
         Dir.mkdir("#{Rails.public_path}/#{bundle_ident}/#{project_version}", 0700) unless File.directory?("#{Rails.public_path}/#{bundle_ident}/#{project_version}")
 
         File.open("#{Rails.public_path}/#{bundle_ident}/#{project_version}/readme.txt", 'w')do |file|
-          file.write "Project mame: #{params[:product_name]} \n"
+          file.write "Product mame: #{params[:application][:product_name]} \n"
           file.write "Bundle identifier: #{bundle_ident} \n"
           file.write "Bundle version: #{project_version}"
         end
@@ -99,8 +99,15 @@ class ApplicationsController < ApplicationController
 
   def destroy
     @application = Application.find(params[:id])
-    @application.destroy
 
+    if Dir["#{Rails.public_path}/#{@application.bundle_identifier}/*"].size.eql? 1
+      FileUtils.rm_rf("#{Rails.public_path}/#{@application.bundle_identifier}")
+      Dir.delete("#{Rails.public_path}/#{@application.bundle_identifier}")
+    else
+      FileUtils.rm_rf("#{Rails.public_path}/#{@application.bundle_identifier}/#{@application.bundle_version}")
+    end
+
+    @application.destroy
     respond_with(@application) do |format|
       format.html { redirect_to applications_url }
       format.json { render json: [status:'deleted'] }
@@ -123,7 +130,7 @@ private
     Dir.mkdir("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}", 0700) unless File.directory?("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
 
     File.open("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}/readme.txt", 'w')do |file|
-      file.write "Project mame: #{app.product_name} \n"
+      file.write "Product mame: #{app.product_name} \n"
       file.write "Bundle identifier: #{app.bundle_identifier} \n"
       file.write "Bundle version: #{app.bundle_version}"
     end
