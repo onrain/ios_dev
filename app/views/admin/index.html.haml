@@ -64,7 +64,7 @@
 
 
 .form_for_index{style:"display:none;"}
-  %form.edit_application{"accept-charset" => "UTF-8", :action => "/admin/remote_update/'+id+'", "data-remote" => "true", :id => "edit_application_'+id+'", :method => "post"}
+  %form.edit_application{"accept-charset" => "UTF-8", "data-remote" => "true", :id => "edit_application_'+id+'", :method => "post"}
     %table.table.table-bordered.table-app
       %tr
         %th Project

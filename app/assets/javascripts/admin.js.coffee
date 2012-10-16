@@ -138,10 +138,8 @@ $ ->
   $('.edit-link').live 'click': ->
     id = $(this).attr('id')
     $('#app-list').modal('show':true)
-    $.get '/admin/projects?project_id='+id, (data) =>
-      $('#relative_store').text(data.handle) 
+
       
-    h_id = $(this).parent().children().eq(0).attr('id') 
     $.get '/admin/applications?get=app&id='+id, (data) =>
                          
       $('#app-title').empty()
