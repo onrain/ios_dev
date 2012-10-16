@@ -89,7 +89,6 @@ ActiveRecord::Schema.define(:version => 20121009121806) do
     t.integer  "client_id"
     t.integer  "manager_id"
     t.string   "name"
-    t.string   "svn"
     t.string   "handle"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

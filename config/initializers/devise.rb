@@ -3,10 +3,6 @@ Devise::TRUE_VALUES << ["on"]
 
 
 
-
-
-
-
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
