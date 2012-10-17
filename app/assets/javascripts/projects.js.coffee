@@ -340,6 +340,10 @@ $ ->
     $('input[id="application_product_name"]').val('')
     parent_el = $(this).parent().parent().parent().parent()
     
+    $('input').removeClass('error_proj')
+    $('#application_title').val('')
+    $('#application_name').val('')
+    
     if parent_el.children().eq(1).length isnt 0
       parent_el.children().eq(1).remove()
 

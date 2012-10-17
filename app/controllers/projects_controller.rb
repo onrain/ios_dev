@@ -46,7 +46,6 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(params[:project])
-    puts params[:project][:developer_ids]
     respond_with(@project) do |format|
       if @project.save
         format.html { redirect_to projects_path+'?notice=updated'}
@@ -77,6 +76,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
+    delete_application_folder_relation @project.applications
     @project.applications.delete_all unless @project.applications.size.eql? 0 
     @project.destroy
     redirect_to projects_url
