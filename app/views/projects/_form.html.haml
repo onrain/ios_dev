@@ -58,8 +58,7 @@
                 var developer = #{res};
                 for(var i = 0; i<developer.length; i++)
                 {
-                  $('#check_'+developer[i]).attr('checked', true);
-                  alert(developer[i]);
+                  $('input[id="check_'+developer[i]+'"]').attr('checked', true);
                 }
               }, 400);
               }
