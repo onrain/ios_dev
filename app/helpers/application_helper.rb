@@ -91,5 +91,14 @@ module ApplicationHelper
   end
 
 
+  def delete_application_folder(app)
+    public_dir_size = Dir["#{Rails.public_path}/#{app.bundle_identifier}/*"].size
+    if public_dir_size.eql? 1
+      FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}")
+      #Dir.delete("#{Rails.public_path}/#{app.bundle_identifier}")
+    elsif public_dir_size > 1
+      FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
+    end
+  end
 
 end

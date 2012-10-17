@@ -99,13 +99,8 @@ class ApplicationsController < ApplicationController
 
   def destroy
     @application = Application.find(params[:id])
-
-    if Dir["#{Rails.public_path}/#{@application.bundle_identifier}/*"].size.eql? 1
-      FileUtils.rm_rf("#{Rails.public_path}/#{@application.bundle_identifier}")
-      Dir.delete("#{Rails.public_path}/#{@application.bundle_identifier}")
-    else
-      FileUtils.rm_rf("#{Rails.public_path}/#{@application.bundle_identifier}/#{@application.bundle_version}")
-    end
+    #helper method
+    delete_application_folder @application
 
     @application.destroy
     respond_with(@application) do |format|
@@ -124,7 +119,12 @@ private
     app.title += " copy"
     app.product_name += " copy"
     app.relative_path += " copy"
-    version = app.bundle_version.to_i + 0.1
+
+    v = Application.where("bundle_identifier = ?",app.bundle_identifier).maximum('bundle_version')
+
+    version = v.to_f + 0.1
+
+    version = (version*1000).floor / 1000.0
     app.bundle_version = version.to_s
     Dir.mkdir("#{Rails.public_path}/#{app.bundle_identifier}", 0700) unless File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
     Dir.mkdir("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}", 0700) unless File.directory?("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
