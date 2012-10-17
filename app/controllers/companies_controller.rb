@@ -11,9 +11,6 @@ class CompaniesController < ApplicationController
 
     @companies = Company.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
     
-
-
-
 		unless params[:type].blank?
       company_details = Hash.new { |hash, key| hash[key] = [] }
       clients = Client.where('company_id = ?',params[:id]).select('name, id')
@@ -110,6 +107,7 @@ class CompaniesController < ApplicationController
       for p in project
         application = Application.find_all_by_project_id(p)
         for app in application
+          delete_application_folder app
           Application.delete(app.id)
         end
       end

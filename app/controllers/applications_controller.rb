@@ -118,7 +118,7 @@ private
     app.id = max_id.to_s
     app.title += " copy"
     app.product_name += " copy"
-    app.relative_path += " copy"
+    app.relative_path += "/copy/"
 
     v = Application.where("bundle_identifier = ?",app.bundle_identifier).maximum('bundle_version')
 

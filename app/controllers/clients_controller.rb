@@ -119,6 +119,7 @@ class ClientsController < ApplicationController
     for p in project
       application = Application.find_all_by_project_id(p.id)
       for app in application
+        delete_application_folder app
         Application.delete(app.id)
       end
     end
