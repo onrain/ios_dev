@@ -58,9 +58,9 @@
                 var developer = #{res};
                 for(var i = 0; i<developer.length; i++)
                 {
-                  $('input[id="check_'+developer[i]+'"]').attr('checked', 'checked');
+                  $('input[id="check_'+developer[i]+'"]').attr('checked', true);
                 }
-              }, 400);
+              }, 700);
               }
               _delay();
               $('#project_manager_id option').click(function(){
