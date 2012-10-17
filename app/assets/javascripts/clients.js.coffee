@@ -138,9 +138,7 @@ $ ->
     $.get '/admin/clients?type=relations&id='+id, (data) =>
       count = Object.keys(data).length
       if count > 0
-        i = 0
-        j = 0
-
+        i = 0;j = 0
         proj_len = data['project'].length
         app_len = data['application'].length if typeof(data['application']) isnt 'undefined'
         text = "With this client will be deleted: \n"
