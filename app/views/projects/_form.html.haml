@@ -53,13 +53,14 @@
           :javascript
             $(function(){
               function _delay(){
+                alert(4);
               setTimeout(function() {
                 var developer = #{res};
                 for(var i = 0; i<developer.length; i++)
                 {
                   $('#check_'+developer[i]).attr('checked', true);
                 }
-              }, 450);
+              }, 400);
               }
               _delay();
               $('#project_manager_id option').click(function(){
