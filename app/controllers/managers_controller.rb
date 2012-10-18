@@ -6,7 +6,7 @@ class ManagersController < ApplicationController
 
   
   def index
-    @managers = Manager.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    @managers = Manager.page(params[:page]).per(10).order(sort_column(Manager) + " " + sort_direction)
     get_notice(params[:notice], 'Manager was successfully create.', 'Manager was successfully updated.')
     respond_with(@managers)
   end

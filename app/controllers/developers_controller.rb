@@ -6,7 +6,7 @@ class DevelopersController < ApplicationController
 
   
   def index
-    @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column(Developer) + " " + sort_direction)
     
     get_notice(params[:notice], 'Developer was successfully create.', 'Developer was successfully updated.')
 

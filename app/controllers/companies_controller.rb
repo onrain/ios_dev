@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
 
     get_notice(params[:notice], 'Company was successfully create.', 'Company was successfully updated.')
 
-    @companies = Company.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    @companies = Company.page(params[:page]).per(10).order(sort_column(Company) + " " + sort_direction)
     
 		unless params[:type].blank?
       company_details = Hash.new { |hash, key| hash[key] = [] }

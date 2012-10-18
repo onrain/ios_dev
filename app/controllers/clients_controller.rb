@@ -27,7 +27,7 @@ class ClientsController < ApplicationController
       return render json: project_application.to_json
     end
 
-    @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column(Client) + " " + sort_direction)
 
     respond_with(@clients)
   end

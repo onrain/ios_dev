@@ -22,8 +22,8 @@ module ApplicationHelper
   end
 
 
-  def sort_column
-    Application.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  def sort_column(model_name)
+    model_name.column_names.include?(params[:sort]) ? params[:sort] : "name"
   end
   
   def sort_direction

@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   
     return(render json: Project.find(params[:project_id])) unless params[:project_id].blank?
 
-    @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column + " " + sort_direction)
+    @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column(Project) + " " + sort_direction)
 
     get_notice(params[:notice], 'Project was successfully create.', 'Project was successfully updated.')
     
