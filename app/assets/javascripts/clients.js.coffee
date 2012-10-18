@@ -136,12 +136,12 @@ $ ->
       count = Object.keys(data).length
       if count > 0
         i = 0;j = 0
-        proj_len = data['project'].length
-        app_len = data['application'].length if typeof(data['application']) isnt 'undefined'
+        proj_len = data['project'][0].length
+        app_len = data['application'][0].length if typeof(data['application']) isnt 'undefined'
         text = "With this client will be deleted: \n"
         text += "Projects: "
         while j<proj_len
-          text += data['project'][j]
+          text += data['project'][0][j].name
           if j+1 isnt proj_len
             text+= ", "
           else text +="\n"
@@ -150,7 +150,7 @@ $ ->
           text += "Applications: "
           
           while i<app_len
-            text += data['application'][i]
+            text += data['application'][0][i].product_name
             if i+1 isnt app_len
               text+= ", "
             else text +="\n"

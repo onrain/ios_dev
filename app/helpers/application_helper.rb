@@ -5,7 +5,7 @@ module ApplicationHelper
     if name.nil?
       name = content_tag(:div, 'empty', style: "color:gray; font-size:13px;")
     else
-      name =  link_to name, '/admin/#{path[:path]}/#{id}'
+      name =  link_to name, "/admin/#{path[:path]}/#{id}"
     end
     name
   end

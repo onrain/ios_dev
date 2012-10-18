@@ -2,8 +2,8 @@
   %div{style:"margin: 0 auto; display:table;"}
     - flash.each do |name, msg|
       - unless msg.eql? ''
-        %div{class:"alert alert-error", style:"width:250px; margin: 0 auto;"}
-          %button{:class=>"close", :"data-dismiss"=>:"alert"}
+        .alert.alert-error{style:"width:250px; margin: 0 auto;"}
+          %button.close{:"data-dismiss"=>:"alert"}
             x
     
           - if msg.class == Array

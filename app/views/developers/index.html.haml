@@ -4,7 +4,7 @@
     %h4 Listing developers
     = link_to 'New Developer', new_developer_path, class:"btn"
   
-  %table{class:"table table-bordered", style:"width:1000px; margin: 0 auto;"}
+  %table.table.table-bordered{style:"width:1000px; margin: 0 auto;"}
     %tr
       %th=sortable "id", "ID"
       %th=sortable "name", "Name"
@@ -26,19 +26,18 @@
         %td= set_time developer.created_at
         %td= set_time developer.updated_at
         %td
-          %div{class:"btn-group"}
+          .btn-group
             =link_to "Show", developer, class:"btn"
-            %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
-              %span{class:"caret"}
-            %ul{class:"dropdown-menu"}
+            %button.btn.dropdown-toggle{:"data-toggle"=>:"dropdown"}
+              %span.caret
+            %ul.dropdown-menu
               %li= link_to 'Show', developer
               %li= link_to 'Edit', edit_developer_path(developer)
               %li= link_to 'Destroy', developer, :confirm => 'Are you sure?', :method => :delete
         
   
   %div{style:'display:table; margin:0 auto;'}
-    %p
-      = paginate @developers
+    %p= paginate @developers
 - else
   %div{style:"margin: 0 auto; display:table;"}
     %h3= "Records not found"

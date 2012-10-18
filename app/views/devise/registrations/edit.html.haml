@@ -1,10 +1,9 @@
-%table{class:"table table-bordered", style:"margin: 0 auto; width:800px;"}
+%table.table.table-bordered{style:"margin: 0 auto; width:800px;"}
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
     = devise_error_messages!
     %tr
       %td{colspan:"2"}
-        %h2
-          Edit #{resource_name.to_s.humanize}
+        %h2 Edit #{resource_name.to_s.humanize}
   
     %tr
       %td= f.label :email
@@ -21,11 +20,9 @@
       %td
         = f.label :current_password
         %i (we need your current password to confirm your changes)
-      %td
-        = f.password_field :current_password
+      %td= f.password_field :current_password
     %tr
-      %td{colspan:"2"}
-        =f.submit "Update", class:"btn"
+      %td{colspan:"2"}=f.submit "Update", class:"btn"
     %tr
       %td{colspan:"2"}
         %h3 Cancel my account

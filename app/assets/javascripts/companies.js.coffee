@@ -20,6 +20,7 @@ $ ->
     $('.companies-notice').empty()
     $('#add-new-client').show()
     $('.show-btn').hide()
+    $('#client_name').val('')
   $('#hide_btn').click ->
     $('input').removeClass('field_with_errors')
     $('#add-new-client').hide()
@@ -234,7 +235,7 @@ $ ->
     $.get '/admin/companies?type=relations&id='+id, (data) =>
       client_length = data['clients'][0].length
       project_length = data['project'][0].length if typeof(data['project']) isnt 'undefined'
-      application_length = data['application'].length if typeof(data['application']) isnt 'undefined'
+      application_length = data['application'][0].length if typeof(data['application']) isnt 'undefined'
       i=0;j=0;k=0
       if client_length > 0
         text = "With this company will be deleted: \n"
@@ -252,7 +253,7 @@ $ ->
         if typeof(data['application']) isnt 'undefined'
           text += "\nApplication: "
           while k < application_length
-            text += data['application'][k]
+            text += data['application'][0][k].product_name
             text += ", " if k+1 isnt application_length
             k++
 
@@ -264,9 +265,3 @@ $ ->
         if confirm(text)
           $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
             location.reload(true)
-
-
-
-
-
-

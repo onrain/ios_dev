@@ -1,19 +1,15 @@
-%table{class:"table", style:"width:1000px; margin: 0 auto;"}
+%table.table{style:"width:1000px; margin: 0 auto;"}
   = form_for @company do |f|
     = error_field(@company,970)
     %tr
-      %th{style:"width:60%;"}
-        = f.label :name
-      %td  
-        = f.text_field :name
+      %th{style:"width:60%;"}= f.label :name
+      %td= f.text_field :name
     %tr
-      %th
-        = f.label :website
-      %td
-        = f.text_field :website
+      %th= f.label :website
+      %td= f.text_field :website
     %tr
       %td{colspan:"2"}
-        %div{class:"btn-group pull-right padd-right"}
+        .btn-group.pull-right.padd-right
           = f.submit 'Save', class:"btn"
-        %div{class:"btn-group pull-left"}
+        .btn-group.pull-left
           = link_to "Back", :back, class:"btn"

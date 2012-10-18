@@ -16,7 +16,7 @@
     - for list in @projects
       %tr{id:"parent_#{list.id}"}
         %td
-          %div.icon-play.get-list-applications{id:"#{list.id}"}
+          .icon-play.get-list-applications{id:"#{list.id}"}
         %td=link_to list.id, project_path(list)
         %td=link_to list.name, project_path(list)
   
@@ -34,7 +34,7 @@
                 %td= f.label :product_name
                 %td
                   = f.text_field :product_name
-                  %div#handle_id_store{style:"display:none;", class:"#{list.id}"}
+                  #handle_id_store{style:"display:none;", class:"#{list.id}"}
               %tr
                 %td= f.label :bundle_identifier
                 %td= f.text_field :bundle_identifier

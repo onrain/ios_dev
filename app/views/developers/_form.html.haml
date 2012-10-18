@@ -1,4 +1,4 @@
-%table{class:"table", style:"width:1000px; margin: 0 auto;"}
+%table.table{style:"width:1000px; margin: 0 auto;"}
   = form_for @developer do |f|
     = error_field(@developer,970)
   
@@ -16,7 +16,7 @@
       %td= f.text_field :personal_email
     %tr
       %td{colspan:"2"}
-        %div{class:"btn-group pull-right padd-right"}
+        .btn-group.pull-right.padd-right
           = f.submit 'Save', class:"btn"
-        %div{class:"btn-group pull-left"}
+        .btn-group.pull-left
           = link_to "Back", :back, class:"btn"

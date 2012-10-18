@@ -1,7 +1,7 @@
 = render 'modal_for_app'
 =print_notice(notice)
 -unless @projects.empty?
-  %div.well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
+  .well.well-small{align:"center", style:"width:980px; margin: 0 auto;"}
     %h4 Listing projects
     = link_to 'New Project', new_project_path, class:"btn"
   
@@ -20,31 +20,31 @@
     - @projects.each do |project|
       %tr{id:"parent_#{project.id}"}
         %td
-          %div.icon-play.get-list-applications{id:"#{project.id}"}
+          .icon-play.get-list-applications{id:"#{project.id}"}
         %td= link_to(project.id, project)
         %td= check_path(project.client_name, project.client_id, path:"clients").html_safe
         %td= check_path(project.manager_name, project.manager_id, path:"managers").html_safe
         %td= project.name
         %td{id:"project_handle_#{project.id}"}= check_f(project.handle)
-        %td{class:"new_app_form", id:"proj_#{project.id}", style:"display:none;"}
+        %td.new_app_form{id:"proj_#{project.id}", style:"display:none;"}
           .notice-admin
           = form_for(@new_app, remote:true) do |f|
-            %table{class:"table table-bordered"}
+            %table.table.table-bordered
               -if @new_app.errors.any?
-                %div.alert.alert-error
+                .alert.alert-error
                   %a.close{:"data-dismiss"=>:"alert", href:"#"}
                     &times;
                   %h3= "#{pluralize(@new_app.errors.count, "error")} prohibited this post from being saved:"
                   %ul
                     - @new_app.errors.full_messages.each do |msg|
                       %li= msg
-              %div.store{style:"display:none;"}
+              .store{style:"display:none;"}
               = f.hidden_field :project_id, value:project.id
               %tr
                 %td= f.label :product_name
                 %td
                   = f.text_field :product_name
-                  %div{id:"handle_id_store", style:"display:none;", class:"#{project.id}"}  
+                  #handle_id_store{style:"display:none;", class:"#{project.id}"}  
               %tr
                 %td= f.label :bundle_identifier
                 %td= f.text_field :bundle_identifier
@@ -56,7 +56,7 @@
                 %td
                   = f.text_field :relative_path, class:"input-xlarge" 
                   .relative-variant
-                  %div{id:"relative_store", style:"display:none;"}
+                  #relative_store{style:"display:none;"}
               %tr
                 %td= f.label :title
                 %td= f.text_field :title
@@ -64,7 +64,7 @@
                 %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
   
         %td
-          %div.btn-group
+          .btn-group
             =link_to "Show", project, class:"btn"
             %button.btn.dropdown-toggle{:"data-toggle"=>:"dropdown"}
               %span.caret

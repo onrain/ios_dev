@@ -1,30 +1,20 @@
-%table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
+%table.table.table-bordered#show-recoreds{style:"width:1000px; margin: 0 auto;"}
   - for client in @client
     %tr
-      %th
-        ID
-      %td
-        = client.id
+      %th ID
+      %td= client.id
     %tr
-      %th
-        Company name:
-      %td
-        = link_to check_path(client.company_name, client.company_id, path:"companies").html_safe
+      %th Company name:
+      %td= link_to check_path(client.company_name, client.company_id, path:"companies").html_safe
     %tr
-      %th
-        Name:
-      %td
-        = client.name
+      %th Name:
+      %td= client.name
     %tr
-      %th
-        Email:
-      %td
-        = client.email
+      %th Email:
+      %td= client.email
     %tr
-      %th
-        Handle:
-      %td
-        = client.handle
+      %th Handle:
+      %td= client.handle
 .well.well-small.well-width
   .btn-group.pull-right
     = link_to 'Edit', edit_client_path(client), class:"btn"

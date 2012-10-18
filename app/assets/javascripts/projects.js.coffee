@@ -474,7 +474,7 @@ $ ->
      
   
   $('#tr_delete_').live 'click': ->
-    $(this).parent().parent().parent().remove()
+    $(this).parent().parent().parent().parent().remove()
   
   $('#duplicate').live 'click': ->
     $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->

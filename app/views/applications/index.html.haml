@@ -14,8 +14,8 @@
   = link_to 'New Application', new_application_path, class:"btn"
 
 
-%table{class:"table table-striped table-bordered", style:"width:1000px; margin: 0 auto;"}
-  %tr{class:"all-sort"}
+%table.table.table-striped.table-bordered{style:"width:1000px; margin: 0 auto;"}
+  %tr.all-sort
     %th=sortable "id", "ID"
     %th=sortable "project_name", "Project"
     %th=sortable "product_name", "Product name"
@@ -39,11 +39,11 @@
       %td= set_time application.created_at
       %td= set_time application.updated_at
       %td
-        %div{class:"btn-group"}
+        .btn-group
           =link_to "Show", application, class:"btn"
-          %button{class:"btn dropdown-toggle", :"data-toggle"=>:"dropdown"}
-            %span{class:"caret"}
-          %ul{class:"dropdown-menu"}
+          %button.btn.dropdown-toggle{:"data-toggle"=>:"dropdown"}
+            %span.caret
+          %ul.dropdown-menu
             = link_to 'Show', application
             = link_to 'Edit', edit_application_path(application)
             = link_to 'Destroy', application, :confirm => 'Are you sure?', :method => :delete

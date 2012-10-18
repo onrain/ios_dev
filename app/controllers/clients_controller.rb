@@ -14,16 +14,15 @@ class ClientsController < ApplicationController
 
     unless params[:type].blank?
       project_application = Hash.new { |hash, key| hash[key] = [] }
-      project = Project.find_all_by_client_id(params[:id])
 
-      for proj in project;project_application['project'] << proj.name;end
+      projects = Client.find(params[:id]).projects.select('id, name')
 
-      for proj in project
-        application = Application.find_all_by_project_id(proj)
-        for app in application
-          project_application['application'] << app.product_name
-        end
+      project_application['project'] << projects unless projects.empty? 
+
+      for project in projects
+        project_application['application'] << project.applications unless project.applications.empty?
       end
+
       return render json: project_application.to_json
     end
 
@@ -113,10 +112,10 @@ class ClientsController < ApplicationController
   
   private
   def delete_relation(client_id)
-    project = Project.find_all_by_client_id(client_id)
-    for proj in project
-      delete_application_folder_relation proj.applications
-      proj.applications.delete_all
+    projects = Project.find_all_by_client_id(client_id)
+    for project in projects
+      delete_application_folder_relation project.applications
+      project.applications.delete_all
     end
   end
 

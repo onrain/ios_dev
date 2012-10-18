@@ -1,6 +1,6 @@
 = render 'modal_for_clients'
 
-%table{class:"table table-bordered", id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
+%table.table.table-bordered#show-recoreds{style:"width:1000px; margin: 0 auto;"}
   %tr
     %th ID
     %td= @company_show.id
@@ -24,37 +24,32 @@
           empty.
   %tr
     %td{colspan:"2"}
-      %table{width:"100%", class:"table_no_border-left show-btn"}
+      %table.table_no_border-left.show-btn{width:"100%"}
         %tr
           %td{colspan:"5", style:"background-color: rgba(204,204,204, 0.3);"}
-            %a{class:"icon-plus pull-right add_new", id:"add-client-btn", style:"margin-right:5px;"}
+            %a.icon-plus.pull-right.add_new#add-client-btn{style:"margin-right:5px;"}
       #add-new-client
         .companies-notice
         .well.well-small#hide_btn{style:"width:30px;"}
           .icon-chevron-up{style:"margin-left:7px;"}
           Hide
         = form_for @client, remote:true do |f|
-          %table{class:"table table-bordered", style:"margin: 0 auto;"}
+          %table.table.table-bordered{style:"margin: 0 auto;"}
             %tr
-              %td
-                = f.label :name
+              %td= f.label :name
               %td
                 = f.hidden_field :company_id, value:"#{params[:id]}"
                 = f.text_field :name
             %tr
-              %td
-                = f.label :email
-              %td
-                = f.text_field :email
+              %td= f.label :email
+              %td= f.text_field :email
             %tr
-              %td 
-                = f.label :handle
+              %td= f.label :handle
               %td
                 = f.text_field :handle
                 .handle-variant
             %tr
-              %td{colspan:"2"}
-                = f.submit 'Save', class:"btn"
+              %td{colspan:"2"}= f.submit 'Save', class:"btn"
  
 
 

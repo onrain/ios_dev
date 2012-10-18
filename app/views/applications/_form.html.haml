@@ -1,13 +1,13 @@
-%table{class:"table", id:"form_app"}
+%table.table#form_app
   = form_for @application do |f|
     -if @application.errors.any?
       = error_field(@application, 950)
-    %div{class:"store", style:"display:none;"}
+    .store{style:"display:none;"}
     %tr
       %td= f.label :project_id
       %td
         = f.select("project_id", Project.all.collect{|e| [e.name, e.id]},{:include_blank => 'None'})
-        %p{id:"create-priject-hanle"}
+        %p#create-priject-hanle
     %tr
       %td{style:"width:60%;"}= f.label :product_name
       %td= f.text_field :product_name
@@ -25,7 +25,7 @@
       %td= f.text_field :title
     %tr
       %td{colspan:"2"}
-        %div{class:"btn-group pull-right padd-right"}
+        .btn-group.pull-right.padd-right
           = f.submit 'Save', class:"btn"
-        %div{class:"btn-group pull-left"}
+        .btn-group.pull-left
           = link_to "Back", :back, class:"btn"
