@@ -35,7 +35,7 @@ switch (type) {
     $('#' + sort).parent().addClass('select-th');
 }});
 
-
+String.prototype.ucfirst = function(){return this.charAt(0).toUpperCase() + this.substr(1);}
 getChildren = function(selector){return $(selector).html();}
 
 

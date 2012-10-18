@@ -104,12 +104,9 @@ class CompaniesController < ApplicationController
     client = company.clients
     for c in client
       project = Project.find_all_by_client_id(c)
-      for p in project
-        application = Application.find_all_by_project_id(p)
-        for app in application
-          delete_application_folder app
-          Application.delete(app.id)
-        end
+      for proj in project
+        delete_application_folder_relation proj.applications
+        proj.applications.delete_all
       end
     end
   end

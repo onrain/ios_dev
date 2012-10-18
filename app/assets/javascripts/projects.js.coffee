@@ -68,7 +68,9 @@ $ ->
       client_name = ltrim(client_name)
       client_name = rtrim(client_name)
       id = $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
-
+      if typeof(id) is 'undefined'
+        client_name = client_name.ucfirst()
+        id = $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
       
       if typeof(id) isnt 'undefined'
         $.get '/admin/clients?handle='+id, (data) =>
@@ -93,7 +95,8 @@ $ ->
   
   
   $('#autocomplete-client').bind 'input': ->
-
+    client_id()
+  $('#autocomplete-client').blur ->
     client_id()
   
   

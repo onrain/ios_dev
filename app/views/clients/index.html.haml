@@ -35,7 +35,7 @@
               %li= link_to 'Destroy', '#', class:"btn-delete-client", id:"#{client.id}"
   %div{style:'display:table; margin:0 auto;'}
     %p
-      = paginate @clients
+      /= paginate @clients
 - else
   %div{style:"margin: 0 auto; display:table;"}
     %h3= "Records not found"

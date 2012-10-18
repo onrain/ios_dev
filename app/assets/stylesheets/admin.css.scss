@@ -1,14 +1,23 @@
-.select-th { background: rgba(153,153,153,0.3) !important; }
+@mixin hover_pointed($color: black, $decor: none){
+  color: $color;
+  cursor: pointer !important;
+  text-decoration: $decor;
+}
+
+.select-th{ background: rgba(153,153,153,0.3) !important;}
+
 .well-width{ width:980px; margin: auto; }
 #show-recoreds th{ width:30%;  }
 a[disabled="disabled"]{color:#ccc;}
 ul.limit li {float: left; list-style: none; font-size: 16x; padding-left:5px;}
 .icon-plus{color:black;}
-.icon-plus:hover{color:green; cursor:pointer; text-decoration:none;}
+.icon-plus:hover{@include hover_pointed(green);}
 .icon-edit{position:absolute !important; margin-left:75px;}
 .icon-edit:hover{cursor:pointer; color:#cccccc; }
 .icon-ok-sign{color:green;}
 .icon-ok{color:green;}
+
+
 .icon-ok:hover{cursor:pointer;}
 table.table-app td{width:50%;}
 .icon-ok-sign:hover{cursor:pointer;}
@@ -26,7 +35,7 @@ ul.admin-index-action li{ list-style: none; float:left; margin-left:20px;}
 ul.admin-index-action{ margin-left: -30px; }
 
 .add-or-get-h { color:green; }
-.add-or-get-h:hover{ color:red; cursor: pointer; }
+.add-or-get-h:hover{ @include hover_pointed(red); }
 .colored{color:green;}
 .popover-title{ display: none; }
 .popover{ height: 30px !important; width: 170px; }
@@ -36,7 +45,7 @@ ul.admin-index-action{ margin-left: -30px; }
 
 
 .icon-plus-sign { color: green;}
-.icon-plus-sign:hover { cursor: pointer; color: red;}
+.icon-plus-sign:hover { @include hover_pointed(red);}
 .popover{ height: 150px !important; overflow-x: auto; overflow-y: scroll; width:auto; }
 .error_proj{border-width: 2px; color: red !important; border-color: rgba(204,51,51,0.5) !important;}
 

@@ -110,18 +110,15 @@ class ClientsController < ApplicationController
     @client.destroy
     redirect_to clients_path
   end
-
-
-
+  
   private
   def delete_relation(client_id)
     project = Project.find_all_by_client_id(client_id)
-    for p in project
-      application = Application.find_all_by_project_id(p.id)
-      for app in application
-        delete_application_folder app
-        Application.delete(app.id)
-      end
+    for proj in project
+      delete_application_folder_relation proj.applications
+      proj.applications.delete_all
     end
   end
+
+
 end
