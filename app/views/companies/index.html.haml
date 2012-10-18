@@ -18,7 +18,7 @@
       %tr
         %td= company.id
         %td= link_to company.name, company_path(company)
-        %td= check_f(company.website).html_safe
+        %td= check_f(company.website)
         %td= set_time company.created_at
         %td= set_time company.updated_at
         %td

@@ -3,16 +3,15 @@ module ApplicationHelper
   def check_path(name, id, path = Hash.new)
     id = id.to_s
     if name.nil?
-      name = "<div style='color:gray; font-size:13px;'>empty</div>"
+      name = content_tag(:div, 'empty', style: "color:gray; font-size:13px;")
     else
-      name = "<a href='/admin/#{path[:path]}/#{id}'>"+name+"</a>"
+      name =  link_to name, '/admin/#{path[:path]}/#{id}'
     end
     name
   end
   
   def check_f(param)
-    param ="<div style='color:gray; font-size:13px;'>empty</div>".html_safe  if param.nil? or param.empty?
-    param
+    return content_tag(:div, 'empty', style: "style='color:gray; font-size:13px;") if param.nil? or param.empty?
   end
 
 
@@ -47,47 +46,52 @@ module ApplicationHelper
   def set_layouts
 		path = request.fullpath
 		case path
-		  when /admin\/clients/
-        res = javascript_include_tag "clients"
-        res += javascript_include_tag
-      when /admin\/companies/
-        res = javascript_include_tag(:companies)
+		when /admin\/clients/
+      res = javascript_include_tag "clients"
+      res += javascript_include_tag
+    when /admin\/companies/
+      res = javascript_include_tag(:companies)
+    when /admin\/managers/
+      res = javascript_include_tag(:managers)
 
-      when /admin\/managers/
-        res = javascript_include_tag(:managers)
+    when /admin\/developers/
+      res =javascript_include_tag(:developers)
 
-      when /admin\/developers/
-        res =javascript_include_tag(:developers)
+    when /admin\/projects/
+      res = javascript_include_tag(:projects)
 
-      when /admin\/projects/
-        res = javascript_include_tag(:projects)
-
-      when /admin\/applications/
-        res = javascript_include_tag(:applications)
-
+    when /admin\/applications/
+      res = javascript_include_tag(:applications)
 		end
     res
   end
 
 
 
-  def error_field(class_name, width)
 
-    if class_name.errors.any?
-      res = "<div class='alert alert-error' style='width:#{width.to_s}px; margin: 0 auto;'><a class='close' data-dismiss='alert' href='#'>&times;</a>
-        <h3>#{pluralize(class_name.errors.count, "error")} prohibited this post from being saved:</h3>
-        <ul>"
-      class_name.errors.full_messages.each do |msg|
-        res+="<li>#{msg}</li>"
-      end
-        res +="</ul></div>"
-      return res.html_safe
-    end
+
+  def error_field(class_name, width)
+    lambda {
+			content_tag(:div, class:'alert alert-error', style:"width:#{width.to_s}px; margin: 0 auto;") do
+				link_to("x", '#', class:'close', :'data-dismiss' => :'alert') +
+				content_tag(:h3, "#{pluralize(class_name.errors.count, "error")} prohibited this post from being saved:") +
+				content_tag(:ul) do
+					class_name.errors.full_messages.each do |msg|
+					  concat content_tag(:li, msg)
+				  end 
+				end
+			end
+		}.call if class_name.errors.any?
   end
 
 
   def print_notice(notice, width=950)
-		return "<div class='alert alert-success' style='width:#{width.to_s}px; margin: 0 auto;'><button class='close' data-dismiss='alert'>x</button>#{notice}</div>".html_safe if notice
+    lambda {
+		content_tag(:div, class:'alert alert-success', style:"width:#{width.to_s}px; margin: 0 auto;") do
+      content_tag(:button, 'x', class:'close', :'data-dismiss'=>:'alert') +
+      content_tag(:span, notice)
+    end
+		}.call if notice
   end
 
 
