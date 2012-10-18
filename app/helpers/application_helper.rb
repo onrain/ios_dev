@@ -89,7 +89,7 @@ module ApplicationHelper
     lambda {
 		content_tag(:div, class:'alert alert-success', style:"width:#{width.to_s}px; margin: 0 auto;") do
       content_tag(:button, 'x', class:'close', :'data-dismiss'=>:'alert') +
-      content_tag(:span, notice)
+      notice
     end
 		}.call if notice
   end
@@ -105,7 +105,7 @@ module ApplicationHelper
   end
 
   def delete_application_folder_relation(application)
-    for app in application
+    f r app in application
 	    public_dir_size = Dir["#{Rails.public_path}/#{app.bundle_identifier}/*"].size
       if public_dir_size.eql? 1
         FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}")
