@@ -4,7 +4,7 @@
 
 
 -unless @projects.empty?
-  %table{class:"table table-bordered", style:"width:800px; margin: 0 auto;"}
+  %table.table.table-bordered{style:"width:800px; margin: 0 auto;"}
     %tr
       %th{style:"width:10px !important; background-color: rgba(204,204,204,0.7);"}
       %th=sortable 'id', 'ID'
@@ -16,17 +16,17 @@
     - for list in @projects
       %tr{id:"parent_#{list.id}"}
         %td
-          %div{class:"icon-play get-list-applications", id:"#{list.id}"}
+          %div.icon-play.get-list-applications{id:"#{list.id}"}
         %td=link_to list.id, project_path(list)
         %td=link_to list.name, project_path(list)
   
         %td=check_path(list.client_name, list.client_id, path:"clients").html_safe
         %td{id:"project_handle_#{list.id}"}= list.handle
         
-        %td{class:"new_app_form", id:"proj_#{list.id}", style:"display:none;"}
+        %td.new_app_form{id:"proj_#{list.id}", style:"display:none;"}
           .notice-admin
           = form_for(@new_app, remote:true) do |f|
-            %table{class:"table table-bordered"}
+            %table.table.table-bordered
   
               .store{style:"display:none;"}
               = f.hidden_field :project_id, value:list.id
@@ -34,7 +34,7 @@
                 %td= f.label :product_name
                 %td
                   = f.text_field :product_name
-                  %div{id:"handle_id_store", style:"display:none;", class:"#{list.id}"}
+                  %div#handle_id_store{style:"display:none;", class:"#{list.id}"}
               %tr
                 %td= f.label :bundle_identifier
                 %td= f.text_field :bundle_identifier
@@ -55,7 +55,7 @@
 - else
   %div{style:"margin: 0 auto; display:table;"}
     %h3= "Records not found"
-    %ul{class:"admin-index-action"}
+    %ul.admin-index-action
       %li= link_to "[Create new [project]", new_project_path
       %li= link_to "[Manage client list]", clients_path
 

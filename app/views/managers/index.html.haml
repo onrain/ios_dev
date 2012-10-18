@@ -20,8 +20,8 @@
       %tr
         %td= link_to manager.id, manager_path(manager.id)
         %td= manager.name
-        %td= check_f(manager.personal_email).html_safe
-        %td= check_f(manager.office_email).html_safe
+        %td= check_f(manager.personal_email)
+        %td= check_f(manager.office_email)
         %td= set_time manager.created_at
         %td= set_time manager.updated_at
         %td

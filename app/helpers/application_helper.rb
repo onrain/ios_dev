@@ -11,7 +11,8 @@ module ApplicationHelper
   end
   
   def check_f(param)
-    return content_tag(:div, 'empty', style: "style='color:gray; font-size:13px;") if param.nil? or param.empty?
+    content_tag(:div, 'empty', style: "color:gray; font-size:13px;") if param.nil? or param.empty?
+    param
   end
 
 
@@ -48,18 +49,14 @@ module ApplicationHelper
 		case path
 		when /admin\/clients/
       res = javascript_include_tag "clients"
-      res += javascript_include_tag
     when /admin\/companies/
       res = javascript_include_tag(:companies)
     when /admin\/managers/
       res = javascript_include_tag(:managers)
-
     when /admin\/developers/
       res =javascript_include_tag(:developers)
-
     when /admin\/projects/
       res = javascript_include_tag(:projects)
-
     when /admin\/applications/
       res = javascript_include_tag(:applications)
 		end
@@ -105,7 +102,7 @@ module ApplicationHelper
   end
 
   def delete_application_folder_relation(application)
-    f r app in application
+    for app in application
 	    public_dir_size = Dir["#{Rails.public_path}/#{app.bundle_identifier}/*"].size
       if public_dir_size.eql? 1
         FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}")
