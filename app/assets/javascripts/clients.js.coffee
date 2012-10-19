@@ -48,56 +48,9 @@ $ ->
     
         
     res = name.split(" ")
-    j = 1;i = 0;variant = 4;count = 0
-    while count < variant
-      $('.handle-variant').append("<div class='variant"+count+"'></div>")
-      count++
-    while i < res.length
-      k = 0
-      $('.variant0').append('<div id="handle'+i+'"></div>')
-      $('.variant1').append('<div id="handle'+i+'"></div>')
-      $('.variant2').append('<div id="handle'+i+'"></div>')
-      $('.variant3').append('<div id="handle'+i+'"></div>')
-      while k < j
-
-        $('.variant0 #handle'+i).append(res[k])
-        $('.app').remove()
-        $('.variant0 #handle'+i).mousemove ->
-          $('.app').remove()
-          $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")         
-        if k+1 < j
-          $('.variant1 #handle'+i).append(res[k]+".")      
-          $('.app').remove()
-          $('.variant1 #handle'+i).mousemove ->
-            $('.app').remove()
-            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")            
-        else if k>0
-          $('.variant1 #handle'+i).append(res[k]) 
-        
-        if k+1 < j
-          $('.variant2 #handle'+i).append(res[k]+"-")
-                      
-          $('.app').remove()
-          $('.variant2 #handle'+i).mousemove ->
-            $('.app').remove()
-            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-            
-        else if k>0
-          $('.variant2 #handle'+i).append(res[k])
-          
-          
-          
-        if k+1 < j
-          $('.variant3 #handle'+i).append(res[k]+"_")
-          $('.app').remove()
-          $('.variant3 #handle'+i).mousemove ->
-            $('.app').remove()
-            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-        else if k>0
-          $('.variant3 #handle'+i).append(res[k])
-        k++    
-      j++
-      i++
+    getHandleName(res)
+    
+    
     $('div[id*="handle"]').mousemove ->
       $(this).css('cursor':'pointer', 'text-decoration':'underline')
     $('div[id*="handle"]').mouseleave ->

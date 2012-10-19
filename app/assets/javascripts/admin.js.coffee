@@ -231,73 +231,14 @@ $ ->
     name = $(this).val().toLowerCase()
     res = name.split(" ")
     try
-      proj_id = $(this).next().attr('class').replace(/\s+/g, '')
+      application_class = $(this).next().attr('class').replace(/\s+/g, '')
     catch e
-      proj_id = ''
+      application_class = ''
+      
+    getRelativePath(res, application_class, place)
     
-    j = 1
-    i = 0
-    variant = 4
-    count = 0
-    while count < variant
-      place.find('.relative-variant').append("<div class='variant"+count+"'></div>")
-      count++
-    while i < res.length
-      k = 0
-      place.find('.variant0').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      place.find('.variant1').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      place.find('.variant2').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      place.find('.variant3').append('<div id="relative'+i+'" class="'+proj_id+'"></div>')
-      while k < j
-
-        place.find('.variant0 #relative'+i).append(res[k])
-        place.find('.app').remove()
-        place.find('.variant0 #relative'+i).mousemove ->
-          $('.app').remove()
-          $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-
-          
-        if k+1 < j
-          place.find('.variant1 #relative'+i).append(res[k]+".")
-          
-          
-          
-          $('.app').remove()
-          place.find('.variant1 #relative'+i).mousemove ->
-            $('.app').remove()
-            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-          
-          
-        else if k>0
-          place.find('.variant1 #relative'+i).append(res[k])
-        
-        
-        
-        if k+1 < j
-            
-          place.find('.variant2 #relative'+i).append(res[k]+"-")
-                      
-          $('.app').remove()
-          place.find('.variant2 #relative'+i).mousemove ->
-            $('.app').remove()
-            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-            
-        else if k>0
-          place.find('.variant2 #relative'+i).append(res[k])
-          
-          
-          
-        if k+1 < j
-          place.find('.variant3 #relative'+i).append(res[k]+"_")
-          $('.app').remove()
-          place.find('.variant3 #relative'+i).mousemove ->
-            $('.app').remove()
-            $(this).append("<span class='app'>&nbsp;&nbsp;<span class='icon-ok'></span></span>")
-        else if k>0
-          place.find('.variant3 #relative'+i).append(res[k])
-        k++    
-      j++
-      i++
+    
+    
     $('div[id*="relative"]').mousemove ->
       $(this).css('cursor':'pointer', 'text-decoration':'underline')
     $('div[id*="relative"]').mouseleave ->
