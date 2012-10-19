@@ -21,8 +21,9 @@ $ ->
     $('#add-new-client').show()
     $('.show-btn').hide()
     $('#client_name').val('')
+
   $('#hide_btn').click ->
-    $('input').removeClass('field_with_errors')
+    $('input').removeClass('error_proj')
     $('#add-new-client').hide()
     $('.show-btn').show()
     
