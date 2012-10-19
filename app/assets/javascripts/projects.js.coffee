@@ -68,10 +68,13 @@ $ ->
       client_name = ltrim(client_name)
       client_name = rtrim(client_name)
       id = $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
+      
+      $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
+      
       if typeof(id) is 'undefined'
         client_name = client_name.ucfirst()
         id = $('.client_name_class:contains("'+client_name+'")').parent().attr('id')
-      
+        $('#project_client_id option:contains("'+client_name+'")').attr('selected':'selected')
       if typeof(id) isnt 'undefined'
         $.get '/admin/clients?handle='+id, (data) =>
           $('#client-handle').text(data.handle.replace(/\s/g,''))
