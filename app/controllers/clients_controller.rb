@@ -42,18 +42,10 @@ class ClientsController < ApplicationController
 
     @client = Client.new
   end
-
-
-  def remove
-    @handle = Handle.find(params[:id])
-
-    render json: [status:'deleted']  if @handle.destroy
-  end
   
 
   def edit
     @company = Company.new
-
     @client = Client.find(params[:id])
   end
 
