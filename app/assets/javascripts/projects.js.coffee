@@ -254,6 +254,7 @@ $ ->
           $('#application_title').val(errors.title).addClass('error_proj')
         if typeof(errors.product_name) isnt 'undefined'  
           $('#application_product_name').val(errors.product_name).addClass('error_proj')
+
           
       $('.notice-app').empty()
       
@@ -311,7 +312,10 @@ $ ->
       $('#application_title').val(errors.title).addClass('error_proj')
     if typeof(errors.product_name) isnt 'undefined'  
       $('#application_product_name').val(errors.product_name).addClass('error_proj')
-    
+    if typeof(errors.bundle_identifier) isnt 'undefined'  
+      $('#application_bundle_identifier').val(errors.bundle_identifier).addClass('error_proj') 
+     
+     
       
   
   $('.error_proj').click ->
@@ -336,8 +340,9 @@ $ ->
         par.find('#application_title').val(errors.title).addClass('error_proj')
       if typeof(errors.product_name) isnt 'undefined'  
         par.find('#application_product_name').val(errors.product_name).addClass('error_proj') 
-   
-   
+      if typeof(errors.bundle_identifier) isnt 'undefined'  
+        par.find('#application_bundle_identifier').val(errors.bundle_identifier).addClass('error_proj') 
+      
   $('.add_new').live 'click': ->
     $('.notice-admin').empty()
     $('.relative-variant').empty()

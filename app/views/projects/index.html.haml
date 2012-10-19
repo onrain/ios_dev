@@ -43,14 +43,14 @@
               %tr
                 %td= f.label :product_name
                 %td
-                  = f.text_field :product_name
+                  = f.text_field :product_name, class:"input-xlarge" 
                   #handle_id_store{style:"display:none;", class:"#{project.id}"}  
               %tr
                 %td= f.label :bundle_identifier
-                %td= f.text_field :bundle_identifier
+                %td= f.text_field :bundle_identifier, class:"input-xlarge" 
               %tr
                 %td= f.label :bundle_version
-                %td= f.text_field :bundle_version
+                %td= f.text_field :bundle_version, class:"input-xlarge" 
               %tr
                 %td= f.label :relative_path
                 %td
@@ -59,7 +59,7 @@
                   #relative_store{style:"display:none;"}
               %tr
                 %td= f.label :title
-                %td= f.text_field :title
+                %td= f.text_field :title, class:"input-xlarge" 
               %tr
                 %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
   
