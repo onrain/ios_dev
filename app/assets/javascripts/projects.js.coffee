@@ -477,8 +477,6 @@ $ ->
       
     getRelativePath(res, application_class, place)
       
-      
-      
     $('div[id*="relative"]').mousemove ->
       $(this).css('cursor':'pointer', 'text-decoration':'underline')
     $('div[id*="relative"]').mouseleave ->
