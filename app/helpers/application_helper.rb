@@ -113,13 +113,15 @@ module ApplicationHelper
   end
   
   def move_application_f(app)
-		FileUtils("#{Rails.public_path}/,#{app.bundle_identifier}","deleted")
+	  Dir.mkdir("#{Rails.public_path}/deleted") if Dir["#{Rails.public_path}/deleted"].size.eql? 0 
+		FileUtils.mv("#{Rails.public_path}/#{app.bundle_identifier}","#{Rails.public_path}/deleted")
   end
   
   
   def move_application_f_list(applications)
+		Dir.mkdir("#{Rails.public_path}/deleted") if Dir["#{Rails.public_path}/deleted"].size.eql? 0 
 		for app in applications
-		  FileUtils("#{Rails.public_path}/,#{app.bundle_identifier}","deleted")
+		  FileUtils.mv("#{Rails.public_path}/#{app.bundle_identifier}","#{Rails.public_path}/deleted")
 		end
   end
 

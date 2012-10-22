@@ -168,3 +168,33 @@ function getRelativePath(res, application_class, place)
       i++;
     }
 }
+
+
+var confirm = {};
+confirm.init = function(id){
+  $('#confirm').modal({
+    'show' : false,
+    'keyboard' : false,
+    'backdrop':false
+  });
+}
+
+
+confirm.run = function(id,text) {
+    $('#'+id).modal({'show':true});
+    $('.confirm-content').empty();
+    $('.confirm-content').html(text);
+}
+
+confirm.click = function(id){
+    var result = $('#'+id).click(function(){
+      return true;
+    });
+    if(result)
+    {
+      return true;
+    } else return false;
+    
+    
+    
+}

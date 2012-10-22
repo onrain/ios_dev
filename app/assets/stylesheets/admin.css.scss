@@ -4,6 +4,17 @@
   text-decoration: $decor;
 }
 
+
+.modal.fade {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}​
+
+
+
 .select-th{ background: rgba(153,153,153,0.3) !important;}
 
 .well-width{ width:980px; margin: auto; }
@@ -53,3 +64,5 @@ ul.admin-index-action{ margin-left: -30px; }
 .typeahead{width:310px !important;  margin-top:2px !important;}
 
 .add_client_from_typehead{ position: relative; top:-30px; left: -50px;}
+
+.header{ height: 70px; background: #cccccc; width:100px; }

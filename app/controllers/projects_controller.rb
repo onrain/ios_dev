@@ -6,7 +6,20 @@ class ProjectsController < ApplicationController
 
 
   def index
-          
+    
+    unless params[:method].blank? 
+      method = params[:method]
+      project_id = params[:proj_id]
+      if method.eql? 'delete'
+        delete_application_folder_relation Project.find(project_id).applications
+        return render json: [status:"deleted"]
+      
+      elsif method.eql? 'move'
+        move_application_f_list Project.find(project_id).applications 
+        return render json: [status:'moved']
+      end
+    end
+      
     return(render json: Project.find(params[:project_id])) unless params[:project_id].blank?
 
     @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column(Project) + " " + sort_direction)

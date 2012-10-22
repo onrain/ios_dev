@@ -6,6 +6,12 @@ $ ->
     )
 	
   
+  confirm.init('confirm')
+	
+  
+  
+  
+  
   $('#dev-link-remote').click ->
     $('.notice-app').empty()
     $('.dev-reload-notice').empty()
@@ -607,3 +613,38 @@ $ ->
       $('#project_manager_id option').children().eq(1).attr('selecte','selected')
       
       
+      
+  $('.delete_project').live 'click': ->
+    $('.btn').css('color':'black !important')
+
+    id = $(@).attr('id')
+    $.get '/admin/projects?application=get&id='+id, (data) =>
+      count = Object.keys(data).length
+      if count > 0
+        text = "<span style='font-size:18px;'>With this project will be deleted:</span> <br/><span style='font-size:15px;'>Application:</span> "
+        i=0
+        while i<count
+          text += data[i].product_name
+          if i+1 isnt count
+            text += ", "
+          i++
+        confirm.run('confirm', text)
+        $('#yes_btn').click ->
+          $('#no_btn').removeClass('close')
+          $('.confirm-content').text("Do you want to delete application folder?")
+          $('#yes_btn').click ->
+            $.get '/admin/projects?method=delete&proj_id='+id, (data) =>
+              $.post "/admin/projects/" + id, {_method:'delete'}, (data) =>
+                location.reload(true)
+          $('#no_btn').live 'click': ->
+            $.get '/admin/projects?method=move&proj_id='+id, (data) =>
+              $.post "/admin/projects/" + id, {_method:'delete'}, (data) =>
+                location.reload(true)
+            return false
+      else
+        text = 'Are you sure?'
+        confirm.run('confirm', text)
+        $('#yes_btn').click ->
+          $.post "/admin/projects/" + id, {_method:'delete'}, (data) =>
+            location.reload(true)
+    return false 

@@ -100,7 +100,7 @@ class ApplicationsController < ApplicationController
   def destroy
     @application = Application.find(params[:id])
     #helper method
-    delete_application_folder @application
+    #delete_application_folder @application
 
     @application.destroy
     respond_with(@application) do |format|
