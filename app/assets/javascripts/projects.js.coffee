@@ -6,7 +6,7 @@ $ ->
     )
 	
   
-  confirm.init('confirm')
+  verify.init('confirm')
 	
   
   
@@ -628,7 +628,7 @@ $ ->
           if i+1 isnt count
             text += ", "
           i++
-        confirm.run('confirm', text)
+        verify.run('confirm', text)
         $('#yes_btn').click ->
           $('#no_btn').removeClass('close')
           $('.confirm-content').text("Do you want to delete application folder?")
@@ -643,7 +643,7 @@ $ ->
             return false
       else
         text = 'Are you sure?'
-        confirm.run('confirm', text)
+        verify.run('confirm', text)
         $('#yes_btn').click ->
           $.post "/admin/projects/" + id, {_method:'delete'}, (data) =>
             location.reload(true)
