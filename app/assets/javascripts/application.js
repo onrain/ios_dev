@@ -48,7 +48,7 @@ function getHandleName(res)
     i = 0;    
     variant = 4;    
     count = 0;
-    
+    $('.proj-h-variants').empty()
     while (count < variant) {
       $('.proj-h-variants').append("<div class='variant" + count + "'></div>");
       count++;

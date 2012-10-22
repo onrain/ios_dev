@@ -385,7 +385,6 @@ $ ->
       
    
   $('#project_name').bind 'input': ->
-    $('.proj-h-variants').empty()
     client = $('#project_client_id :selected').text().toLowerCase().replace(/\s+/g,'')
 
     name = $(this).val().toLowerCase()
@@ -608,25 +607,3 @@ $ ->
       $('#project_manager_id option').children().eq(1).attr('selecte','selected')
       
       
-      
-  $('.delete_project').click ->
-    id = $(@).attr('id')
-    $.get '/admin/projects?application=get&id='+id, (data) =>
-      count = Object.keys(data).length
-      if count > 0
-        text = "With this project will be deleted: \nApplication: "
-        i=0
-        while i<count
-          text += data[i].product_name
-          if i+1 isnt count
-            text += ", "
-          i++
-        if(confirm(text))
-          $.post "/admin/projects/" + id, {_method:'delete'}, (data) =>
-            location.reload(true)
-      else
-        text = 'Are you sure?'
-        if(confirm(text))
-          $.post "/admin/projects/" + id, {_method:'delete'}, (data) =>
-            location.reload(true)
-    return false 

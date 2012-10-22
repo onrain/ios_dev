@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
 
   def index
-  
+          
     return(render json: Project.find(params[:project_id])) unless params[:project_id].blank?
 
     @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column(Project) + " " + sort_direction)
@@ -14,7 +14,8 @@ class ProjectsController < ApplicationController
     get_notice(params[:notice], 'Project was successfully create.', 'Project was successfully updated.')
     
     return(render json: Project.find(params[:id]).applications) unless params[:application].blank?
-
+  
+    
     
     @new_app = Application.new
 
@@ -55,6 +56,7 @@ class ProjectsController < ApplicationController
       end
     end
   end
+  
 
 
   def update
@@ -75,7 +77,6 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
-    delete_application_folder_relation @project.applications
     @project.applications.delete_all unless @project.applications.size.eql? 0 
     @project.destroy
     redirect_to projects_url

@@ -84,10 +84,10 @@ module ApplicationHelper
 
   def print_notice(notice, width=950)
     lambda {
-		content_tag(:div, class:'alert alert-success', style:"width:#{width.to_s}px; margin: 0 auto;") do
-      content_tag(:button, 'x', class:'close', :'data-dismiss'=>:'alert') +
-      notice
-    end
+		  content_tag(:div, class:'alert alert-success', style:"width:#{width.to_s}px; margin: 0 auto;") do
+        content_tag(:button, 'x', class:'close', :'data-dismiss'=>:'alert') +
+        notice
+      end
 		}.call if notice
   end
 
@@ -110,6 +110,17 @@ module ApplicationHelper
         FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
       end
     end
+  end
+  
+  def move_application_f(app)
+		FileUtils("#{Rails.public_path}/,#{app.bundle_identifier}","deleted")
+  end
+  
+  
+  def move_application_f_list(applications)
+		for app in applications
+		  FileUtils("#{Rails.public_path}/,#{app.bundle_identifier}","deleted")
+		end
   end
 
 end

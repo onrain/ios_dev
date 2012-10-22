@@ -40,12 +40,12 @@ $ ->
 
 
   $('#client_name').bind 'input': ->
-    $('.handle-variant').empty()
+
     company = $('#client_company_id :selected').text().toLowerCase().replace(/\s+/g,'')
 
     name = $(this).val().toLowerCase()
 
-    
+
         
     res = name.split(" ")
     getHandleName(res)
