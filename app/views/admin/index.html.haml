@@ -1,6 +1,7 @@
 = javascript_include_tag(:admin)
 
-=render 'projects/modal_for_app'
+= render 'projects/modal_for_app'
+= render 'admin/confirm_form'
 
 
 -unless @projects.empty?
@@ -52,6 +53,10 @@
                 %td= f.text_field :title, class:"input-xlarge"
               %tr
                 %td{colspan:"2"}= f.submit 'Save', class:"btn", id:"save-new-app"
+
+  %div{style:'display:table; margin:0 auto;'}
+    %p= paginate @projects
+
 - else
   %div{style:"margin: 0 auto; display:table;"}
     %h3= "Records not found"
