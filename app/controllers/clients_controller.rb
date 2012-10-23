@@ -11,7 +11,35 @@ class ClientsController < ApplicationController
     return (render json: Client.find(params[:handle])) unless params[:handle].blank?
 
     return (render json: Client.find(params[:id])) unless params[:get].blank?
+    
+    
+    
+    unless params[:method].blank? 
+      method = params[:method]
+      client_id = params[:client_id]
+      
+      if method.eql? 'delete'
+        Project.find_all_by_client_id(client_id).collect do |project|
+          delete_application_folder_relation project.applications
+        end
 
+        return render json: [status:"deleted"]
+      
+      elsif method.eql? 'move'
+        Project.find_all_by_client_id(client_id).collect do |project|
+          move_application_f_list project.applications 
+        end
+        
+        return render json: [status:'moved']
+      end
+    end
+    
+    
+    
+    
+    
+    
+    
     unless params[:type].blank?
       project_application = Hash.new { |hash, key| hash[key] = [] }
 
@@ -104,8 +132,7 @@ class ClientsController < ApplicationController
   
   private
   def delete_relation(client_id)
-    projects = Project.find_all_by_client_id(client_id)
-    for project in projects
+   Project.find_all_by_client_id(client_id).collect do |project|
       delete_application_folder_relation project.applications
       project.applications.delete_all
     end

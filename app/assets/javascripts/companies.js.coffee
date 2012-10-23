@@ -10,7 +10,9 @@ $ ->
   $('#add-new-client').hide()
 
 
+  verify.init('confirm')
   
+  verify.style_set('confirm',[['width','350px !important']])
   
   $('#add-client-btn').click ->
     $('.handle-variant').empty()
@@ -240,30 +242,39 @@ $ ->
       application_length = data['application'][0].length if typeof(data['application']) isnt 'undefined'
       i=0;j=0;k=0
       if client_length > 0
-        text = "With this company will be deleted: \n"
-        text += "Clients: "
+        text = $span("With this company will be deleted:", "style='font-size:18px;'")
+        text += $span([$br, "Clients:"], "style='font-size:15px;'")
         while i<client_length
           text += data['clients'][0][i].name
           text += ", " if i+1 isnt client_length
           i++
         if typeof(data['project']) isnt 'undefined'
-          text += "\nProjects: "
+          text += $span([$br ,"Projects: "], "style='font-size:15px;'")
           while j < project_length
             text += data['project'][0][j].name
             text += ", " if j+1 isnt project_length
             j++
         if typeof(data['application']) isnt 'undefined'
-          text += "\nApplication: "
+          text += $span([$br, "Application: "],"style='font-size:15px;'")
           while k < application_length
             text += data['application'][0][k].product_name
             text += ", " if k+1 isnt application_length
             k++
+          verify.run('confirm',text)
+          $('#yes_btn').click ->
+            $('#no_btn').removeClass('close')
+            $('.confirm-content').text("Do you want to delete application folder?")
+            $('#yes_btn').click ->
+              $.get '/admin/companies?method=delete&com_id='+id, (data) =>
+                $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+                  location.reload(true)
+            $('#no_btn').click ->
+              $.get '/admin/companies?method=move&com_id='+id, (data) =>
+                $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+                  location.reload(true)
 
-        if confirm(text)
-          $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
-            location.reload(true)
       else
-        text = "Are you sure?"
-        if confirm(text)
+        verify.run("Are you sure?")
+        $('#yes_btn').click ->
           $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
             location.reload(true)

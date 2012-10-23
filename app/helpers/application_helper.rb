@@ -95,9 +95,9 @@ module ApplicationHelper
   def delete_application_folder(app)
     public_dir_size = Dir["#{Rails.public_path}/#{app.bundle_identifier}/*"].size
     if public_dir_size.eql? 1
-      FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}")
+      FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}") if File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
     elsif public_dir_size > 1
-      FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
+      FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}") if File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
     end
   end
 
@@ -105,23 +105,23 @@ module ApplicationHelper
     for app in application
 	    public_dir_size = Dir["#{Rails.public_path}/#{app.bundle_identifier}/*"].size
       if public_dir_size.eql? 1
-        FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}")
+        FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}") if File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
       elsif public_dir_size > 1
-        FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}")
+        FileUtils.rm_rf("#{Rails.public_path}/#{app.bundle_identifier}/#{app.bundle_version}") if File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
       end
     end
   end
   
   def move_application_f(app)
 	  Dir.mkdir("#{Rails.public_path}/deleted") if Dir["#{Rails.public_path}/deleted"].size.eql? 0 
-		FileUtils.mv("#{Rails.public_path}/#{app.bundle_identifier}","#{Rails.public_path}/deleted")
+		FileUtils.mv("#{Rails.public_path}/#{app.bundle_identifier}","#{Rails.public_path}/deleted") if File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
   end
   
   
   def move_application_f_list(applications)
 		Dir.mkdir("#{Rails.public_path}/deleted") if Dir["#{Rails.public_path}/deleted"].size.eql? 0 
 		for app in applications
-		  FileUtils.mv("#{Rails.public_path}/#{app.bundle_identifier}","#{Rails.public_path}/deleted")
+		  FileUtils.mv("#{Rails.public_path}/#{app.bundle_identifier}","#{Rails.public_path}/deleted") if File.directory?("#{Rails.public_path}/#{app.bundle_identifier}")
 		end
   end
 

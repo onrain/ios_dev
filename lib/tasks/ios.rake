@@ -50,7 +50,7 @@ namespace :go do
   end
   
   
-  task :package => :environment do
+  task :pa => :environment do
     @companies = {id:"1", name:"Hello amigos", website:"silver.com"}
     @clients = {id:"1", name:"test", company_id:"1", email:"s@s.com", handle:"silver/test"}
     @manager = {id:"1", name:"manager Test", personal_email:"sergey@teset.com", office_email:"test@test.com"}

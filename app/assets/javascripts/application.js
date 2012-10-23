@@ -39,7 +39,11 @@ String.prototype.ucfirst = function(){return this.charAt(0).toUpperCase() + this
 getChildren = function(selector){return $(selector).html();}
 
 
-$(function(){trim = function (str, chars) {return ltrim(rtrim(str, chars), chars);};ltrim = function(str, chars) {chars = chars || "\\s";return str.replace(new RegExp("^[" + chars + "]+", "g"), "");};rtrim = function (str, chars) {chars = chars || "\\s";return str.replace(new RegExp("[" + chars + "]+$", "g"), "");};$td = function(params, attr){var td;if(typeof(params) == 'object'){params = params.join(' ');};td = typeof(attr) == 'string'? "<td "+attr+">":"<td>";td +=params+"</td>";return td;};$th = function(params, attr){var th;if(typeof(params) == 'object'){params = params.join(' ');}th = typeof(attr) == 'string'? "<th "+attr+">":"<th>";th +=params+"</th>";return th;};$tr = function(params, attr){var tr;if(typeof(params) == 'object'){  params = params.join(' ');}tr = typeof(attr) == 'string'? "<tr "+attr+">":"<tr>";tr +=params+"</tr>";return tr;};$div = function(params, attr){var div;if(typeof(params) == 'object'){params = params.join(' ');};div = typeof(attr) == 'string'? "<div "+attr+">":"<div>";div +=params+"</div>";return div;};$link_to = function(params, path, attr){ var a;a = typeof(path) == 'string'? "<a href="+path:"<a";a += typeof(attr) == 'string'? " "+attr+">":">";a +=params+"</a>";return a;};$table = function(params, attr){var table;if(typeof(params) == 'object'){  params = params.join(' ');}table = typeof(attr) == 'string'? "<table "+attr+">":"<table>";table +=params+"</table>";return table;}});
+$(function(){trim = function (str, chars) {return ltrim(rtrim(str, chars), chars);};ltrim = function(str, chars) {chars = chars || "\\s";return str.replace(new RegExp("^[" + chars + "]+", "g"), "");};rtrim = function (str, chars) {chars = chars || "\\s";return str.replace(new RegExp("[" + chars + "]+$", "g"), "");};$td = function(params, attr){var td;if(typeof(params) == 'object'){params = params.join(' ');};td = typeof(attr) == 'string'? "<td "+attr+">":"<td>";td +=params+"</td>";return td;};$th = function(params, attr){var th;if(typeof(params) == 'object'){params = params.join(' ');}th = typeof(attr) == 'string'? "<th "+attr+">":"<th>";th +=params+"</th>";return th;};$tr = function(params, attr){var tr;if(typeof(params) == 'object'){  params = params.join(' ');}tr = typeof(attr) == 'string'? "<tr "+attr+">":"<tr>";tr +=params+"</tr>";return tr;};$div = function(params, attr){var div;if(typeof(params) == 'object'){params = params.join(' ');};div = typeof(attr) == 'string'? "<div "+attr+">":"<div>";div +=params+"</div>";return div;};$link_to = function(params, path, attr){ var a;a = typeof(path) == 'string'? "<a href="+path:"<a";a += typeof(attr) == 'string'? " "+attr+">":">";a +=params+"</a>";return a;};$table = function(params, attr){var table;if(typeof(params) == 'object'){  params = params.join(' ');}table = typeof(attr) == 'string'? "<table "+attr+">":"<table>";table +=params+"</table>";return table;};
+  
+  $span = function(params, attr){var span;if(typeof(params) == 'object'){  params = params.join(' ');}span = typeof(attr) == 'string'? "<span "+attr+">":"<span>";span +=params+"</span>";return span;};
+  
+  $br='<br />';});
 $.fn.debug = function(e){ alert(e); }
 function getHandleName(res)
 {
@@ -185,3 +189,14 @@ verify.run = function(id,text) {
     $('.confirm-content').empty();
     $('.confirm-content').html(text);
 }
+
+
+verify.style_set = function(id, css_arr){  
+    var style = '';
+    for(var i = 0; i<css_arr.length; i++){
+        css_arr[i] = css_arr[i].join(':');
+        style += css_arr[i]+";";
+        }
+    $('#'+id).attr('style',style);
+    }	
+      

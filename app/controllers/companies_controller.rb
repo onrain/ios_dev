@@ -24,7 +24,33 @@ class CompaniesController < ApplicationController
         end
       end
       return render(json: company_details)
+		end
+
+
+    
+    unless params[:method].blank? 
+      method = params[:method]
+      com_id = params[:com_id]
+      if method.eql? 'delete'
+        
+        Company.find(com_id).clients.collect do |client|
+					Project.find_all_by_client_id(client.id).collect do |project|
+						delete_application_folder_relation project.applications
+					end
+		  	end
+        return render json: [status:"deleted"]
+      
+      elsif method.eql? 'move'
+        Company.find(com_id).clients.collect do |client|
+					Project.find_all_by_client_id(client.id).collect do |project|
+						move_application_f_list project.applications
+					end
+		  	end
+        return render json: [status:'moved']
+      end
     end
+
+
 
     respond_with(@companies) do |format|
       format.json{render json: Company.all}
@@ -94,13 +120,12 @@ class CompaniesController < ApplicationController
   private
   def delete_relations(company_id)  
     company = Company.find(company_id)
-    client = company.clients
-    for c in client
-      project = Project.find_all_by_client_id(c)
-      for proj in project
+    client = company.clients.collect do |c|
+      for proj in c.projects
         delete_application_folder_relation proj.applications
         proj.applications.delete_all
       end
+
     end
   end
 
