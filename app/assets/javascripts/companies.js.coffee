@@ -277,10 +277,10 @@ $ ->
                 location.reload(true)
 
 
-        $('#no_btn').click ->
-          $.get '/admin/companies?method=move&com_id='+id, (data) =>
-            $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
-              location.reload(true)
+          $('#no_btn').click ->
+            $.get '/admin/companies?method=move&com_id='+id, (data) =>
+              $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+                location.reload(true)
 
       else
         verify.run("Are you sure?")
