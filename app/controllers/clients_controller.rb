@@ -48,7 +48,7 @@ class ClientsController < ApplicationController
 
 
   def show
-    respond_with  @client = Client.get_clients_list_where_id(params[:id])
+    respond_with  @client = Client.joins("LEFT JOIN companies ON companies.id = clients.company_id").select('companies.name as company_name, clients.*').where('clients.id = ?', params[:id]).page(params[:page]).per(10).order(sort_column(Client) + " " + sort_direction)
   end
 
 

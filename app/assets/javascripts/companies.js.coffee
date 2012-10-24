@@ -12,8 +12,8 @@ $ ->
 
   verify.init('confirm')
   
-  verify.style_set('confirm',[['width','350px !important']])
-  
+  verify.style_set('confirm',[['width','350px !important'],['margin-left','-150px !important']])
+
   $('#add-client-btn').click ->
     $('.handle-variant').empty()
     $('#client_name').val('')

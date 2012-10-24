@@ -9,7 +9,7 @@ $ ->
  
  
   verify.init('confirm')
- 
+  
   $('#get-new-company').click ->
     $('#new-company').modal(show:true)
     $('#cname').val('')
