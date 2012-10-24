@@ -24,12 +24,21 @@ class ApplicationsController < ApplicationController
       app_id = params[:app_id]
       if method.eql? 'delete'
         application = Application.find(app_id)
-        unless application.bundle_version.eql? '1.0'
-          FileUtils.rm_rf("#{Rails.public_path}/#{application.bundle_identifier}/#{application.bundle_version}") if File.directory?("#{Rails.public_path}/#{application.bundle_identifier}")
+        if application.bundle_version.eql? '1.0'
+          if File.directory?("#{Rails.public_path}/#{application.bundle_identifier}")
+            if Dir["#{Rails.public_path}/#{application.bundle_identifier}/*"].size.eql? 1
+              FileUtils.rm_rf("#{Rails.public_path}/#{application.bundle_identifier}")
+            else
+              FileUtils.rm_rf("#{Rails.public_path}/#{application.bundle_identifier}/#{application.bundle_version}")
+            end
+          end
         else
-          FileUtils.rm_rf("#{Rails.public_path}/#{application.bundle_identifier}") if File.directory?("#{Rails.public_path}/#{application.bundle_identifier}")
+          if Dir["#{Rails.public_path}/#{application.bundle_identifier}/*"].size.eql? 1
+            FileUtils.rm_rf("#{Rails.public_path}/#{application.bundle_identifier}")
+           else 
+            FileUtils.rm_rf("#{Rails.public_path}/#{application.bundle_identifier}/#{application.bundle_version}") if File.directory?("#{Rails.public_path}/#{application.bundle_identifier}")
+          end
         end
-
         return render json: [status:"deleted"]
       end
     end
