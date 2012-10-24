@@ -254,24 +254,33 @@ $ ->
             text += data['project'][0][j].name
             text += ", " if j+1 isnt project_length
             j++
-        if typeof(data['application']) isnt 'undefined'
-          text += $span([$br, "Application: "],"style='font-size:15px;'")
-          while k < application_length
-            text += data['application'][0][k].product_name
-            text += ", " if k+1 isnt application_length
-            k++
-          verify.run('confirm',text)
-          $('#yes_btn').click ->
-            $('#no_btn').removeClass('close')
+          if typeof(data['application']) isnt 'undefined'
+            text += $span([$br, "Application: "],"style='font-size:15px;'")
+            while k < application_length
+              text += data['application'][0][k].product_name
+              text += ", " if k+1 isnt application_length
+              k++
+
+        verify.run('confirm',text)
+        $('#yes_btn').click ->
+          $('#no_btn').removeClass('close')
+          if typeof(data['application']) isnt 'undefined'
+  
             $('.confirm-content').text("Do you want to delete application folder?")
             $('#yes_btn').click ->
               $.get '/admin/companies?method=delete&com_id='+id, (data) =>
                 $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
                   location.reload(true)
-            $('#no_btn').click ->
-              $.get '/admin/companies?method=move&com_id='+id, (data) =>
-                $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
-                  location.reload(true)
+          else
+            $.get '/admin/companies?method=delete&com_id='+id, (data) =>
+              $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+                location.reload(true)
+
+
+        $('#no_btn').click ->
+          $.get '/admin/companies?method=move&com_id='+id, (data) =>
+            $.post "/admin/companies/" + id, {_method:'delete'}, (data) =>
+              location.reload(true)
 
       else
         verify.run("Are you sure?")

@@ -114,11 +114,16 @@ $ ->
         verify.run('confirm',text)
         $('#yes_btn').click ->
           $('#no_btn').removeClass('close')
-          $('.confirm-content').text("Do you want to delete application folder?")
-          $('#yes_btn').click ->
+          if typeof(data['application']) isnt 'undefined'  
+            $('.confirm-content').text("Do you want to delete application folder?")
+            $('#yes_btn').click ->
+              $.get '/admin/clients?method=delete&client_id='+id, (data) =>
+                $.post "/admin/clients/" + id, {_method:'delete'}, (data) =>
+                  location.reload(true)
+          else
             $.get '/admin/clients?method=delete&client_id='+id, (data) =>
-              $.post "/admin/clients/" + id, {_method:'delete'}, (data) =>
-                location.reload(true)
+                $.post "/admin/clients/" + id, {_method:'delete'}, (data) =>
+                  location.reload(true)
 
           $('#no_btn').click ->
             $.get '/admin/clients?method=move&client_id='+id, (data) =>

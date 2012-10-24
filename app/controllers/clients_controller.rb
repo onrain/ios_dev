@@ -22,39 +22,26 @@ class ClientsController < ApplicationController
         Project.find_all_by_client_id(client_id).collect do |project|
           delete_application_folder_relation project.applications
         end
-
         return render json: [status:"deleted"]
-      
       elsif method.eql? 'move'
         Project.find_all_by_client_id(client_id).collect do |project|
           move_application_f_list project.applications 
         end
-        
         return render json: [status:'moved']
       end
     end
     
-    
-    
-    
-    
-    
-    
     unless params[:type].blank?
       project_application = Hash.new { |hash, key| hash[key] = [] }
-
       projects = Client.find(params[:id]).projects.select('id, name')
-
       project_application['project'] << projects unless projects.empty? 
-
       for project in projects
         project_application['application'] << project.applications unless project.applications.empty?
       end
-
       return render json: project_application.to_json
     end
 
-    @clients = Client.get_clients_list.page(params[:page]).per(10).order(sort_column(Client) + " " + sort_direction)
+    @clients = Client.joins("LEFT JOIN companies ON companies.id = clients.company_id").select('companies.name as company_name, clients.*').page(params[:page]).per(10).order(sort_column(Client) + " " + sort_direction)
 
     respond_with(@clients)
   end
