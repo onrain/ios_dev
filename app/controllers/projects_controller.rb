@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
       
     return(render json: Project.find(params[:project_id])) unless params[:project_id].blank?
 
-    @projects = Project.get_proj_list.page(params[:page]).per(10).order(sort_column(Project) + " " + sort_direction)
+    @projects = Project.joins("left join managers on managers.id = projects.manager_id left join clients on clients.id = projects.client_id").select("projects.*, managers.name as manager_name, clients.name as client_name").page(params[:page]).per(10).order(sort_column(Project) + " " + sort_direction)
 
     get_notice(params[:notice], 'Project was successfully create.', 'Project was successfully updated.')
     
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
     @application = Application.find_all_by_project_id(params[:id])
     @developers = Project.find(params[:id]).developers
     @new_app = Application.new
-    respond_with @project = Project.get_proj_list_where_id(params[:id])
+    respond_with @project = Project.joins("left join managers on managers.id = projects.manager_id left join clients on clients.id = projects.client_id").select("projects.*, managers.name as manager_name, clients.name as client_name").where("projects.id = ?",params[:id])
   end
 
 

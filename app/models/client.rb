@@ -10,13 +10,4 @@ class Client < ActiveRecord::Base
   validates :name, presence:true, length:{minimum:3, maximum:40}
   validates :handle, presence:true
 
-  
-  scope :get_clients_list_where_id, lambda{ |e|
-    select("companies.name as company_name, clients.*")
-    .joins("LEFT JOIN companies ON companies.id = clients.company_id")
-    .where("clients.id = ?",e)
-  }
-
-
-
 end

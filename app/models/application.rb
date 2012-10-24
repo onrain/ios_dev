@@ -5,17 +5,5 @@ class Application < ActiveRecord::Base
   validates :bundle_identifier, presence:true
   belongs_to :project
   #validates :relative_path, presence:true, uniqueness:true
-  #validates :bundle_identifier, presence:true, uniqueness:true
-
-  scope :get_app_list,
-    select:"applications.*, projects.name as project_name",
-    joins:"left join projects on projects.id = applications.project_id"
-  
-  scope :get_app_list_where_id, lambda{ |e|
-    select("applications.*, projects.name as project_name")
-    .joins("left join projects on projects.id = applications.project_id")
-    .where("applications.id = ? ",e)
-  }
-    
 
 end

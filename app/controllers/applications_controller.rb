@@ -52,13 +52,13 @@ class ApplicationsController < ApplicationController
 
 
 
-    @applications = Application.get_app_list.page(params[:page]).per(10).order(sort_column(Client) + " " + sort_direction)
+    @applications = Application.joins("left join projects on projects.id = applications.project_id").select("applications.*, projects.name as project_name").page(params[:page]).per(10).order(sort_column(Client) + " " + sort_direction)
 
     respond_with(@applications)
   end
 
   def show
-    @application = Application.get_app_list_where_id(params[:id])
+    @application = Application.joins("left join projects on projects.id = applications.project_id").select("applications.*, projects.name as project_name").where("applications.id = ?",params[:id])
   end
 
 

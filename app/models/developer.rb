@@ -12,14 +12,4 @@ class Developer < ActiveRecord::Base
                     :length => {:minimum => 3, :maximum => 254},
                     :uniqueness => true,
                     :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
-
-  scope :get_dev_list,
-     select:"managers.name as manager_name, developers.*",
-     joins:"LEFT JOIN managers ON managers.id = developers.manager_id"
-
-  scope :get_dev_list_where_id, lambda{ |e|
-    select("managers.name as manager_name, developers.*")
-    .joins("LEFT JOIN managers ON managers.id = developers.manager_id")
-    .where("developers.id = ?",e)
-  }
 end

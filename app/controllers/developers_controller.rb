@@ -6,7 +6,7 @@ class DevelopersController < ApplicationController
 
   
   def index
-    @developers = Developer.get_dev_list.page(params[:page]).per(10).order(sort_column(Developer) + " " + sort_direction)
+    @developers = Developer.joins("LEFT JOIN managers ON managers.id = developers.manager_id").select("managers.name as manager_name, developers.*").page(params[:page]).per(10).order(sort_column(Developer) + " " + sort_direction)
     
     get_notice(params[:notice], 'Developer was successfully create.', 'Developer was successfully updated.')
 
@@ -17,7 +17,7 @@ class DevelopersController < ApplicationController
 
 
   def show
-    respond_with @developer = Developer.get_dev_list_where_id(params[:id])
+    respond_with @developer = Developer.joins("LEFT JOIN managers ON managers.id = developers.manager_id").select("managers.name as manager_name, developers.*").where("developers.id = ?",params[:id])
   end
 
   def new
