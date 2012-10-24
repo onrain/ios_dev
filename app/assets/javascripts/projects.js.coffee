@@ -157,7 +157,7 @@ $ ->
           while i < count
             link = []
             link[0] = $link_to('', '#', 'id="'+data[i].id+'" class="icon-pencil edit-link" style="color:black;"')
-            link[1] = $link_to('', '/admin/applications/'+data[i].id, 'rel="nofollow" style="color:black;" class="icon-trash" data-method="delete" data-remote="true" data-confirm="Are you sure?" id="tr_delete_"')
+            link[1] = $link_to('', '#', 'rel="nofollow" style="color:black;" class="icon-trash tr_delete_" id="'+data[i].id+'"')
             link[2] = $link_to('', '/admin/applications?method=clone&id='+data[i].id, 'class="icon-retweet" style="color:black;" id="duplicate" data-remote="true" title="Make duplicate" data-confirm="Are you sure?"')
             link = link.join(' ')
             
@@ -428,10 +428,17 @@ $ ->
           $('#client-handle').text(data.handle.replace(/\s/g,'')) 
      
   
-  $('#tr_delete_').live 'click': ->
-    if (/projects\/\d+/).test(window.location.pathname)
-      $(this).parent().parent().parent().parent().remove()
-    else $(this).parent().parent().parent().remove()
+  $('.tr_delete_').live 'click': ->
+    id = $(@).attr('id')
+    verify.run('confirm','Do you realy want to delete this application?')
+    $('#yes_btn').click ->
+      $.get '/admin/applications?method=delete&app_id='+id, (data) =>
+        $.post "/admin/applications/" + id, {_method:'delete'}, (data) =>
+          document.location.reload(true)
+    
+    
+    
+    
   
   $('#duplicate').live 'click': ->
     $('a[data-remote]').bind "ajax:success", (evt, data, status, xhr) ->

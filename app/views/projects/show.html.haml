@@ -1,5 +1,5 @@
 = render 'modal_for_app'
-
+= render 'admin/confirm_form'
 - for proj in @project 
   %table.table.table-bordered{id:"show-recoreds", style:"width:1000px; margin: 0 auto;"}
     %tr
@@ -68,7 +68,7 @@
                     .app-panel.pull-right
                       %a.icon-pencil.edit-link{id:"#{app.id}", href:"#", style:"color:black;"}
   
-                      %a.icon-trash{rel:"nofollow", style:"color:black;", :"data-method"=>:"delete", :"data-remote"=>:"true", :"data-confirm"=>:"Are you sure?", id:"tr_delete_", href:"/admin/applications/#{app.id}?proj=#{app.project_id}"}
+                      %a.icon-trash{rel:"nofollow", style:"color:black;", id:"#{app.id}", class:"tr_delete_", href:"#"}
   
                       %a.icon-retweet{style:"color:black;", href:"/admin/applications?meth=clone&id=#{app.id}", id:"duplicate", :"data-remote"=>:"true", title:"Make duplicate", :"data-confirm"=>"Are you sure?"}
           - else
