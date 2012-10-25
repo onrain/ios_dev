@@ -1,4 +1,6 @@
-'<span style="display:inline-block; border: 1px solid #cccccc; margin: 0px 2px 5px 0px; height:23px;">
-        <span>'+data[i].name+'</span>
-        <input type="checkbox" value="'+data[i].id+'" name="project[developer_ids][]" id="project_developer_ids_" checked="checked">
-</span>'
+Список тестов для моделей.
+
+1. Создание записей.
+2. Удаление записей.
+3. Редактирование записей.
+4. Валидация полей.

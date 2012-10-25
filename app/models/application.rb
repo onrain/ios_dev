@@ -5,5 +5,7 @@ class Application < ActiveRecord::Base
   validates :bundle_identifier, presence:true
   belongs_to :project
   #validates :relative_path, presence:true, uniqueness:true
+  
+
 
 end
