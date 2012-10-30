@@ -30,7 +30,6 @@ describe Application do
   
   it "should be delete application" do 
     app = Application.where(title:"new title")
-    
     app.delete_all
     
     app.should be_empty
@@ -42,9 +41,6 @@ describe Application do
     FactoryGirl.create(:application)
     @app = Application.last
     @app.product_name.should eq("New product")
-  
-    
-
     @app.id = @app.id+1
     @app.title += " copy"
     @app.product_name += " copy"
@@ -52,7 +48,6 @@ describe Application do
     Application.create(@app.attributes)
     Application.last.bundle_version.should eq('1.1')
     #puts "all attr[]: -> #{Application.last.attributes}"
-  
   end
   
   

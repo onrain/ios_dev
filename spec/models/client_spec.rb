@@ -9,6 +9,9 @@ describe Client do
     @client.id.size.should_not eq(0)
   end
   
+  
+  it { should validate_presence_of(:handle) }
+  
   it "should be valid email" do
     FactoryGirl.build(:client, :email=>"").should_not be_valid
     
@@ -34,17 +37,15 @@ describe Client do
   end
   
   it "should be insert new client" do
-    Client.create(handle:"name.name").should have(:no).errors_on(:handle)
+    Client.create(handle:"company/client.test").should have(:no).errors_on(:handle)
     
-    client = Client.where(handle:"name.name")
-    
-    for c in client
-      c.handle.should eq("name.name")
+    Client.where(handle:"company/client.test").collect do |c|
+      c.handle.should eq("company/client.test")
     end
   end
   
   it "should be delete client" do
-    client = Client.where(handle:"name.name")
+    client = Client.where(handle:"company/client.test")
     
     client.delete_all
     

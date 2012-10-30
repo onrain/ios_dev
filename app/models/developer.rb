@@ -1,7 +1,8 @@
 class Developer < ActiveRecord::Base
   attr_accessible :email, :manager_id, :name, :personal_email
   validates :name, presence:true
-  validates :manager, presence:true
+  validates :manager_id, presence:true
+  
   has_and_belongs_to_many :projects
   belongs_to :manager
   validates :personal_email, :presence => true, 
